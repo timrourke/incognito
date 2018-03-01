@@ -21,6 +21,10 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
+      - run:
+          name: Install ext-gmp
+          command: 'apt-get install -y php7.1-gmp'
+
       - run: composer install -n --prefer-dist
 
       - save_cache:
