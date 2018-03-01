@@ -1,0 +1,38 @@
+{
+    "name": "timrourke/aws-cognito-toolkit",
+    "description": "A suite of tools for working with AWS Cognito",
+    "keywords": ["aws", "cognito", "jwt", "token", "authentication"],
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tim Rourke",
+            "email": "tim@timrourke.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">7.1.3",
+        "ext-gmp": "*",
+        "ext-mbstring": "*",
+        "lib-openssl": "*",
+        "web-token/jwt-checker": "^1.0",
+        "web-token/jwt-core": "^1.0",
+        "web-token/jwt-signature": "^1.0",
+        "guzzlehttp/guzzle": "^6.3",
+        "psr/cache": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Incognito\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.0"
+    }
+}
