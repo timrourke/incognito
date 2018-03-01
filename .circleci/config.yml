@@ -23,7 +23,7 @@ jobs:
 
       - run:
           name: Install ext-gmp
-          command: 'apt-get install -y php7.1-gmp'
+          command: 'sudo apt-get install -y php7.1-gmp'
 
       - run: composer install -n --prefer-dist
 
