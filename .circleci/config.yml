@@ -39,7 +39,7 @@ jobs:
       # run tests!
       - run:
           name: Generate code coverage
-          command: 'phpunit --coverage-html ./coverage'
+          command: './vendor/bin/phpunit --coverage-html ./coverage'
       - store_artifacts:
           path: './coverage/test-results.xml'
           prefix: tests
