@@ -2,6 +2,8 @@
 
 A suite of tools for working with AWS Cognito
 
+[![CircleCI](https://circleci.com/gh/timrourke/aws-cognito-toolkit.svg?style=svg)](https://circleci.com/gh/timrourke/aws-cognito-toolkit)
+
 ## In alpha
 
 Development of this library is still in progress. Contributions are welcome and
