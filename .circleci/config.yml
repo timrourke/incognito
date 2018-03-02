@@ -43,16 +43,19 @@ jobs:
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
+
       - run:
           name: Run tests
           command: |
             sudo docker-php-ext-enable xdebug
             ./cc-test-reporter before-build
-            sudo ./vendor/bin/phpunit --coverage-clover clover.xml --coverage-html ./coverage
+            sudo ./vendor/bin/phpunit --coverage-clover clover.xml --coverage-html ./coverage --coverage-xml ./coverage
             ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+
       - store_artifacts:
           path: './coverage/test-results.xml'
           prefix: tests
+
       - store_artifacts:
           path: coverage
           prefix: coverage
