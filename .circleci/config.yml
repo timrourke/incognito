@@ -59,3 +59,9 @@ jobs:
       - store_artifacts:
           path: coverage
           prefix: coverage
+
+      - store_test_results:
+          path: ~/phpunit
+
+      - store_artifacts:
+          path: ~/phpunit
