@@ -99,15 +99,15 @@ class ClaimsValidator
     {
         $headers = $this->getTokenHeaders($token);
 
-        foreach(self::REQUIRED_HEADER_CLAIMS as $requiredHeaderClaim) {
+        foreach (self::REQUIRED_HEADER_CLAIMS as $requiredHeaderClaim) {
             if (!array_key_exists($requiredHeaderClaim, $headers)) {
                 throw new InvalidHeaderException(
-                  sprintf(
-                      'The required header claim "%s" is missing from the token.',
-                      $requiredHeaderClaim
-                  ),
-                  $requiredHeaderClaim,
-                  null
+                    sprintf(
+                        'The required header claim "%s" is missing from the token.',
+                        $requiredHeaderClaim
+                    ),
+                    $requiredHeaderClaim,
+                    null
                 );
             }
         }
@@ -121,7 +121,7 @@ class ClaimsValidator
      */
     private function verifyRequiredPayloadClaims(array $claims): void
     {
-        foreach(self::REQUIRED_PAYLOAD_CLAIMS as $requiredPayloadClaim) {
+        foreach (self::REQUIRED_PAYLOAD_CLAIMS as $requiredPayloadClaim) {
             if (!array_key_exists($requiredPayloadClaim, $claims)) {
                 throw new InvalidClaimException(
                     sprintf(
