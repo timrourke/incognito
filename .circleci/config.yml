@@ -49,7 +49,7 @@ jobs:
           command: |
             sudo docker-php-ext-enable xdebug
             ./cc-test-reporter before-build
-            sudo ./vendor/bin/phpunit --coverage-clover clover.xml --coverage-html ./coverage --coverage-xml ./coverage
+            sudo ./vendor/bin/phpunit --coverage-clover ./clover.xml --coverage-html ./coverage --log-junit ~/phpunit/junit.xml
             ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
 
       - store_artifacts:
