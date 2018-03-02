@@ -37,17 +37,6 @@ jobs:
           paths:
             - ./vendor
           key: v1-dependencies-{{ checksum "composer.json" }}
-        
-      # run tests!
-      - run:
-          name: Generate code coverage
-          command: './vendor/bin/phpunit --coverage-html ./coverage'
-      - store_artifacts:
-          path: './coverage/test-results.xml'
-          prefix: tests
-      - store_artifacts:
-          path: coverage
-          prefix: coverage
 
       - run:
           name: Setup Code Climate test-reporter
@@ -59,5 +48,11 @@ jobs:
           command: |
             sudo docker-php-ext-enable xdebug
             ./cc-test-reporter before-build
-            sudo ./vendor/bin/phpunit --coverage-clover clover.xml
+            sudo ./vendor/bin/phpunit --coverage-clover clover.xml --coverage-html ./coverage
             ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+      - store_artifacts:
+          path: './coverage/test-results.xml'
+          prefix: tests
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
