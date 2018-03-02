@@ -34,17 +34,17 @@ class ServiceFactory
     /**
      * Build a Cognito token service with all of its dependencies
      *
-     * @param string $awsCognitoClientAppId
+     * @param string $cognitoClientAppId
      * @param JWKSet $keyset
      * @return Service
      */
     public static function make(
-        string $awsCognitoClientAppId,
+        string $cognitoClientAppId,
         JWKSet $keyset
     ): Service
     {
         return new Service(
-            self::getClaimsValidator($awsCognitoClientAppId),
+            self::getClaimsValidator($cognitoClientAppId),
             self::getSignatureValidator($keyset),
             self::getDeserializer()
         );
@@ -53,18 +53,18 @@ class ServiceFactory
     /**
      * Get a Cognito token claims validator
      *
-     * @param string $awsCognitoClientAppId
+     * @param string $cognitoClientAppId
      * @return ClaimsValidator
      */
     private static function getClaimsValidator(
-        string $awsCognitoClientAppId
+        string $cognitoClientAppId
     ): ClaimsValidator
     {
         $claimCheckerManager = ClaimCheckerManager::create([
             new IssuedAtChecker(),
             new NotBeforeChecker(),
             new ExpirationTimeChecker(),
-            new AudienceChecker($awsCognitoClientAppId),
+            new AudienceChecker($cognitoClientAppId),
             new TokenUseChecker(),
         ]);
 
