@@ -24,5 +24,5 @@ interface CacheItemFactoryInterface
      * @param bool $isHit Whether the CacheItem resulted from a cache hit
      * @return \Psr\Cache\CacheItemInterface
      */
-    public function make(string $key, $data, bool $isHit = false): CacheItemInterface;
+    public function make(string $key, $data, bool $isHit): CacheItemInterface;
 }
