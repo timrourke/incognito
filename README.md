@@ -2,7 +2,7 @@
 
 A suite of tools for working with AWS Cognito
 
-[![CircleCI](https://circleci.com/gh/timrourke/aws-cognito-toolkit.svg?style=svg)](https://circleci.com/gh/timrourke/aws-cognito-toolkit) [![Maintainability](https://api.codeclimate.com/v1/badges/7328dca6e43b609e61e1/maintainability)](https://codeclimate.com/github/timrourke/aws-cognito-toolkit/maintainability)
+[![CircleCI](https://circleci.com/gh/timrourke/aws-cognito-toolkit.svg?style=svg)](https://circleci.com/gh/timrourke/aws-cognito-toolkit) [![Maintainability](https://api.codeclimate.com/v1/badges/7328dca6e43b609e61e1/maintainability)](https://codeclimate.com/github/timrourke/aws-cognito-toolkit/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/7328dca6e43b609e61e1/test_coverage)](https://codeclimate.com/github/timrourke/aws-cognito-toolkit/test_coverage)
 
 ## In alpha
 
