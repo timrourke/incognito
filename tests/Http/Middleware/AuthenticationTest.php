@@ -10,7 +10,6 @@ use Incognito\Token\ServiceFactory;
 use Incognito\Token\TestUtility;
 use Jose\Component\Signature\JWS;
 use PHPUnit\Framework\TestCase;
-use Zend\Diactoros\ServerRequestFactory;
 
 class AuthenticationTest extends TestCase
 {
