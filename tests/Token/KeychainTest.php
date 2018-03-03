@@ -58,9 +58,6 @@ class KeychainTest extends TestCase
         );
     }
 
-    /**
-     * @covers \Incognito\Cache\CacheItemFactoryInterface
-     */
     public function testGetPublicKeysetWithColdCache(): void
     {
         $guzzleMock = $this->getGuzzleMock();
