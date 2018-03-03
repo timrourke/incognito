@@ -1,5 +1,5 @@
 {
-    "name": "timrourke/aws-cognito-toolkit",
+    "name": "timrourke/incognito",
     "description": "A suite of tools for working with AWS Cognito",
     "keywords": ["aws", "cognito", "jwt", "token", "authentication"],
     "type": "library",
