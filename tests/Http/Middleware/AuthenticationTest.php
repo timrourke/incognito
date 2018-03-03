@@ -57,11 +57,6 @@ class AuthenticationTest extends TestCase
             $handler
         );
 
-        $this->assertInstanceOf(
-            Response::class,
-            $response
-        );
-
         $this->assertEquals(
             200,
             $response->getStatusCode()
