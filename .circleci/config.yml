@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     environment:
-      CC_TEST_REPORTER_ID: '5fc5e48f1fc306c64d95c8282a01c8f902bedfc0ee15f704444b1155823164d2'
+      CC_TEST_REPORTER_ID: '8e76501ef6943aab8b75ccd38af9c741d589f93f920ad447619d7c0bc93ced9f'
 
     docker:
       - image: circleci/php:7.1-browsers
