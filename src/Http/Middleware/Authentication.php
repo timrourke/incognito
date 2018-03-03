@@ -1,6 +1,6 @@
 <?php
 
-namespace Incognito\Middleware;
+namespace Incognito\Http\Middleware;
 
 use Incognito\Http\ResponseFactoryInterface;
 use Incognito\Token\Service;
