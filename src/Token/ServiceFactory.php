@@ -25,11 +25,11 @@ use Jose\Component\Signature\Serializer\CompactSerializer;
 use Jose\Component\Signature\Serializer\JWSSerializerManager;
 
 /**
- * Class CognitoTokenServiceFactory
+ * Class ServiceFactory
  *
  * Builds Cognito token service with all of its dependencies
  *
- * @package App\Services
+ * @package Incognito\Token
  */
 class ServiceFactory
 {

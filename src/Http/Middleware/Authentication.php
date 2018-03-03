@@ -69,6 +69,8 @@ class Authentication implements MiddlewareInterface
 
             return $handler->handle($request);
         } catch(\Exception $e) {
+            $handler->handle($request);
+
             return $this->authErrorResponseFactory->createResponse();
         }
     }
