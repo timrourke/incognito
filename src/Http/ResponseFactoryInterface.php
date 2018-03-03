@@ -1,4 +1,4 @@
-<?php // @codeCoverageIgnore
+<?php // @codeCoverageIgnoreStart
 
 namespace Incognito\Http;
 

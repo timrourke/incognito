@@ -1,4 +1,4 @@
-<?php // @codeCoverageIgnore
+<?php // @codeCoverageIgnoreStart
 
 declare(strict_types=1);
 

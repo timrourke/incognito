@@ -1,15 +1,111 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: tim
- * Date: 3/3/18
- * Time: 6:53 AM
- */
 
 namespace Incognito\Middleware;
 
+use Incognito\Http\ResponseFactoryInterface;
+use Incognito\Token\Service;
+use Jose\Component\Signature\JWS;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
-class Authentication
+class Authentication implements MiddlewareInterface
 {
+    /**
+     * A regular expression for matching the compact serialized representation
+     * of a JSON Web Token as an Authentication Bearer token
+     *
+     * @var string
+     */
+    private const AUTHENTICATION_BEARER_JWT_REGEXP = "/Bearer\s+(.*)$/i";
 
+    /**
+     * @var \Incognito\Http\ResponseFactoryInterface
+     */
+    private $authErrorResponseFactory;
+
+    /**
+     * @var \Incognito\Token\Service
+     */
+    private $tokenService;
+
+    /**
+     * Constructor.
+     *
+     * @param \Incognito\Token\Service $tokenService
+     * @param \Incognito\Http\ResponseFactoryInterface $authErrorResponseFactory
+     */
+    public function __construct(
+        Service $tokenService,
+        ResponseFactoryInterface $authErrorResponseFactory
+    ) {
+        $this->tokenService = $tokenService;
+        $this->authErrorResponseFactory = $authErrorResponseFactory;
+    }
+
+    /**
+     * Process an incoming server request for valid authentication via an AWS
+     * Cognito JSON Web Token
+     *
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
+     */
+    public function process(
+        ServerRequestInterface $request,
+        RequestHandlerInterface $handler
+    ): ResponseInterface {
+        try {
+            $this->authenticateRequest($request);
+
+            return $handler->handle($request);
+        } catch(\Exception $e) {
+            return $this->authErrorResponseFactory->createResponse();
+        }
+    }
+
+    /**
+     * Authenticate a request
+     *
+     * @param ServerRequestInterface $request
+     * @return \Jose\Component\Signature\JWS
+     * @throws \Exception
+     */
+    private function authenticateRequest(ServerRequestInterface $request): JWS
+    {
+        $jwtString = $this->fetchTokenFromRequest($request);
+
+        return $this->tokenService->verifyToken($jwtString);
+    }
+
+    /**
+     * Fetch the compact serialization form of a JSON Web Token from the
+     * Authorization header
+     *
+     * @param ServerRequestInterface $request
+     * @return string
+     */
+    private function fetchTokenFromRequest(
+        ServerRequestInterface $request
+    ): string {
+        $tokenMatches = [];
+
+        // Attempt to fetch the Authentication header
+        $authenticationHeader = $request->getHeader('Authentication');
+        $header = isset($authenticationHeader[0]) ?
+            $authenticationHeader[0] :
+            '';
+
+        // Attempt to match a JWT Bearer token from the Authentication header
+        $didMatch = preg_match(
+            self::AUTHENTICATION_BEARER_JWT_REGEXP,
+            $header,
+            $tokenMatches
+        );
+
+        return ($didMatch) ?
+            $tokenMatches[1] :
+            '';
+    }
 }
