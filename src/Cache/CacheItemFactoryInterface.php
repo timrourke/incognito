@@ -13,6 +13,7 @@ use Psr\Cache\CacheItemInterface;
  * of \Psr\Cache\CacheItemInterface. Useful for ensuring framework interoperability.
  *
  * @package Incognito\Cache
+ * @codeCoverageIgnore
  */
 interface CacheItemFactoryInterface
 {
