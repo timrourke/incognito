@@ -40,7 +40,7 @@ class InvalidTokenResponseFactory implements ResponseFactoryInterface
         return new Response(
             401,
             [],
-            \GuzzleHttp\json_encode(self::ERROR_MESSAGE)
+            json_encode(self::ERROR_MESSAGE)
         );
     }
 }
