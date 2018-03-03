@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Incognito\Token;
+namespace Incognito\Token\Validation;
 
+use Incognito\Token\TestUtility;
 use PHPUnit\Framework\TestCase;
 
 class SignatureValidatorTest extends TestCase

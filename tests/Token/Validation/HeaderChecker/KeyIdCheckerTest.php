@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Incognito\Token\HeaderChecker;
+namespace Incognito\Token\Validation\HeaderChecker;
 
 use PHPUnit\Framework\TestCase;
 

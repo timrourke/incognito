@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Incognito\Token;
+namespace Incognito\Token\Validation;
 
 use Jose\Component\Checker\ClaimCheckerManager;
 use Jose\Component\Checker\HeaderCheckerManager;

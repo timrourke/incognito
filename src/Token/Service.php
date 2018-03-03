@@ -4,17 +4,19 @@ declare(strict_types=1);
 
 namespace Incognito\Token;
 
+use Incognito\Token\Validation\ClaimsValidator;
+use Incognito\Token\Validation\SignatureValidator;
 use Jose\Component\Signature\JWS;
 
 class Service
 {
     /**
-     * @var \Incognito\Token\ClaimsValidator
+     * @var \Incognito\Token\Validation\ClaimsValidator
      */
     private $claimsValidator;
 
     /**
-     * @var \Incognito\Token\SignatureValidator
+     * @var \Incognito\Token\Validation\SignatureValidator
      */
     private $signatureValidator;
 
@@ -26,8 +28,8 @@ class Service
     /**
      * Constructor.
      *
-     * @param \Incognito\Token\ClaimsValidator $claimsValidator
-     * @param \Incognito\Token\SignatureValidator $signatureValidator
+     * @param \Incognito\Token\Validation\ClaimsValidator $claimsValidator
+     * @param \Incognito\Token\Validation\SignatureValidator $signatureValidator
      * @param \Incognito\Token\Deserializer $tokenDeserializer
      */
     public function __construct(

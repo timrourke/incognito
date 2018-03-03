@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Incognito\Token\ClaimsChecker;
+namespace Incognito\Token\Validation\ClaimsChecker;
 
 use PHPUnit\Framework\TestCase;
 

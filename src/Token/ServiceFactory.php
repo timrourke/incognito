@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Incognito\Token;
 
-use Incognito\Token\ClaimsChecker\TokenUseChecker;
-use Incognito\Token\HeaderChecker\KeyIdChecker;
+use Incognito\Token\Validation\ClaimsChecker\TokenUseChecker;
+use Incognito\Token\Validation\HeaderChecker\KeyIdChecker;
+use Incognito\Token\Validation\ClaimsValidator;
+use Incognito\Token\Validation\SignatureValidator;
 use Jose\Component\Checker\AlgorithmChecker;
 use Jose\Component\Checker\AudienceChecker;
 use Jose\Component\Checker\ClaimCheckerManager;
@@ -89,8 +91,8 @@ class ServiceFactory
     /**
      * Get a Cognito token signature validator
      *
-     * @param JWKSet $keyset
-     * @return SignatureValidator
+     * @param \Jose\Component\Core\JWKSet $keyset
+     * @return \Incognito\Token\Validation\SignatureValidator
      */
     private static function getSignatureValidator(
         JWKSet $keyset
@@ -111,7 +113,7 @@ class ServiceFactory
     /**
      * Get a Cognito token deserializer
      *
-     * @return Deserializer
+     * @return \Incognito\Token\Deserializer
      */
     private static function getDeserializer(): Deserializer
     {
