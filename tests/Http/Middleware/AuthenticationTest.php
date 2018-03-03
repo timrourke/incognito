@@ -61,6 +61,33 @@ class AuthenticationTest extends TestCase
             Response::class,
             $response
         );
+
+        $this->assertEquals(
+            200,
+            $response->getStatusCode()
+        );
+    }
+
+    public function testProcessWhenUnauthenticated(): void
+    {
+        $sut = $this->getAuthentication();
+
+        $unauthenticatedRequest = new ServerRequest(
+            'GET',
+            'localhost'
+        );
+
+        $handler = new PsrRequestHandlerStub();
+
+        $response = $sut->process(
+            $unauthenticatedRequest,
+            $handler
+        );
+
+        $this->assertEquals(
+            401,
+            $response->getStatusCode()
+        );
     }
 
     private function getTokenService(): Service

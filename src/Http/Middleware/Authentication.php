@@ -14,11 +14,11 @@ class Authentication implements MiddlewareInterface
 {
     /**
      * A regular expression for matching the compact serialized representation
-     * of a JSON Web Token as an Authentication Bearer token
+     * of a JSON Web Token as an Authorization Bearer token
      *
      * @var string
      */
-    private const AUTHENTICATION_BEARER_JWT_REGEXP = "/Bearer\s+(.*)$/i";
+    private const AUTHORIZATION_BEARER_JWT_REGEXP = "/Bearer\s+(.*)$/i";
 
     /**
      * @var \Incognito\Http\ResponseFactoryInterface
@@ -91,15 +91,15 @@ class Authentication implements MiddlewareInterface
     ): string {
         $tokenMatches = [];
 
-        // Attempt to fetch the Authentication header
-        $authenticationHeader = $request->getHeader('Authentication');
+        // Attempt to fetch the Authorization header
+        $authenticationHeader = $request->getHeader('Authorization');
         $header = isset($authenticationHeader[0]) ?
             $authenticationHeader[0] :
             '';
 
-        // Attempt to match a JWT Bearer token from the Authentication header
+        // Attempt to match a JWT Bearer token from the Authorization header
         $didMatch = preg_match(
-            self::AUTHENTICATION_BEARER_JWT_REGEXP,
+            self::AUTHORIZATION_BEARER_JWT_REGEXP,
             $header,
             $tokenMatches
         );
