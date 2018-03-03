@@ -43,9 +43,13 @@ class AuthenticationTest extends TestCase
 
         $validTokenString = $this->getValidTokenString();
 
-        $authenticatedRequest = new ServerRequest('GET', 'localhost', [
-            'Authorization' => 'Bearer ' . $validTokenString,
-        ]);
+        $authenticatedRequest = new ServerRequest(
+            'GET',
+            'localhost',
+            [
+                'Authorization' => 'Bearer ' . $validTokenString,
+            ]
+        );
 
         $handler = new PsrRequestHandlerStub();
 
