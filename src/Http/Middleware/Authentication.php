@@ -10,6 +10,14 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
+/**
+ * Class Authentication
+ *
+ * PSR-15 middleware for authenticating a request bearing an AWS Cognito JSON
+ * Web Token
+ *
+ * @package Incognito\Http\Middleware
+ */
 class Authentication implements MiddlewareInterface
 {
     /**
