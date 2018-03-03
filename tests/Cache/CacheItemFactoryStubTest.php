@@ -2,7 +2,9 @@
 
 namespace Incognito\Cache;
 
-class CacheItemFactoryStubTest
+use PHPUnit\Framework\TestCase;
+
+class CacheItemFactoryStubTest extends TestCase
 {
     public function testConstruct(): void
     {
