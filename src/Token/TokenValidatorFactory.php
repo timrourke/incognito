@@ -25,27 +25,27 @@ use Jose\Component\Signature\Serializer\CompactSerializer;
 use Jose\Component\Signature\Serializer\JWSSerializerManager;
 
 /**
- * Class ServiceFactory
+ * Class TokenValidatorFactory
  *
- * Builds Cognito token service with all of its dependencies
+ * Builds Cognito token validator service with all of its dependencies
  *
  * @package Incognito\Token
  */
-class ServiceFactory
+class TokenValidatorFactory
 {
     /**
      * Build a Cognito token service with all of its dependencies
      *
      * @param string $cognitoClientAppId
      * @param JWKSet $keyset
-     * @return Service
+     * @return TokenValidator
      */
     public static function make(
         string $cognitoClientAppId,
         JWKSet $keyset
-    ): Service
+    ): TokenValidator
     {
-        return new Service(
+        return new TokenValidator(
             self::getClaimsValidator($cognitoClientAppId),
             self::getSignatureValidator($keyset),
             self::getDeserializer()

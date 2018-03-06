@@ -15,7 +15,7 @@ class ServiceTest extends TestCase
     private $serializer;
 
     /**
-     * @var \Incognito\Token\Service
+     * @var \Incognito\Token\TokenValidator
      */
     private $sut;
 
@@ -25,7 +25,7 @@ class ServiceTest extends TestCase
     public function setUp(): void
     {
         $this->serializer = TestUtility::getSerializerManager();
-        $this->sut = ServiceFactory::make(
+        $this->sut = TokenValidatorFactory::make(
             TestUtility::EXPECTED_AUDIENCE,
             TestUtility::getKeyset()
         );
@@ -34,7 +34,7 @@ class ServiceTest extends TestCase
     public function testConstruct(): void
     {
         $this->assertInstanceOf(
-            Service::class,
+            TokenValidator::class,
             $this->sut
         );
     }

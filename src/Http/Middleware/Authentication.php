@@ -3,7 +3,7 @@
 namespace Incognito\Http\Middleware;
 
 use Incognito\Http\ResponseFactoryInterface;
-use Incognito\Token\Service;
+use Incognito\Token\TokenValidator;
 use Jose\Component\Signature\JWS;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -34,18 +34,18 @@ class Authentication implements MiddlewareInterface
     private $authErrorResponseFactory;
 
     /**
-     * @var \Incognito\Token\Service
+     * @var \Incognito\Token\TokenValidator
      */
     private $tokenService;
 
     /**
      * Constructor.
      *
-     * @param \Incognito\Token\Service $tokenService
+     * @param \Incognito\Token\TokenValidator $tokenService
      * @param \Incognito\Http\ResponseFactoryInterface $authErrorResponseFactory
      */
     public function __construct(
-        Service $tokenService,
+        TokenValidator $tokenService,
         ResponseFactoryInterface $authErrorResponseFactory
     ) {
         $this->tokenService = $tokenService;

@@ -10,13 +10,13 @@ class ServiceFactoryTest extends TestCase
 {
     public function testMake(): void
     {
-        $service = ServiceFactory::make(
+        $service = TokenValidatorFactory::make(
             'some-cognito-client-app-id',
             TestUtility::getKeyset()
         );
 
         $this->assertInstanceOf(
-            Service::class,
+            TokenValidator::class,
             $service
         );
     }

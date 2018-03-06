@@ -5,8 +5,8 @@ namespace Incognito\Http\Middleware;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
 use Incognito\Http\InvalidTokenResponseFactory;
-use Incognito\Token\Service;
-use Incognito\Token\ServiceFactory;
+use Incognito\Token\TokenValidator;
+use Incognito\Token\TokenValidatorFactory;
 use Incognito\Token\TestUtility;
 use Jose\Component\Signature\JWS;
 use PHPUnit\Framework\TestCase;
@@ -135,9 +135,9 @@ class AuthenticationTest extends TestCase
         );
     }
 
-    private function getTokenService(): Service
+    private function getTokenService(): TokenValidator
     {
-        return ServiceFactory::make(
+        return TokenValidatorFactory::make(
             TestUtility::EXPECTED_AUDIENCE,
             TestUtility::getKeyset()
         );
