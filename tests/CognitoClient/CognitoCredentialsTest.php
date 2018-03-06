@@ -61,4 +61,18 @@ class CognitoCredentialsTest extends TestCase
             $sut->getUserPoolId()
         );
     }
+
+    public function testGetSecretHashForUsername(): void
+    {
+        $sut = new CognitoCredentials(
+            'someCognitoClientId',
+            'someCognitoClientSecret',
+            'someCognitoUserPoolId'
+        );
+
+        $this->assertEquals(
+            'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
+            $sut->getSecretHashForUsername('some-username')
+        );
+    }
 }
