@@ -22,7 +22,8 @@
         "guzzlehttp/guzzle": "^6.3",
         "psr/cache": "^1.0",
         "psr/http-message": "^1.0",
-        "psr/http-server-middleware": "^1.0"
+        "psr/http-server-middleware": "^1.0",
+        "aws/aws-sdk-php": "^3.52"
     },
     "autoload": {
         "psr-4": {
