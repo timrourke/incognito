@@ -7,6 +7,14 @@ namespace Incognito\Token\Validation\HeaderChecker;
 use Jose\Component\Checker\HeaderChecker;
 use Jose\Component\Checker\InvalidHeaderException;
 
+/**
+ * Class KeyIdChecker
+ *
+ * A header checker that verifies the presence and type of the `kid` header on a
+ * JSON Web Token issued by your AWS Cognito User Pool
+ *
+ * @package Incognito\Token\Validation\HeaderChecker
+ */
 final class KeyIdChecker implements HeaderChecker
 {
     /**

@@ -8,6 +8,14 @@ use Incognito\Token\Validation\ClaimsValidator;
 use Incognito\Token\Validation\SignatureValidator;
 use Jose\Component\Signature\JWS;
 
+/**
+ * Class Service
+ *
+ * The token service verifies that a JSON Web Token was genuinely issued by your
+ * AWS Cognito User Pool, and is valid per its claims, signature, and expiration.
+ *
+ * @package Incognito\Token
+ */
 class Service
 {
     /**

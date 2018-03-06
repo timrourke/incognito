@@ -139,7 +139,7 @@ class ClaimsValidator
      * Get the headers from a token.
      *
      * We only intend to validate the protected headers of a token, so we can
-     * discard the unprotected headers here.
+     * ignore the unprotected headers here.
      *
      * @param \Jose\Component\Signature\JWS $token
      * @return array

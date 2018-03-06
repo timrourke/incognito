@@ -7,6 +7,14 @@ namespace Incognito\Token\Validation\ClaimsChecker;
 use Jose\Component\Checker\ClaimChecker;
 use Jose\Component\Checker\InvalidClaimException;
 
+/**
+ * Class TokenUseChecker
+ *
+ * A claim checker that verifies the `token_use` claim's presence and value on a
+ * JSON Web Token issued by your AWS Cognito User Pool
+ *
+ * @package Incognito\Token\Validation\ClaimsChecker
+ */
 final class TokenUseChecker implements ClaimChecker
 {
     /**

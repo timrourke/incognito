@@ -8,6 +8,14 @@ use Jose\Component\Core\JWKSet;
 use Jose\Component\Signature\JWSVerifier;
 use Jose\Component\Signature\JWS;
 
+/**
+ * Class SignatureValidator
+ *
+ * Validates a JSON Web Token was authentically signed by the RSA public keyset
+ * of your AWS Cognito User Pool
+ *
+ * @package Incognito\Token\Validation
+ */
 class SignatureValidator
 {
     /**
