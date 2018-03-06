@@ -72,4 +72,22 @@ class CognitoCredentials
     {
         return $this->userPoolId;
     }
+
+    /**
+     * Create a base64-encoded HMAC SHA256 signature to sign the SignUp request
+     *
+     * @param string $username
+     * @return string
+     */
+    public function getSecretHashForUsername(string $username): string
+    {
+        $secretHash = hash_hmac(
+            'sha256',
+            $username . $this->clientId,
+            $this->clientSecret,
+            true
+        );
+
+        return base64_encode($secretHash);
+    }
 }
