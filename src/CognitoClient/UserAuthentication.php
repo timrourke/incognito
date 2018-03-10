@@ -6,6 +6,8 @@ namespace Incognito\CognitoClient;
 
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\Entity\User;
+use Incognito\Entity\UserAttribute;
 
 class UserAuthentication
 {
@@ -61,40 +63,28 @@ class UserAuthentication
     /**
      * Sign up a new user
      *
-     * @param array $userAttributes A hash of data to create a new User with
+     * @param \Incognito\Entity\User $user
+     * @param string $password
      * @return \Aws\Result
      */
-    public function signUpUser(array $userAttributes): Result
+    public function signUpUser(User $user, string $password): Result
     {
         return $this->cognitoClient->signUp([
             'ClientId'   => $this->cognitoCredentials->getClientId(),
-            'Password'   => $userAttributes['password'],
+            'Password'   => $password,
             'SecretHash' => $this->cognitoCredentials->getSecretHashForUsername(
-                $userAttributes['username']
+                $user->username()
             ),
-            'UserAttributes' => [
-                [
-                    'Name' => 'given_name',
-                    'Value' => trim($userAttributes['first-name']),
-                ],
-                [
-                    'Name' => 'family_name',
-                    'Value' => trim($userAttributes['last-name']),
-                ],
-                [
-                    'Name' => 'email',
-                    'Value' => trim($userAttributes['email']),
-                ],
-                [
-                    'Name' => 'locale',
-                    'Value' => trim($userAttributes['locale']),
-                ],
-                [
-                    'Name' => 'zoneinfo',
-                    'Value' => trim($userAttributes['zoneinfo']),
-                ],
-            ],
-            'Username' => $userAttributes['username'],
+            'UserAttributes' => array_map(
+                function(UserAttribute $attr) {
+                    return [
+                        'Name' => $attr->name(),
+                        'Value' => $attr->value(),
+                    ];
+                },
+                $user->getAttributes()
+            ),
+            'Username' => $user->username(),
         ]);
     }
 }

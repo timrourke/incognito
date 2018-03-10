@@ -53,10 +53,10 @@ class UserAttribute
 
     /**
      * @param string $name
-     * @return \Incognito\Entity\UserAttribute
+     * @return void
      * @throws \Assert\AssertionFailedException
      */
-    private function setName(string $name): UserAttribute
+    private function setName(string $name): void
     {
         Assertion::betweenLength(
             $name,
@@ -78,16 +78,14 @@ class UserAttribute
         );
 
         $this->name = $name;
-
-        return $this;
     }
 
     /**
      * @param string $value
-     * @return UserAttribute
+     * @return void
      * @throws \Assert\AssertionFailedException
      */
-    private function setValue(string $value): UserAttribute
+    private function setValue(string $value): void
     {
         Assertion::maxLength(
             $value,
@@ -99,7 +97,5 @@ class UserAttribute
         );
 
         $this->value = $value;
-
-        return $this;
     }
 }
