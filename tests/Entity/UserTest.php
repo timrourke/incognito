@@ -109,6 +109,18 @@ class UserTest extends TestCase
         );
     }
 
+    public function testGetAttributesWhenNoneExist(): void
+    {
+        $sut = new User(
+            new Username('foo')
+        );
+
+        $this->assertEquals(
+            [],
+            $sut->getAttributes()
+        );
+    }
+
     public function testId(): void
     {
         $sut = new User(
@@ -189,6 +201,23 @@ class UserTest extends TestCase
             $date,
             $sut->createdAt()
         );
+    }
+
+    public function testSetCreatedAtThrowsWhenAlreadySet(): void
+    {
+        $this->expectException(AssertionFailedException::class);
+        $this->expectExceptionMessage(
+            'Invalid createdAt: user already has a "createdAt" date.'
+        );
+
+        $sut = new User(
+            new Username('foo')
+        );
+
+        $date = new \DateTimeImmutable('now');
+
+        $sut->setCreatedAt($date);
+        $sut->setCreatedAt($date);
     }
 
     public function testUpdatedAt(): void

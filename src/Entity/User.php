@@ -9,6 +9,21 @@ use Assert\Assertion;
 class User
 {
     /**
+     * The possible statuses an AWS Cognito User can be in
+     *
+     * @var array
+     */
+    private const VALID_STATUSES = [
+        'UNCONFIRMED',
+        'CONFIRMED',
+        'ARCHIVED',
+        'COMPROMISED',
+        'UNKNOWN',
+        'RESET_REQUIRED',
+        'FORCE_CHANGE_PASSWORD',
+    ];
+
+    /**
      * The user's UUID
      *
      * @var string
@@ -16,31 +31,43 @@ class User
     private $id;
 
     /**
+     * The user's username
+     *
      * @var \Incognito\Entity\Username
      */
     private $username;
 
     /**
+     * The date the user was created at
+     *
      * @var \DateTimeImmutable
      */
     private $createdAt;
 
     /**
+     * The date the user was last updated at
+     *
      * @var \DateTimeImmutable
      */
     private $updatedAt;
 
     /**
+     * Whether the AWS Cognito User is enabled
+     *
      * @var bool
      */
     private $enabled;
 
     /**
+     * The current status for the user
+     *
      * @var string
      */
     private $status = 'UNKNOWN';
 
     /**
+     * The user attributes for this user
+     *
      * @var \Incognito\Entity\UserAttributeCollection
      */
     private $userAttributes;
@@ -60,6 +87,8 @@ class User
     }
 
     /**
+     * Set a user attribute for this user
+     *
      * @param \Incognito\Entity\UserAttribute $userAttribute
      */
     public function setAttribute(UserAttribute $userAttribute): void
@@ -72,6 +101,8 @@ class User
     }
 
     /**
+     * Get a user attribute by name
+     *
      * @param string $name
      * @return UserAttribute|null
      */
@@ -81,14 +112,20 @@ class User
     }
 
     /**
+     * Get the array of user attributes for this user
+     *
      * @return array
      */
     public function getAttributes(): array
     {
-        return $this->userAttributes->toArray();
+        return is_null($this->userAttributes) ?
+            [] :
+            $this->userAttributes->toArray();
     }
 
     /**
+     * Get the user's ID
+     *
      * @return string
      */
     public function id(): string
@@ -97,6 +134,8 @@ class User
     }
 
     /**
+     * Set the user's ID
+     *
      * @param string $id
      * @return \Incognito\Entity\User
      */
@@ -108,6 +147,8 @@ class User
     }
 
     /**
+     * Get the user's username
+     *
      * @return string
      */
     public function username(): string
@@ -116,6 +157,8 @@ class User
     }
 
     /**
+     * Set the user's username
+     *
      * @param Username $username
      * @return \Incognito\Entity\User
      */
@@ -127,6 +170,8 @@ class User
     }
 
     /**
+     * Get the date the user was created at
+     *
      * @return \DateTimeImmutable|null
      */
     public function createdAt(): ?\DateTimeImmutable
@@ -135,17 +180,27 @@ class User
     }
 
     /**
+     * Set the date the user was created at
+     *
      * @param \DateTimeImmutable $createdAt
      * @return \Incognito\Entity\User
+     * @throws \Assert\AssertionFailedException
      */
     public function setCreatedAt(\DateTimeImmutable $createdAt): User
     {
+        Assertion::null(
+            $this->createdAt,
+            'Invalid createdAt: user already has a "createdAt" date.'
+        );
+
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
     /**
+     * Get the date the user was last updated at
+     *
      * @return \DateTimeImmutable|null
      */
     public function updatedAt(): ?\DateTimeImmutable
@@ -154,6 +209,8 @@ class User
     }
 
     /**
+     * Set the date the user was last updated at
+     *
      * @param \DateTimeImmutable $updatedAt
      * @return \Incognito\Entity\User
      */
@@ -165,6 +222,8 @@ class User
     }
 
     /**
+     * Get whether this user is enabled
+     *
      * @return bool|null
      */
     public function enabled(): ?bool
@@ -173,6 +232,8 @@ class User
     }
 
     /**
+     * Set whether this user is enabled
+     *
      * @param bool $enabled
      * @return \Incognito\Entity\User
      */
@@ -183,11 +244,18 @@ class User
         return $this;
     }
 
+    /**
+     * Get the user's status
+     *
+     * @return string
+     */
     public function status(): string {
         return $this->status;
     }
 
     /**
+     * Set the user's status
+     *
      * @param string $status
      * @return \Incognito\Entity\User
      * @throws \Assert\AssertionFailedException
@@ -196,15 +264,7 @@ class User
     {
         Assertion::inArray(
             $status,
-            [
-                'UNCONFIRMED',
-                'CONFIRMED',
-                'ARCHIVED',
-                'COMPROMISED',
-                'UNKNOWN',
-                'RESET_REQUIRED',
-                'FORCE_CHANGE_PASSWORD',
-            ],
+            self::VALID_STATUSES,
             sprintf(
                 "Invalid status: must provide a valid status, received: \"%s\"",
                 $status
