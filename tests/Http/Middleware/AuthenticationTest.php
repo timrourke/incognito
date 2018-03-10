@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incognito\Http\Middleware;
 
 use GuzzleHttp\Psr7\Response;

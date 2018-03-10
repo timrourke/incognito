@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Incognito\Cache;
 
 use PHPUnit\Framework\TestCase;
