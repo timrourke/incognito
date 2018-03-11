@@ -4,44 +4,35 @@ declare(strict_types=1);
 
 namespace Incognito\Repository;
 
-use Incognito\CognitoClient\CognitoCredentials;
 use Incognito\Entity\User;
 use Incognito\Mapper\UserMapper;
-use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\CognitoClient\UserQueryService;
 
 class UserRepository
 {
-    /**
-     * @var \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
-     */
-    private $cognitoClient;
-
-    /**
-     * @var \Incognito\CognitoClient\CognitoCredentials
-     */
-    private $cognitoCredentials;
-
     /**
      * @var \Incognito\Mapper\UserMapper
      */
     private $mapper;
 
     /**
-     * Constructor.
+     * @var \Incognito\CognitoClient\UserQueryService
+     */
+    private $queryService;
+
+    /**
+     * UserRepository constructor.
      *
-     * @param \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient $cognitoClient
-     * @param \Incognito\CognitoClient\CognitoCredentials $cognitoCredentials
      * @param \Incognito\Mapper\UserMapper $mapper
+     * @param \Incognito\CognitoClient\UserQueryService $queryService
      */
     public function __construct(
-        CognitoClient $cognitoClient,
-        CognitoCredentials $cognitoCredentials,
-        UserMapper $mapper
+        UserMapper $mapper,
+        UserQueryService $queryService
     )
     {
-        $this->cognitoClient = $cognitoClient;
-        $this->cognitoCredentials = $cognitoCredentials;
         $this->mapper = $mapper;
+        $this->queryService = $queryService;
     }
 
     /**
@@ -52,10 +43,7 @@ class UserRepository
      */
     public function find(string $username): User
     {
-        $result = $this->cognitoClient->adminGetUser([
-            'UserPoolId' => $this->cognitoCredentials->getUserPoolId(),
-            'Username'   => $username,
-        ]);
+        $result = $this->queryService->getUserByUsername($username);
 
         return $this->mapper->mapAdminGetUserResult($result);
     }
@@ -71,9 +59,7 @@ class UserRepository
      */
     public function findAll(): array
     {
-        $result = $this->cognitoClient->listUsers([
-            'UserPoolId' => $this->cognitoCredentials->getUserPoolId(),
-        ]);
+        $result = $this->queryService->getList();
 
         return $this->mapper->mapListUsersResult($result);
     }

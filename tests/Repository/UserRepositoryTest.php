@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Incognito\Repository;
 
 use Aws\Result;
-use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
-use Incognito\CognitoClient\CognitoCredentials;
+use Incognito\CognitoClient\UserQueryService;
 use Incognito\Entity\User;
 use Incognito\Entity\Username;
 use Incognito\Mapper\UserMapper;
@@ -17,9 +16,8 @@ class UserRepositoryTest extends TestCase
     public function testConstruct(): void
     {
         $sut = new UserRepository(
-            $this->getCognitoClientMock(),
-            $this->getCognitoCredentials(),
-            new UserMapper()
+            new UserMapper(),
+            $this->getUserQueryServiceMock()
         );
 
         $this->assertInstanceOf(
@@ -36,16 +34,11 @@ class UserRepositoryTest extends TestCase
 
         $expectedResult = $this->getAwsResult();
 
-        $client = $this->getCognitoClientMock();
+        $queryService = $this->getUserQueryServiceMock();
 
-        $client->expects($this->once())
-            ->method('__call')
-            ->with('adminGetUser', [
-                [
-                    'UserPoolId' => 'someCognitoUserPoolId',
-                    'Username' => 'some-username'
-                ]
-            ])
+        $queryService->expects($this->once())
+            ->method('getUserByUsername')
+            ->with('some-username')
             ->willReturn($expectedResult);
 
         $mapper = $this->getUserMapperMock();
@@ -56,9 +49,8 @@ class UserRepositoryTest extends TestCase
             ->willReturn($expectedUser);
 
         $sut = new UserRepository(
-            $client,
-            $this->getCognitoCredentials(),
-            $mapper
+            $mapper,
+            $queryService
         );
 
         $actual = $sut->find('some-username');
@@ -73,15 +65,10 @@ class UserRepositoryTest extends TestCase
     {
         $expectedResult = $this->getAwsResult();
 
-        $client = $this->getCognitoClientMock();
+        $queryService = $this->getUserQueryServiceMock();
 
-        $client->expects($this->once())
-            ->method('__call')
-            ->with('listUsers', [
-                [
-                    'UserPoolId' => 'someCognitoUserPoolId',
-                ]
-            ])
+        $queryService->expects($this->once())
+            ->method('getList')
             ->willReturn($expectedResult);
 
         $mapper = $this->getUserMapperMock();
@@ -92,9 +79,8 @@ class UserRepositoryTest extends TestCase
             ->willReturn([]);
 
         $sut = new UserRepository(
-            $client,
-            $this->getCognitoCredentials(),
-            $mapper
+            $mapper,
+            $queryService
         );
 
         $actual = $sut->findAll();
@@ -105,20 +91,11 @@ class UserRepositoryTest extends TestCase
         );
     }
 
-    private function getCognitoClientMock()
+    private function getUserQueryServiceMock()
     {
-        return $this->getMockBuilder(CognitoClient::class)
+        return $this->getMockBuilder(UserQueryService::class)
             ->disableOriginalConstructor()
             ->getMock();
-    }
-
-    private function getCognitoCredentials(): CognitoCredentials
-    {
-        return new CognitoCredentials(
-            'someCognitoClientId',
-            'someCognitoClientSecret',
-            'someCognitoUserPoolId'
-        );
     }
 
     private function getUserMapperMock()
