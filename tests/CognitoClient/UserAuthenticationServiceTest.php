@@ -12,17 +12,17 @@ use Incognito\Entity\UserAttributeCollection;
 use Incognito\Entity\Username;
 use PHPUnit\Framework\TestCase;
 
-class UserAuthenticationTest extends TestCase
+class UserAuthenticationServiceTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $sut = new UserAuthentication(
+        $sut = new UserAuthenticationService(
             $this->getCognitoClientMock(),
             $this->getCognitoCredentials()
         );
 
         $this->assertInstanceOf(
-            UserAuthentication::class,
+            UserAuthenticationService::class,
             $sut
         );
     }
@@ -50,7 +50,7 @@ class UserAuthenticationTest extends TestCase
             )
             ->willReturn($this->getAwsResult());
 
-        $sut = new UserAuthentication(
+        $sut = new UserAuthenticationService(
             $clientMock,
             $this->getCognitoCredentials()
         );
@@ -100,7 +100,7 @@ class UserAuthenticationTest extends TestCase
             ])
         );
 
-        $sut = new UserAuthentication(
+        $sut = new UserAuthenticationService(
             $clientMock,
             $this->getCognitoCredentials()
         );

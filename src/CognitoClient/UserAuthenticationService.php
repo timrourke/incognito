@@ -9,7 +9,7 @@ use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute;
 
-class UserAuthentication
+class UserAuthenticationService
 {
     /**
      * @var \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
