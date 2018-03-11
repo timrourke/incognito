@@ -76,7 +76,6 @@ class UserQueryServiceTest extends TestCase
         );
     }
 
-
     private function getCognitoClientMock()
     {
         return $this->getMockBuilder(CognitoClient::class)
