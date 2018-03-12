@@ -112,7 +112,7 @@ class UserMapperTest extends TestCase
             ->willReturn([
                 'Users' => [
                     0 => [
-                        'UserAttributes' => [
+                        'Attributes' => [
                             [
                                 'Name' => 'sub',
                                 'Value' => 'some-id'

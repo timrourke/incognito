@@ -114,7 +114,7 @@ class User
     /**
      * Get the array of user attributes for this user
      *
-     * @return array
+     * @return \Incognito\Entity\UserAttribute[]
      */
     public function getAttributes(): array
     {

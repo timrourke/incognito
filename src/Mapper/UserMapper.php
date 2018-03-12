@@ -20,7 +20,7 @@ class UserMapper
      */
     public function mapAdminGetUserResult(Result $result): User
     {
-        return $this->buildUserFromResult($result->toArray(), 'Attributes');
+        return $this->buildUserFromResult($result->toArray());
     }
 
     /**
@@ -33,7 +33,7 @@ class UserMapper
     {
         return array_map(
             function(array $userData) {
-                return $this->buildUserFromResult($userData, 'UserAttributes');
+                return $this->buildUserFromResult($userData);
             },
             $result->toArray()['Users']
         );
@@ -43,18 +43,14 @@ class UserMapper
      * Build a User entity from an AWS SDK Result
      *
      * @param array $userData
-     * @param string $userAttrsKey
      * @return \Incognito\Entity\User
      */
-    private function buildUserFromResult(
-        array $userData,
-        string $userAttrsKey
-    ): User {
+    private function buildUserFromResult(array $userData): User
+    {
         $username = new Username((string) $userData['Username']);
 
         $userAttributeCollection = $this->buildUserAttributesCollectionFromResult(
-            $userData,
-            $userAttrsKey
+            $userData
         );
 
         $user = new User($username, $userAttributeCollection);
@@ -71,18 +67,16 @@ class UserMapper
      * Build a UserAttributeCollection from an AWS SDK Result
      *
      * @param array $userData
-     * @param string $userAttributesKey
      * @return \Incognito\Entity\UserAttributeCollection
      */
     private function buildUserAttributesCollectionFromResult(
-        array $userData,
-        string $userAttributesKey
+        array $userData
     ): UserAttributeCollection {
         $userAttributes = array_map(
             function(array $attr) {
                 return new UserAttribute($attr['Name'], $attr['Value']);
             },
-            $userData[$userAttributesKey]
+            $userData['Attributes']
         );
 
         return new UserAttributeCollection($userAttributes);
