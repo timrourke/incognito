@@ -9,21 +9,6 @@ use Assert\Assertion;
 class User
 {
     /**
-     * The possible statuses an AWS Cognito User can be in
-     *
-     * @var array
-     */
-    private const VALID_STATUSES = [
-        'UNCONFIRMED',
-        'CONFIRMED',
-        'ARCHIVED',
-        'COMPROMISED',
-        'UNKNOWN',
-        'RESET_REQUIRED',
-        'FORCE_CHANGE_PASSWORD',
-    ];
-
-    /**
      * The user's UUID
      *
      * @var string
@@ -61,9 +46,9 @@ class User
     /**
      * The current status for the user
      *
-     * @var string
+     * @var \Incognito\Entity\UserStatus
      */
-    private $status = 'UNKNOWN';
+    private $status;
 
     /**
      * The user attributes for this user
@@ -114,7 +99,7 @@ class User
     /**
      * Get the array of user attributes for this user
      *
-     * @return \Incognito\Entity\UserAttribute[]
+     * @return array
      */
     public function getAttributes(): array
     {
@@ -247,30 +232,24 @@ class User
     /**
      * Get the user's status
      *
-     * @return string
+     * @return \Incognito\Entity\UserStatus
      */
-    public function status(): string {
+    public function status(): UserStatus {
+        if (is_null($this->status)) {
+            $this->status = new UserStatus('UNKNOWN');
+        }
+
         return $this->status;
     }
 
     /**
      * Set the user's status
      *
-     * @param string $status
+     * @param \Incognito\Entity\UserStatus $status
      * @return \Incognito\Entity\User
-     * @throws \Assert\AssertionFailedException
      */
-    public function setStatus(string $status): User
+    public function setStatus(UserStatus $status): User
     {
-        Assertion::inArray(
-            $status,
-            self::VALID_STATUSES,
-            sprintf(
-                "Invalid status: must provide a valid status, received: \"%s\"",
-                $status
-            )
-        );
-
         $this->status = $status;
 
         return $this;

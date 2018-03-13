@@ -289,24 +289,26 @@ class UserTest extends TestCase
 
         $this->assertEquals(
             'UNKNOWN',
-            $sut->status()
+            sprintf('%s', $sut->status())
         );
     }
 
     /**
      * @dataProvider statusProvider
-     * @param string $status
+     * @param string $statusString
      */
-    public function testSetStatus(string $status): void
+    public function testSetStatus(string $statusString): void
     {
+        $expected = new UserStatus($statusString);
+
         $sut = new User(
             new Username('foo')
         );
 
-        $sut->setStatus($status);
+        $sut->setStatus($expected);
 
         $this->assertEquals(
-            $status,
+            $expected,
             $sut->status()
         );
     }
@@ -322,20 +324,5 @@ class UserTest extends TestCase
             ['RESET_REQUIRED'],
             ['FORCE_CHANGE_PASSWORD'],
         ];
-    }
-
-    public function testSetStatusThrowsWhenProvidedInvalidStatus(): void
-    {
-        $this->expectException(AssertionFailedException::class);
-
-        $this->expectExceptionMessage(
-            'Invalid status: must provide a valid status, received: "some invalid status"'
-        );
-
-        $sut = new User(
-            new Username('foo')
-        );
-
-        $sut->setStatus('some invalid status');
     }
 }

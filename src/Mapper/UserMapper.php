@@ -9,6 +9,7 @@ use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute;
 use Incognito\Entity\UserAttributeCollection;
 use Incognito\Entity\Username;
+use Incognito\Entity\UserStatus;
 
 class UserMapper
 {
@@ -60,7 +61,7 @@ class UserMapper
             ->setCreatedAt(new \DateTimeImmutable((string) $userData['UserCreateDate']))
             ->setUpdatedAt(new \DateTimeImmutable((string) $userData['UserLastModifiedDate']))
             ->setEnabled((bool) json_decode((string) $userData['Enabled']))
-            ->setStatus((string) $userData['UserStatus']);
+            ->setStatus(new UserStatus((string) $userData['UserStatus']));
     }
 
     /**
