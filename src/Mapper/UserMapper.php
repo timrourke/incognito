@@ -73,11 +73,15 @@ class UserMapper
     private function buildUserAttributesCollectionFromResult(
         array $userData
     ): UserAttributeCollection {
+        $attrsKey = array_key_exists('Attributes', $userData) ?
+            'Attributes' :
+            'UserAttributes';
+
         $userAttributes = array_map(
             function(array $attr) {
                 return new UserAttribute($attr['Name'], $attr['Value']);
             },
-            $userData['Attributes']
+            $userData[$attrsKey]
         );
 
         return new UserAttributeCollection($userAttributes);
