@@ -2,26 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Incognito\Entity;
+namespace Incognito\Entity\UserAttribute;
 
 use Assert\Assertion;
 
-class UserAttribute
+class UserAttribute implements UserAttributeInterface
 {
     /**
      * @var string
      */
-    private const ALLOWABLE_CHARACTERS_REGEX = "/[\p{L}\p{M}\p{S}\p{N}\p{P}]+/u";
+    protected const ALLOWABLE_CHARACTERS_REGEX = "/[\p{L}\p{M}\p{S}\p{N}\p{P}]+/u";
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @var string
      */
-    private $value;
+    protected $value;
 
     /**
      * Constructor.
@@ -36,6 +36,8 @@ class UserAttribute
     }
 
     /**
+     * Get the name
+     *
      * @return string
      */
     public function name(): string
@@ -44,6 +46,8 @@ class UserAttribute
     }
 
     /**
+     * Get the value
+     *
      * @return string
      */
     public function value(): string
@@ -52,11 +56,29 @@ class UserAttribute
     }
 
     /**
+     * Set the name
+     *
      * @param string $name
      * @return void
      * @throws \Assert\AssertionFailedException
      */
-    private function setName(string $name): void
+    protected function setName(string $name): void
+    {
+        $this->validateNameLength($name);
+
+        $this->validateNameCharacters($name);
+
+        $this->name = $name;
+    }
+
+    /**
+     * Validate that the name's length is between 1 and 32 characters
+     *
+     * @param string $name
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    protected function validateNameLength(string $name): void
     {
         Assertion::betweenLength(
             $name,
@@ -67,7 +89,17 @@ class UserAttribute
                 $name
             )
         );
+    }
 
+    /**
+     * Validate that the name's characters are valid
+     *
+     * @param string $name
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    protected function validateNameCharacters(string $name): void
+    {
         Assertion::regex(
             $name,
             self::ALLOWABLE_CHARACTERS_REGEX,
@@ -76,16 +108,30 @@ class UserAttribute
                 $name
             )
         );
-
-        $this->name = $name;
     }
 
     /**
+     * Set the value
+     *
      * @param string $value
      * @return void
      * @throws \Assert\AssertionFailedException
      */
-    private function setValue(string $value): void
+    protected function setValue(string $value): void
+    {
+        $this->validateValueLength($value);
+
+        $this->value = $value;
+    }
+
+    /**
+     * Validate that the value's length is between 0 and 2048 characters
+     *
+     * @param string $value
+     * @return void
+     * @throws \Assert\AssertionFailedException
+     */
+    protected function validateValueLength(string $value): void
     {
         Assertion::maxLength(
             $value,
@@ -95,7 +141,5 @@ class UserAttribute
                 $value
             )
         );
-
-        $this->value = $value;
     }
 }

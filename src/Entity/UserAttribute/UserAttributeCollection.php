@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Incognito\Entity;
+namespace Incognito\Entity\UserAttribute;
 
 use Assert\Assertion;
 
 class UserAttributeCollection
 {
     /**
-     * @var \Incognito\Entity\UserAttribute[]
+     * @var \Incognito\Entity\UserAttribute\UserAttribute[]
      */
     private $userAttributes;
 
     /**
      * Constructor.
      *
-     * @param \Incognito\Entity\UserAttribute[] $userAttributes
+     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      */
     public function __construct(array $userAttributes = [])
     {
@@ -29,7 +29,7 @@ class UserAttributeCollection
      * If the collection already contains a UserAttribute bearing the same name,
      * it will be replaced with the new one provided to this method.
      *
-     * @param UserAttribute $newUserAttribute
+     * @param \Incognito\Entity\UserAttribute\UserAttribute $newUserAttribute
      * @return UserAttributeCollection
      */
     public function add(UserAttribute $newUserAttribute): UserAttributeCollection
@@ -53,7 +53,7 @@ class UserAttributeCollection
      * Get a UserAttribute by name
      *
      * @param string $name
-     * @return \Incognito\Entity\UserAttribute|null
+     * @return \Incognito\Entity\UserAttribute\UserAttribute|null
      */
     public function get(string $name): ?UserAttribute
     {
@@ -73,7 +73,7 @@ class UserAttributeCollection
     /**
      * Get the collection of UserAttributes sorted alphabetically by name
      *
-     * @return \Incognito\Entity\UserAttribute[]
+     * @return \Incognito\Entity\UserAttribute\UserAttribute[]
      */
     public function toArray(): array
     {
@@ -90,7 +90,7 @@ class UserAttributeCollection
     }
 
     /**
-     * @param \Incognito\Entity\UserAttribute[] $userAttributes
+     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -104,7 +104,7 @@ class UserAttributeCollection
     }
 
     /**
-     * @param \Incognito\Entity\UserAttribute[] $userAttributes
+     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -118,7 +118,7 @@ class UserAttributeCollection
     }
 
     /**
-     * @param \Incognito\Entity\UserAttribute[] $userAttributes
+     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      * @return void
      * @throws \Assert\AssertionFailedException
      */

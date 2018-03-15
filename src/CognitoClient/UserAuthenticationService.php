@@ -7,7 +7,7 @@ namespace Incognito\CognitoClient;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
 use Incognito\Entity\User;
-use Incognito\Entity\UserAttribute;
+use Incognito\Entity\UserAttribute\UserAttribute;
 
 class UserAuthenticationService
 {

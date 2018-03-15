@@ -3,6 +3,8 @@
 namespace Incognito\Entity;
 
 use Assert\AssertionFailedException;
+use Incognito\Entity\UserAttribute\UserAttribute;
+use Incognito\Entity\UserAttribute\UserAttributeCollection;
 use PHPUnit\Framework\TestCase;
 
 class UserTest extends TestCase

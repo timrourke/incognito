@@ -6,8 +6,8 @@ namespace Incognito\Mapper;
 
 use Aws\Result;
 use Incognito\Entity\User;
-use Incognito\Entity\UserAttribute;
-use Incognito\Entity\UserAttributeCollection;
+use Incognito\Entity\UserAttribute\UserAttribute;
+use Incognito\Entity\UserAttribute\UserAttributeCollection;
 use Incognito\Entity\Username;
 use Incognito\Entity\UserStatus;
 
@@ -68,7 +68,7 @@ class UserMapper
      * Build a UserAttributeCollection from an AWS SDK Result
      *
      * @param array $userData
-     * @return \Incognito\Entity\UserAttributeCollection
+     * @return \Incognito\Entity\UserAttribute\UserAttributeCollection
      */
     private function buildUserAttributesCollectionFromResult(
         array $userData

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Incognito\Entity;
+namespace Incognito\Entity\UserAttribute;
 
 use Assert\AssertionFailedException;
 use PHPUnit\Framework\TestCase;

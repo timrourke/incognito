@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Incognito\Entity;
 
 use Assert\Assertion;
+use Incognito\Entity\UserAttribute\UserAttribute;
+use Incognito\Entity\UserAttribute\UserAttributeCollection;
 
 class User
 {
@@ -53,7 +55,7 @@ class User
     /**
      * The user attributes for this user
      *
-     * @var \Incognito\Entity\UserAttributeCollection
+     * @var \Incognito\Entity\UserAttribute\UserAttributeCollection
      */
     private $userAttributes;
 
@@ -61,7 +63,7 @@ class User
      * Constructor.
      *
      * @param \Incognito\Entity\Username $username
-     * @param \Incognito\Entity\UserAttributeCollection $userAttributes
+     * @param \Incognito\Entity\UserAttribute\UserAttributeCollection $userAttributes
      */
     public function __construct(
         Username $username,
@@ -74,7 +76,7 @@ class User
     /**
      * Set a user attribute for this user
      *
-     * @param \Incognito\Entity\UserAttribute $userAttribute
+     * @param \Incognito\Entity\UserAttribute\UserAttribute $userAttribute
      */
     public function setAttribute(UserAttribute $userAttribute): void
     {
