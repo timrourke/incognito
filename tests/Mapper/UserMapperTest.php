@@ -28,7 +28,7 @@ class UserMapperTest extends TestCase
         $result->expects($this->once())
             ->method('toArray')
             ->willReturn([
-                'Attributes' => [
+                'UserAttributes' => [
                     [
                         'Name' => 'sub',
                         'Value' => 'some-id'
