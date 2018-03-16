@@ -8,6 +8,7 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
@@ -97,6 +98,36 @@ class UserAuthenticationServiceTest extends TestCase
         $awsException = new AwsException(
             'some-message',
             new Command('some-command')
+        );
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminInitiateAuth',
+                self::LOGIN_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->loginUser('some-username', 'some-password');
+    }
+
+    public function testLoginUserThrowsNotAuthorizedException(): void
+    {
+        $this->expectException(NotAuthorizedException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command'),
+            [
+                'code' => 'NotAuthorizedException'
+            ]
         );
 
         $clientMock = $this->getCognitoClientMock();
