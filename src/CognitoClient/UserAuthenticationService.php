@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Incognito\CognitoClient;
 
+use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\CognitoClient\Exception\UserNotConfirmedException;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
 
@@ -41,21 +43,29 @@ class UserAuthenticationService
      * @param string $username
      * @param string $password
      * @return \Aws\Result
+     * @throws \Incognito\CognitoClient\Exception\UserNotConfirmedException
+     * @throws \Exception
      */
     public function loginUser(string $username, string $password): Result
     {
-        $result = $this->cognitoClient->adminInitiateAuth([
-            'AuthFlow'       => 'ADMIN_NO_SRP_AUTH',
-            'ClientId'       => $this->cognitoCredentials->getClientId(),
-            'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
-            'AuthParameters' => [
-                'SECRET_HASH' => $this->cognitoCredentials->getSecretHashForUsername(
-                    $username
-                ),
-                'USERNAME'    => $username,
-                'PASSWORD'    => $password,
-            ],
-        ]);
+        $result = null;
+
+        try {
+            $result = $this->cognitoClient->adminInitiateAuth([
+                'AuthFlow'       => 'ADMIN_NO_SRP_AUTH',
+                'ClientId'       => $this->cognitoCredentials->getClientId(),
+                'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
+                'AuthParameters' => [
+                    'SECRET_HASH' => $this->cognitoCredentials->getSecretHashForUsername(
+                        $username
+                    ),
+                    'USERNAME'    => $username,
+                    'PASSWORD'    => $password,
+                ],
+            ]);
+        } catch(AwsException $e) {
+            $this->handleLoginAwsException($e);
+        }
 
         return $result;
     }
@@ -86,5 +96,20 @@ class UserAuthenticationService
             ),
             'Username' => $user->username(),
         ]);
+    }
+
+    /**
+     * @param \Aws\Exception\AwsException $e
+     * @throws \Incognito\CognitoClient\Exception\UserNotConfirmedException
+     */
+    private function handleLoginAwsException(AwsException $e): void
+    {
+        switch ($e->getAwsErrorCode()) {
+            case 'UserNotConfirmedException':
+                throw new UserNotConfirmedException($e);
+                break;
+            default:
+                throw $e;
+        }
     }
 }

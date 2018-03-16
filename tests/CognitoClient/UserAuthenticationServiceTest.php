@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace Incognito\CognitoClient;
 
+use Aws\Command;
+use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\CognitoClient\Exception\UserNotConfirmedException;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
 use Incognito\Entity\UserAttribute\UserAttributeCollection;
@@ -14,6 +17,24 @@ use PHPUnit\Framework\TestCase;
 
 class UserAuthenticationServiceTest extends TestCase
 {
+    /**
+     * The payload expected for a login request (`AdminInitiateAuth`)
+     *
+     * @var array
+     */
+    private const LOGIN_PAYLOAD = [
+        [
+            'AuthFlow'   => 'ADMIN_NO_SRP_AUTH',
+            'ClientId'   => 'someCognitoClientId',
+            'UserPoolId' => 'someCognitoUserPoolId',
+            'AuthParameters' => [
+                'SECRET_HASH' => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
+                'USERNAME'    => 'some-username',
+                'PASSWORD'    => 'some-password',
+            ],
+        ]
+    ];
+
     public function testConstruct(): void
     {
         $sut = new UserAuthenticationService(
@@ -35,20 +56,88 @@ class UserAuthenticationServiceTest extends TestCase
             ->method('__call')
             ->with(
                 'adminInitiateAuth',
-                [
-                    [
-                        'AuthFlow'   => 'ADMIN_NO_SRP_AUTH',
-                        'ClientId'   => 'someCognitoClientId',
-                        'UserPoolId' => 'someCognitoUserPoolId',
-                        'AuthParameters' => [
-                            'SECRET_HASH' => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
-                            'USERNAME'    => 'some-username',
-                            'PASSWORD'    => 'some-password',
-                        ],
-                    ]
-                ]
+                self::LOGIN_PAYLOAD
             )
             ->willReturn($this->getAwsResult());
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->loginUser('some-username', 'some-password');
+    }
+
+    public function testLoginUserThrowsGenericException(): void
+    {
+        $this->expectException(\Exception::class);
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminInitiateAuth',
+                self::LOGIN_PAYLOAD
+            )
+            ->willThrowException(new \Exception());
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->loginUser('some-username', 'some-password');
+    }
+
+    public function testLoginUserThrowsGenericAwsException(): void
+    {
+        $this->expectException(AwsException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command')
+        );
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminInitiateAuth',
+                self::LOGIN_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->loginUser('some-username', 'some-password');
+    }
+
+    public function testLoginUserThrowsUserNotConfirmedException(): void
+    {
+        $this->expectException(UserNotConfirmedException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command'),
+            [
+                'code' => 'UserNotConfirmedException'
+            ]
+        );
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminInitiateAuth',
+                self::LOGIN_PAYLOAD
+            )
+            ->willThrowException($awsException);
 
         $sut = new UserAuthenticationService(
             $clientMock,
