@@ -44,12 +44,13 @@ class UserAuthenticationServiceTest extends TestCase
      */
     private const REFRESH_TOKEN_PAYLOAD = [
         [
-            'AuthFlow'   => 'REFRESH_TOKEN',
+            'AuthFlow'   => 'REFRESH_TOKEN_AUTH',
             'ClientId'   => 'someCognitoClientId',
             'UserPoolId' => 'someCognitoUserPoolId',
             'AuthParameters' => [
                 'REFRESH_TOKEN' => 'some-refresh-token',
-                'SECRET_HASH' => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
+                'SECRET_HASH'   => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
+                'USERNAME'      => 'some-username',
             ],
         ]
     ];

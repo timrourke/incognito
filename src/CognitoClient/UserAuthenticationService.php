@@ -82,14 +82,15 @@ class UserAuthenticationService
     public function refreshToken(string $username, string $refreshToken): Result
     {
          return $this->cognitoClient->adminInitiateAuth([
-              'AuthFlow'       => 'REFRESH_TOKEN',
+              'AuthFlow'       => 'REFRESH_TOKEN_AUTH',
               'ClientId'       => $this->cognitoCredentials->getClientId(),
               'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
               'AuthParameters' => [
                   'REFRESH_TOKEN' => $refreshToken,
-                  'SECRET_HASH' => $this->cognitoCredentials->getSecretHashForUsername(
+                  'SECRET_HASH'   => $this->cognitoCredentials->getSecretHashForUsername(
                       $username
                   ),
+                  'USERNAME'      => $username,
               ],
          ]);
     }
