@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Incognito\Repository;
 
+use Aws\Exception\AwsException;
+use Incognito\CognitoClient\Exception\UserNotFoundException;
 use Incognito\Entity\User;
 use Incognito\Mapper\UserMapper;
 use Incognito\CognitoClient\UserQueryService;
@@ -43,7 +45,13 @@ class UserRepository
      */
     public function find(string $username): User
     {
-        $result = $this->queryService->getUserByUsername($username);
+        $result = null;
+
+        try {
+            $result = $this->queryService->getUserByUsername($username);
+        } catch(AwsException $e) {
+            $this->handleFindAwsException($e);
+        }
 
         return $this->mapper->mapAdminGetUserResult($result);
     }
@@ -62,5 +70,15 @@ class UserRepository
         $result = $this->queryService->getList();
 
         return $this->mapper->mapListUsersResult($result);
+    }
+
+    private function handleFindAwsException(AwsException $e): void
+    {
+       switch($e->getAwsErrorCode()) {
+           case 'UserNotFoundException':
+               throw new UserNotFoundException($e);
+           default:
+               throw $e;
+       }
     }
 }

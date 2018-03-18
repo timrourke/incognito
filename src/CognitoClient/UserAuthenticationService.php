@@ -9,6 +9,7 @@ use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
 use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
+use Incognito\CognitoClient\Exception\UserNotFoundException;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
 
@@ -103,6 +104,7 @@ class UserAuthenticationService
      * @param \Aws\Exception\AwsException $e
      * @throws \Incognito\CognitoClient\Exception\NotAuthorizedException
      * @throws \Incognito\CognitoClient\Exception\UserNotConfirmedException
+     * @throws \Incognito\CognitoClient\Exception\UserNotFoundException
      */
     private function handleLoginAwsException(AwsException $e): void
     {
@@ -111,6 +113,8 @@ class UserAuthenticationService
                 throw new NotAuthorizedException($e);
             case 'UserNotConfirmedException':
                 throw new UserNotConfirmedException($e);
+            case 'UserNotFoundException':
+                throw new UserNotFoundException($e);
             default:
                 throw $e;
         }

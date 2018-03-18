@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace Incognito\Repository;
 
+use Aws\Command;
 use Aws\Result;
+use Aws\Exception\AwsException;
+use Incognito\CognitoClient\Exception\UserNotFoundException;
 use Incognito\CognitoClient\UserQueryService;
 use Incognito\Entity\User;
 use Incognito\Entity\Username;
@@ -59,6 +62,61 @@ class UserRepositoryTest extends TestCase
             $expectedUser,
             $actual
         );
+    }
+
+    public function testFindThrowsGenericAwsException(): void
+    {
+        $this->expectException(AwsException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command')
+        );
+
+        $queryService = $this->getUserQueryServiceMock();
+
+        $queryService->expects($this->once())
+            ->method('getUserByUsername')
+            ->with('some-username')
+            ->willThrowException($awsException);
+
+        $mapper = $this->getUserMapperMock();
+
+        $sut = new UserRepository(
+            $mapper,
+            $queryService
+        );
+
+        $sut->find('some-username');
+    }
+
+    public function testFindThrowsUserNotFoundException(): void
+    {
+        $this->expectException(UserNotFoundException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command'),
+            [
+                'code' => 'UserNotFoundException'
+            ]
+        );
+
+        $queryService = $this->getUserQueryServiceMock();
+
+        $queryService->expects($this->once())
+            ->method('getUserByUsername')
+            ->with('some-username')
+            ->willThrowException($awsException);
+
+        $mapper = $this->getUserMapperMock();
+
+        $sut = new UserRepository(
+            $mapper,
+            $queryService
+        );
+
+       $sut->find('some-username');
     }
 
     public function testFindAll(): void

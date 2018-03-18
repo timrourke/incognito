@@ -10,6 +10,7 @@ use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
 use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
+use Incognito\CognitoClient\Exception\UserNotFoundException;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
 use Incognito\Entity\UserAttribute\UserAttributeCollection;
@@ -127,6 +128,36 @@ class UserAuthenticationServiceTest extends TestCase
             new Command('some-command'),
             [
                 'code' => 'NotAuthorizedException'
+            ]
+        );
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminInitiateAuth',
+                self::LOGIN_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->loginUser('some-username', 'some-password');
+    }
+
+    public function testLoginUserThrowsUserNotFoundException(): void
+    {
+        $this->expectException(UserNotFoundException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command'),
+            [
+                'code' => 'UserNotFoundException'
             ]
         );
 
