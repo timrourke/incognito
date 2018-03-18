@@ -73,6 +73,28 @@ class UserAuthenticationService
     }
 
     /**
+     * Refresh the current AWS Cognito session and return a new access token
+     *
+     * @param string $username
+     * @param string $refreshToken
+     * @return \Aws\Result
+     */
+    public function refreshToken(string $username, string $refreshToken): Result
+    {
+         return $this->cognitoClient->adminInitiateAuth([
+              'AuthFlow'       => 'REFRESH_TOKEN',
+              'ClientId'       => $this->cognitoCredentials->getClientId(),
+              'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
+              'AuthParameters' => [
+                  'REFRESH_TOKEN' => $refreshToken,
+                  'SECRET_HASH' => $this->cognitoCredentials->getSecretHashForUsername(
+                      $username
+                  ),
+              ],
+         ]);
+    }
+
+    /**
      * Sign up a new user
      *
      * @param \Incognito\Entity\User $user

@@ -37,6 +37,23 @@ class UserAuthenticationServiceTest extends TestCase
         ]
     ];
 
+    /**
+     * The payload expected for a refresh token request (`AdminInitiateAuth`)
+     *
+     * @var array
+     */
+    private const REFRESH_TOKEN_PAYLOAD = [
+        [
+            'AuthFlow'   => 'REFRESH_TOKEN',
+            'ClientId'   => 'someCognitoClientId',
+            'UserPoolId' => 'someCognitoUserPoolId',
+            'AuthParameters' => [
+                'REFRESH_TOKEN' => 'some-refresh-token',
+                'SECRET_HASH' => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
+            ],
+        ]
+    ];
+
     public function testConstruct(): void
     {
         $sut = new UserAuthenticationService(
@@ -207,6 +224,31 @@ class UserAuthenticationServiceTest extends TestCase
         );
 
         $sut->loginUser('some-username', 'some-password');
+    }
+
+    public function testRefreshToken(): void
+    {
+        $expectedResult = $this->getAwsResult();
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminInitiateAuth',
+                self::REFRESH_TOKEN_PAYLOAD
+            )
+            ->willReturn($expectedResult);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $this->assertEquals(
+            $expectedResult,
+            $sut->refreshToken('some-username', 'some-refresh-token')
+        );
     }
 
     public function testSignUpUser(): void

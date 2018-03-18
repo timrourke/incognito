@@ -72,6 +72,10 @@ class UserRepository
         return $this->mapper->mapListUsersResult($result);
     }
 
+    /**
+     * @param \Aws\Exception\AwsException $e
+     * @throws \Incognito\CognitoClient\Exception\UserNotFoundException
+     */
     private function handleFindAwsException(AwsException $e): void
     {
        switch($e->getAwsErrorCode()) {
