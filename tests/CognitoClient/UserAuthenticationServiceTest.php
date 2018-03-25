@@ -12,6 +12,7 @@ use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UsernameExistsException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
 use Incognito\CognitoClient\Exception\UserNotFoundException;
+use Incognito\Entity\Password;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
 use Incognito\Entity\UserAttribute\UserAttributeCollection;
@@ -64,7 +65,7 @@ class UserAuthenticationServiceTest extends TestCase
     private const SIGN_UP_PAYLOAD = [
         [
             'ClientId' => 'someCognitoClientId',
-            'Password' => 'some-password',
+            'Password' => 'SomePassword123!',
             'SecretHash' => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
             'UserAttributes' => [
                 [
@@ -300,7 +301,7 @@ class UserAuthenticationServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $sut->signUpUser($user, 'some-password');
+        $sut->signUpUser($user, new Password('SomePassword123!'));
     }
 
     public function testSignUpUserThrowsGenericException(): void
@@ -322,7 +323,7 @@ class UserAuthenticationServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $sut->signUpUser($this->getSignUpUser(), 'some-password');
+        $sut->signUpUser($this->getSignUpUser(), new Password('SomePassword123!'));
     }
 
     public function testSignUpUserThrowsGenericAwsException(): void
@@ -349,7 +350,7 @@ class UserAuthenticationServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $sut->signUpUser($this->getSignUpUser(), 'some-password');
+        $sut->signUpUser($this->getSignUpUser(), new Password('SomePassword123!'));
     }
 
     public function testSignUpUserThrowsUsernameExistsException(): void
@@ -379,7 +380,7 @@ class UserAuthenticationServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $sut->signUpUser($this->getSignUpUser(), 'some-password');
+        $sut->signUpUser($this->getSignUpUser(), new Password('SomePassword123!'));
     }
 
     private function getCognitoClientMock()

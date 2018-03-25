@@ -11,6 +11,7 @@ use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UsernameExistsException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
 use Incognito\CognitoClient\Exception\UserNotFoundException;
+use Incognito\Entity\Password;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
 
@@ -100,17 +101,17 @@ class UserAuthenticationService
      * Sign up a new user
      *
      * @param \Incognito\Entity\User $user
-     * @param string $password
+     * @param \Incognito\Entity\Password $password
      * @return \Aws\Result
      */
-    public function signUpUser(User $user, string $password): Result
+    public function signUpUser(User $user, Password $password): Result
     {
         $result = null;
 
         try {
             $result = $this->cognitoClient->signUp([
                 'ClientId'   => $this->cognitoCredentials->getClientId(),
-                'Password'   => $password,
+                'Password'   => $password->password(),
                 'SecretHash' => $this->cognitoCredentials->getSecretHashForUsername(
                     $user->username()
                 ),
