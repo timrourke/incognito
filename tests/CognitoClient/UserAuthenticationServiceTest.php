@@ -9,6 +9,7 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
 use Incognito\CognitoClient\Exception\NotAuthorizedException;
+use Incognito\CognitoClient\Exception\UsernameExistsException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
 use Incognito\CognitoClient\Exception\UserNotFoundException;
 use Incognito\Entity\User;
@@ -52,6 +53,34 @@ class UserAuthenticationServiceTest extends TestCase
                 'SECRET_HASH'   => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
                 'USERNAME'      => 'some-username',
             ],
+        ]
+    ];
+
+    /**
+     * The payload expected for a sign up request (`SignUp`)
+     *
+     * @var array
+     */
+    private const SIGN_UP_PAYLOAD = [
+        [
+            'ClientId' => 'someCognitoClientId',
+            'Password' => 'some-password',
+            'SecretHash' => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
+            'UserAttributes' => [
+                [
+                    'Name' => 'email',
+                    'Value' => 'somebody@somewhere.com',
+                ],
+                [
+                    'Name' => 'family_name',
+                    'Value' => 'Klein',
+                ],
+                [
+                    'Name' => 'given_name',
+                    'Value' => 'Val',
+                ]
+            ],
+            'Username' => 'some-username',
         ]
     ];
 
@@ -260,39 +289,11 @@ class UserAuthenticationServiceTest extends TestCase
             ->method('__call')
             ->with(
                 'signUp',
-                [
-                    [
-                        'ClientId' => 'someCognitoClientId',
-                        'Password' => 'some-password',
-                        'SecretHash' => 'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
-                        'UserAttributes' => [
-                            [
-                                'Name' => 'email',
-                                'Value' => 'somebody@somewhere.com',
-                            ],
-                            [
-                                'Name' => 'family_name',
-                                'Value' => 'Klein',
-                            ],
-                            [
-                                'Name' => 'given_name',
-                                'Value' => 'Val',
-                            ]
-                        ],
-                        'Username' => 'some-username',
-                    ]
-                ]
+                self::SIGN_UP_PAYLOAD
             )
             ->willReturn($this->getAwsResult());
 
-        $user = new User(
-            new Username('some-username'),
-            new UserAttributeCollection([
-                new UserAttribute('email', 'somebody@somewhere.com'),
-                new UserAttribute('family_name', 'Klein'),
-                new UserAttribute('given_name', 'Val'),
-            ])
-        );
+        $user = $this->getSignUpUser();
 
         $sut = new UserAuthenticationService(
             $clientMock,
@@ -300,6 +301,85 @@ class UserAuthenticationServiceTest extends TestCase
         );
 
         $sut->signUpUser($user, 'some-password');
+    }
+
+    public function testSignUpUserThrowsGenericException(): void
+    {
+        $this->expectException(\Exception::class);
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'signUp',
+                self::SIGN_UP_PAYLOAD
+            )
+            ->willThrowException(new \Exception());
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->signUpUser($this->getSignUpUser(), 'some-password');
+    }
+
+    public function testSignUpUserThrowsGenericAwsException(): void
+    {
+        $this->expectException(AwsException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command')
+        );
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'signUp',
+                self::SIGN_UP_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->signUpUser($this->getSignUpUser(), 'some-password');
+    }
+
+    public function testSignUpUserThrowsUsernameExistsException(): void
+    {
+        $this->expectException(UsernameExistsException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command'),
+            [
+                'code' => 'UsernameExistsException'
+            ]
+        );
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'signUp',
+                self::SIGN_UP_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->signUpUser($this->getSignUpUser(), 'some-password');
     }
 
     private function getCognitoClientMock()
@@ -323,5 +403,17 @@ class UserAuthenticationServiceTest extends TestCase
         return $this->getMockBuilder(Result::class)
             ->disableOriginalConstructor()
             ->getMock();
+    }
+
+    private function getSignUpUser(): User
+    {
+        return new User(
+            new Username('some-username'),
+            new UserAttributeCollection([
+                new UserAttribute('email', 'somebody@somewhere.com'),
+                new UserAttribute('family_name', 'Klein'),
+                new UserAttribute('given_name', 'Val'),
+            ])
+        );
     }
 }

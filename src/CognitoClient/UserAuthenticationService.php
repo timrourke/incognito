@@ -8,6 +8,7 @@ use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
 use Incognito\CognitoClient\Exception\NotAuthorizedException;
+use Incognito\CognitoClient\Exception\UsernameExistsException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
 use Incognito\CognitoClient\Exception\UserNotFoundException;
 use Incognito\Entity\User;
@@ -104,23 +105,31 @@ class UserAuthenticationService
      */
     public function signUpUser(User $user, string $password): Result
     {
-        return $this->cognitoClient->signUp([
-            'ClientId'   => $this->cognitoCredentials->getClientId(),
-            'Password'   => $password,
-            'SecretHash' => $this->cognitoCredentials->getSecretHashForUsername(
-                $user->username()
-            ),
-            'UserAttributes' => array_map(
-                function(UserAttribute $attr) {
-                    return [
-                        'Name' => $attr->name(),
-                        'Value' => $attr->value(),
-                    ];
-                },
-                $user->getAttributes()
-            ),
-            'Username' => $user->username(),
-        ]);
+        $result = null;
+
+        try {
+            $result = $this->cognitoClient->signUp([
+                'ClientId'   => $this->cognitoCredentials->getClientId(),
+                'Password'   => $password,
+                'SecretHash' => $this->cognitoCredentials->getSecretHashForUsername(
+                    $user->username()
+                ),
+                'UserAttributes' => array_map(
+                    function(UserAttribute $attr) {
+                        return [
+                            'Name' => $attr->name(),
+                            'Value' => $attr->value(),
+                        ];
+                    },
+                    $user->getAttributes()
+                ),
+                'Username' => $user->username(),
+            ]);
+        } catch(AwsException $e) {
+            $this->handleSignUpUserAwsException($e);
+        }
+
+        return $result;
     }
 
     /**
@@ -138,6 +147,20 @@ class UserAuthenticationService
                 throw new UserNotConfirmedException($e);
             case 'UserNotFoundException':
                 throw new UserNotFoundException($e);
+            default:
+                throw $e;
+        }
+    }
+
+    /**
+     * @param \Aws\Exception\AwsException $e
+     * @throws \Incognito\CognitoClient\Exception\UsernameExistsException
+     */
+    private function handleSignUpUserAwsException(AwsException $e)
+    {
+        switch ($e->getAwsErrorCode()) {
+            case 'UsernameExistsException':
+                throw new UsernameExistsException($e);
             default:
                 throw $e;
         }
