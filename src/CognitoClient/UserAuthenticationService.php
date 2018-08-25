@@ -7,6 +7,7 @@ namespace Incognito\CognitoClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\CognitoClient\Exception\InvalidPasswordException;
 use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UsernameExistsException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
@@ -134,6 +135,34 @@ class UserAuthenticationService
     }
 
     /**
+     * Change a User's password
+     *
+     * @param string $accessToken
+     * @param \Incognito\Entity\Password $previousPassword
+     * @param \Incognito\Entity\Password $proposedPassword
+     * @return \Aws\Result
+     */
+    public function changePassword(
+        string $accessToken,
+        Password $previousPassword,
+        Password $proposedPassword
+    ): Result {
+        $result = null;
+
+        try {
+            $result = $this->cognitoClient->changePassword([
+                'AccessToken' => $accessToken,
+                'PreviousPassword' => $previousPassword->password(),
+                'ProposedPassword' => $proposedPassword->password(),
+            ]);
+        } catch(AwsException $e) {
+            $this->handleChangePasswordAwsException($e);
+        }
+
+        return $result;
+    }
+
+    /**
      * @param \Aws\Exception\AwsException $e
      * @throws \Incognito\CognitoClient\Exception\NotAuthorizedException
      * @throws \Incognito\CognitoClient\Exception\UserNotConfirmedException
@@ -157,11 +186,25 @@ class UserAuthenticationService
      * @param \Aws\Exception\AwsException $e
      * @throws \Incognito\CognitoClient\Exception\UsernameExistsException
      */
-    private function handleSignUpUserAwsException(AwsException $e)
+    private function handleSignUpUserAwsException(AwsException $e): void
     {
         switch ($e->getAwsErrorCode()) {
             case 'UsernameExistsException':
                 throw new UsernameExistsException($e);
+            default:
+                throw $e;
+        }
+    }
+
+    /**
+     * @param \Aws\Exception\AwsException $e
+     * @throws \Incognito\CognitoClient\Exception\InvalidPasswordException
+     */
+    private function handleChangePasswordAwsException(AwsException $e): void
+    {
+        switch ($e->getAwsErrorCode()) {
+            case 'InvalidPasswordException':
+                throw new InvalidPasswordException($e);
             default:
                 throw $e;
         }

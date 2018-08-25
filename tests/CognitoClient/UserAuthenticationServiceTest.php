@@ -8,6 +8,7 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\CognitoClient\Exception\InvalidPasswordException;
 use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UsernameExistsException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
@@ -83,6 +84,14 @@ class UserAuthenticationServiceTest extends TestCase
             ],
             'Username' => 'some-username',
         ]
+    ];
+
+    private const CHANGE_PASSWORD_PAYLOAD = [
+        [
+            'AccessToken' => 'some-access-token',
+            'PreviousPassword' => 'Some-old-password!123',
+            'ProposedPassword' => 'Some-new-password!123',
+        ],
     ];
 
     public function testConstruct(): void
@@ -381,6 +390,104 @@ class UserAuthenticationServiceTest extends TestCase
         );
 
         $sut->signUpUser($this->getSignUpUser(), new Password('SomePassword123!'));
+    }
+
+    public function testChangePassword(): void
+    {
+        $oldPassword = new Password('Some-old-password!123');
+        $newPassword = new Password('Some-new-password!123');
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'changePassword',
+                self::CHANGE_PASSWORD_PAYLOAD
+            )
+            ->willReturn($this->getAwsResult());
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->changePassword(
+            self::CHANGE_PASSWORD_PAYLOAD[0]['AccessToken'],
+            $oldPassword,
+            $newPassword
+        );
+    }
+
+    public function testChangePasswordThrowsInvalidPasswordException(): void
+    {
+        $this->expectException(InvalidPasswordException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command'),
+            [
+                'code' => 'InvalidPasswordException'
+            ]
+        );
+
+        $oldPassword = new Password('Some-old-password!123');
+        $newPassword = new Password('Some-new-password!123');
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'changePassword',
+                self::CHANGE_PASSWORD_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->changePassword(
+            self::CHANGE_PASSWORD_PAYLOAD[0]['AccessToken'],
+            $oldPassword,
+            $newPassword
+        );
+    }
+
+    public function testChangePasswordThrowsGenericException(): void
+    {
+        $this->expectException(AwsException::class);
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command')
+        );
+
+        $oldPassword = new Password('Some-old-password!123');
+        $newPassword = new Password('Some-new-password!123');
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'changePassword',
+                self::CHANGE_PASSWORD_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->changePassword(
+            self::CHANGE_PASSWORD_PAYLOAD[0]['AccessToken'],
+            $oldPassword,
+            $newPassword
+        );
     }
 
     private function getCognitoClientMock()
