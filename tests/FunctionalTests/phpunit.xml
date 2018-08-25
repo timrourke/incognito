@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
          backupStaticAttributes="false"
-         bootstrap="vendor/autoload.php"
+         bootstrap="../../vendor/autoload.php"
          colors="true"
          convertErrorsToExceptions="true"
          convertNoticesToExceptions="true"
@@ -9,13 +9,16 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Application Unit Test Suite">
-            <directory suffix="Test.php">./tests/UnitTests</directory>
+        <testsuite name="Application Functional Test Suite">
+            <directory suffix="Test.php">./</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">./../../src</directory>
         </whitelist>
     </filter>
+    <extensions>
+        <extension class="Incognito\FunctionalTests\TerraformExtension"/>
+    </extensions>
 </phpunit>

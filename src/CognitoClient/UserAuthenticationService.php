@@ -135,6 +135,29 @@ class UserAuthenticationService
     }
 
     /**
+     * Confirm a sign up for a new User without the User going through an email
+     * or SMS confirmation flow.
+     *
+     * @param string $username
+     * @return \Aws\Result
+     */
+    public function adminConfirmSignUp(string $username): Result
+    {
+        $result = null;
+
+        try {
+            $result = $this->cognitoClient->adminConfirmSignUp([
+                'UserPoolId' => $this->cognitoCredentials->getUserPoolId(),
+                'Username'   => $username,
+            ]);
+        } catch (AwsException $e) {
+            $this->handleAdminConfirmSignUpException($e);
+        }
+
+        return $result;
+    }
+
+    /**
      * Change a User's password
      *
      * @param string $accessToken
@@ -208,5 +231,10 @@ class UserAuthenticationService
             default:
                 throw $e;
         }
+    }
+
+    private function handleAdminConfirmSignUpException(AwsException $e): void
+    {
+        throw $e;
     }
 }
