@@ -7,6 +7,7 @@ namespace Incognito\CognitoClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Incognito\CognitoClient\Exception\InvalidPasswordException;
 use Incognito\CognitoClient\Exception\NotAuthorizedException;
 use Incognito\CognitoClient\Exception\UsernameExistsException;
 use Incognito\CognitoClient\Exception\UserNotConfirmedException;
@@ -195,6 +196,10 @@ class UserAuthenticationService
         }
     }
 
+    /**
+     * @param \Aws\Exception\AwsException $e
+     * @throws \Incognito\CognitoClient\Exception\InvalidPasswordException
+     */
     private function handleChangePasswordAwsException(AwsException $e): void
     {
         switch ($e->getAwsErrorCode()) {
