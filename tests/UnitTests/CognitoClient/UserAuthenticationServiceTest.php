@@ -96,6 +96,13 @@ class UserAuthenticationServiceTest extends TestCase
         ],
     ];
 
+    private const ADMIN_CONFIRM_SIGNUP_PAYLOAD = [
+        [
+            'Username'   => 'some-username',
+            'UserPoolId' => 'someCognitoUserPoolId',
+        ],
+    ];
+
     public function testConstruct(): void
     {
         $sut = new UserAuthenticationService(
@@ -490,6 +497,53 @@ class UserAuthenticationServiceTest extends TestCase
             $oldPassword,
             $newPassword
         );
+    }
+
+    public function testAdminConfirmSignup(): void
+    {
+        $clientMock = $this->getCognitoClientMock();
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminConfirmSignUp',
+                self::ADMIN_CONFIRM_SIGNUP_PAYLOAD
+            )
+            ->willReturn($this->getAwsResult());
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->adminConfirmSignUp(self::ADMIN_CONFIRM_SIGNUP_PAYLOAD[0]['Username']);
+    }
+
+    public function testAdminConfirmSignupThrowsGenericException(): void
+    {
+        $this->expectException(AwsException::class);
+
+        $clientMock = $this->getCognitoClientMock();
+
+        $awsException = new AwsException(
+            'some-message',
+            new Command('some-command')
+        );
+
+        $clientMock->expects($this->once())
+            ->method('__call')
+            ->with(
+                'adminConfirmSignUp',
+                self::ADMIN_CONFIRM_SIGNUP_PAYLOAD
+            )
+            ->willThrowException($awsException);
+
+        $sut = new UserAuthenticationService(
+            $clientMock,
+            $this->getCognitoCredentials()
+        );
+
+        $sut->adminConfirmSignUp(self::ADMIN_CONFIRM_SIGNUP_PAYLOAD[0]['Username']);
     }
 
     private function getCognitoClientMock()

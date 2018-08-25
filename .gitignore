@@ -1,5 +1,7 @@
 /vendor
 /coverage
+/tests/FunctionalTests/terraform/.terraform
+terraform.*
 .DS_Store
 .idea
 composer.phar
