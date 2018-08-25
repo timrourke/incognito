@@ -2,7 +2,7 @@
 
 A suite of tools for working with AWS Cognito
 
-[![CircleCI](https://circleci.com/gh/timrourke/incognito.svg?style=svg)](https://circleci.com/gh/timrourke/incognito) [![Maintainability](https://api.codeclimate.com/v1/badges/6db25214b74fd9db1173/maintainability)](https://codeclimate.com/github/timrourke/incognito/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/6db25214b74fd9db1173/test_coverage)](https://codeclimate.com/github/timrourke/incognito/test_coverage) [![Dependency Status](https://beta.gemnasium.com/badges/github.com/timrourke/incognito.svg)](https://beta.gemnasium.com/projects/github.com/timrourke/incognito)
+[![CircleCI](https://circleci.com/gh/timrourke/incognito.svg?style=svg)](https://circleci.com/gh/timrourke/incognito) [![Maintainability](https://api.codeclimate.com/v1/badges/6db25214b74fd9db1173/maintainability)](https://codeclimate.com/github/timrourke/incognito/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/6db25214b74fd9db1173/test_coverage)](https://codeclimate.com/github/timrourke/incognito/test_coverage) [![Dependabot Status](https://api.dependabot.com/badges/status?host=github&repo=timrourke/incognito)](https://dependabot.com)
 
 ## In alpha
 
