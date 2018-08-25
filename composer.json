@@ -33,7 +33,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Incognito\\": "tests/"
+            "Incognito\\UnitTests\\": "tests/UnitTests",
+            "Incognito\\FunctionalTests\\": "tests/FunctionalTests"
         }
     },
     "require-dev": {
