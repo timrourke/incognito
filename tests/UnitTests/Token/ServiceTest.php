@@ -166,7 +166,7 @@ class ServiceTest extends TestCase
 
         $headersMissingKeyId = array_filter(
             $validHeaders,
-            function($v, $k) {
+            function ($v, $k) {
                 return $k !== 'kid';
             },
             ARRAY_FILTER_USE_BOTH
@@ -183,7 +183,7 @@ class ServiceTest extends TestCase
 
         $claimsMissingTokenUse = array_filter(
             $validClaims,
-            function($v, $k) {
+            function ($v, $k) {
                 return $k !== 'token_use';
             },
             ARRAY_FILTER_USE_BOTH

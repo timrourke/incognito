@@ -33,7 +33,7 @@ class UserMapper
     public function mapListUsersResult(Result $result): array
     {
         return array_map(
-            function(array $userData) {
+            function (array $userData) {
                 return $this->buildUserFromResult($userData);
             },
             $result->toArray()['Users']
@@ -78,7 +78,7 @@ class UserMapper
             'UserAttributes';
 
         $userAttributes = array_map(
-            function(array $attr) {
+            function (array $attr) {
                 return new UserAttribute($attr['Name'], $attr['Value']);
             },
             $userData[$attrsKey]

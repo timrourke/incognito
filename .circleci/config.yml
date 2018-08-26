@@ -57,6 +57,11 @@ jobs:
           command: |
             vendor/bin/phpstan analyse -l 7 src tests
 
+      - run:
+          name: Run phpcs
+          command: |
+            vendor/bin/phpcs --colors --standard=PSR1,PSR2 src/
+
       - store_artifacts:
           path: './coverage/test-results.xml'
           prefix: tests

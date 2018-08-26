@@ -36,5 +36,4 @@ class SignatureValidatorTest extends TestCase
 
         $this->assertTrue($actual);
     }
-
 }

@@ -62,7 +62,8 @@ class UserAuthenticationServiceFactory
         if (false === $handle) {
             throw new RuntimeException(
 
-                sprintf('Unable to open file "%s": %s',
+                sprintf(
+                    'Unable to open file "%s": %s',
                     $filePath,
                     print_r(error_get_last(), true)
                 )

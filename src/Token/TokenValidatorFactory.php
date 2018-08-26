@@ -43,8 +43,7 @@ class TokenValidatorFactory
     public static function make(
         string $cognitoClientAppId,
         JWKSet $keyset
-    ): TokenValidator
-    {
+    ): TokenValidator {
         return new TokenValidator(
             self::getClaimsValidator($cognitoClientAppId),
             self::getSignatureValidator($keyset),
@@ -60,8 +59,7 @@ class TokenValidatorFactory
      */
     private static function getClaimsValidator(
         string $cognitoClientAppId
-    ): ClaimsValidator
-    {
+    ): ClaimsValidator {
         $claimCheckerManager = ClaimCheckerManager::create([
             new IssuedAtChecker(),
             new NotBeforeChecker(),
@@ -96,8 +94,7 @@ class TokenValidatorFactory
      */
     private static function getSignatureValidator(
         JWKSet $keyset
-    ): SignatureValidator
-    {
+    ): SignatureValidator {
         $rsa256Alg = new RS256();
 
         $algorithmManager = AlgorithmManager::create([$rsa256Alg]);

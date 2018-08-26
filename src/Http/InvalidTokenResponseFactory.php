@@ -18,6 +18,23 @@ use Psr\Http\Message\ResponseInterface;
 class InvalidTokenResponseFactory implements ResponseFactoryInterface
 {
     /**
+     * @var string
+     */
+    private const STATUS_CODE = '401';
+
+    /**
+     * @var string
+     */
+    private const TITLE = 'Unauthorized';
+
+    /**
+     * @var string
+     */
+    private const DETAIL = <<<EOT
+The request has not been applied because it lacks valid authentication credentials for the target resource
+EOT;
+
+    /**
      * JSON to render as the error response body
      *
      * @var array
@@ -25,11 +42,11 @@ class InvalidTokenResponseFactory implements ResponseFactoryInterface
     private const ERROR_MESSAGE = [
         'errors' => [
             0 => [
-                'status' => '401',
-                'title'  => 'Unauthorized',
-                'detail' => 'The request has not been applied because it lacks valid authentication credentials for the target resource'
-            ]
-        ]
+                'status' => self::STATUS_CODE,
+                'title'  => self::TITLE,
+                'detail' => self::DETAIL,
+            ],
+        ],
     ];
 
     /**

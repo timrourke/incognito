@@ -115,7 +115,7 @@ class UserAuthenticationService
                     $user->username()
                 ),
                 'UserAttributes' => array_map(
-                    function(UserAttribute $attr) {
+                    function (UserAttribute $attr) {
                         return [
                             'Name'  => $attr->name(),
                             'Value' => $attr->value(),

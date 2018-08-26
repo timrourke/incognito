@@ -29,7 +29,7 @@ class UserAttributeCollectionTest extends TestCase
         );
 
         $this->expectExceptionMessage(
-           'Invalid user attributes: all elements in the array must be of type "\Incognito\Entity\UserAttribute".'
+            'Invalid user attributes: all elements in the array must be of type "\Incognito\Entity\UserAttribute".'
         );
 
         new UserAttributeCollection([

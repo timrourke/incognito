@@ -117,7 +117,7 @@ class UserRepositoryTest extends TestCase
             $queryService
         );
 
-       $sut->find('some-username');
+        $sut->find('some-username');
     }
 
     public function testFindAll(): void

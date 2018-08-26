@@ -37,7 +37,7 @@ class UserAttributeTest extends TestCase
         );
 
         $this->expectExceptionMessage(
-          'Invalid name "": name must be between 1 and 32 characters in length.'
+            'Invalid name "": name must be between 1 and 32 characters in length.'
         );
 
         new UserAttribute('');

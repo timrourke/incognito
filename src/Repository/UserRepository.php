@@ -32,8 +32,7 @@ class UserRepository
     public function __construct(
         UserMapper $mapper,
         UserQueryService $queryService
-    )
-    {
+    ) {
         $this->mapper       = $mapper;
         $this->queryService = $queryService;
     }

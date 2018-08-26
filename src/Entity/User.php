@@ -234,7 +234,8 @@ class User
      *
      * @return \Incognito\Entity\UserStatus
      */
-    public function status(): UserStatus {
+    public function status(): UserStatus
+    {
         return is_null($this->status) ?
             new UserStatus() :
             $this->status;

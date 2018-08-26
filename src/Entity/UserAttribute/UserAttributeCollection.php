@@ -37,7 +37,7 @@ class UserAttributeCollection
         $this->userAttributes = array_merge(
             array_filter(
                 $this->userAttributes,
-                function(UserAttribute $attr) use ($newUserAttribute) {
+                function (UserAttribute $attr) use ($newUserAttribute) {
                     return $attr->name() !== $newUserAttribute->name();
                 }
             ),
@@ -59,7 +59,7 @@ class UserAttributeCollection
     {
         return array_reduce(
             $this->userAttributes,
-            function(?UserAttribute $acc, UserAttribute $current) use ($name) {
+            function (?UserAttribute $acc, UserAttribute $current) use ($name) {
                 if ($current->name() === $name) {
                     $acc = $current;
                 }
@@ -79,7 +79,7 @@ class UserAttributeCollection
     {
         usort(
             $this->userAttributes,
-            function(UserAttribute $a, UserAttribute $b) {
+            function (UserAttribute $a, UserAttribute $b) {
                 return ($a->name() > $b->name()) ?
                     1 :
                     -1;
@@ -131,7 +131,7 @@ class UserAttributeCollection
     {
         $mapOfAttrsByName = array_reduce(
             $userAttributes,
-            function(array $acc, UserAttribute $current) {
+            function (array $acc, UserAttribute $current) {
                 $acc[$current->name()][] = $current;
 
                 return $acc;
@@ -141,7 +141,7 @@ class UserAttributeCollection
 
         $nonUniqueAttrs = array_filter(
             $mapOfAttrsByName,
-            function($element, $key) use ($mapOfAttrsByName) {
+            function ($element, $key) use ($mapOfAttrsByName) {
                 return count($mapOfAttrsByName[$key]) > 1;
             },
             ARRAY_FILTER_USE_BOTH
