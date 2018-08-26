@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Incognito\CognitoClient\Exception;
+namespace Incognito\UnitTests\CognitoClient\Exception;
 
 use Aws\Command;
 use Aws\Exception\AwsException;
+use Incognito\CognitoClient\Exception\UserNotFoundException;
 use PHPUnit\Framework\TestCase;
 
 class UserNotFoundExceptionTest extends TestCase

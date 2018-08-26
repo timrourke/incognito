@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Incognito\CognitoClient\Exception;
+namespace Incognito\UnitTests\CognitoClient\Exception;
 
 use Aws\Command;
 use Aws\Exception\AwsException;
+use Incognito\CognitoClient\Exception\InvalidPasswordException;
 use PHPUnit\Framework\TestCase;
 
 class InvalidPasswordExceptionTest extends TestCase
