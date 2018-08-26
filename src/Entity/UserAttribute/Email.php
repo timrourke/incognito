@@ -11,7 +11,7 @@ class Email extends UserAttribute implements UserAttributeInterface
     /**
      * @var string
      */
-    protected $name = 'email';
+    private const NAME = 'email';
 
     /**
      * Email constructor.
@@ -21,7 +21,7 @@ class Email extends UserAttribute implements UserAttributeInterface
      */
     public function __construct($value = '')
     {
-        $this->setValue($value);
+        parent::__construct(self::NAME, $value);
     }
 
     /**
