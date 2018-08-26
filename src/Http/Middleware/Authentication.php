@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Incognito\Http\Middleware;
 
+use Exception;
 use Incognito\Http\ResponseFactoryInterface;
 use Incognito\Token\TokenValidator;
 use Jose\Component\Signature\JWS;
@@ -50,7 +51,7 @@ class Authentication implements MiddlewareInterface
         TokenValidator $tokenService,
         ResponseFactoryInterface $authErrorResponseFactory
     ) {
-        $this->tokenService = $tokenService;
+        $this->tokenService             = $tokenService;
         $this->authErrorResponseFactory = $authErrorResponseFactory;
     }
 
@@ -70,7 +71,7 @@ class Authentication implements MiddlewareInterface
             $this->authenticateRequest($request);
 
             return $handler->handle($request);
-        } catch(\Exception $e) {
+        } catch (Exception $e) {
             $handler->handle($request);
 
             return $this->authErrorResponseFactory->createResponse();

@@ -28,9 +28,8 @@ class UserQueryService
     public function __construct(
         CognitoClient $cognitoClient,
         CognitoCredentials $cognitoCredentials
-    )
-    {
-        $this->cognitoClient = $cognitoClient;
+    ) {
+        $this->cognitoClient      = $cognitoClient;
         $this->cognitoCredentials = $cognitoCredentials;
     }
 

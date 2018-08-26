@@ -64,7 +64,7 @@ class UserAuthenticationService
                     'PASSWORD'    => $password,
                 ],
             ]);
-        } catch(AwsException $e) {
+        } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
 
@@ -117,7 +117,7 @@ class UserAuthenticationService
                 'UserAttributes' => array_map(
                     function(UserAttribute $attr) {
                         return [
-                            'Name' => $attr->name(),
+                            'Name'  => $attr->name(),
                             'Value' => $attr->value(),
                         ];
                     },
@@ -125,7 +125,7 @@ class UserAuthenticationService
                 ),
                 'Username' => $user->username(),
             ]);
-        } catch(AwsException $e) {
+        } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
 
@@ -174,11 +174,11 @@ class UserAuthenticationService
 
         try {
             $result = $this->cognitoClient->changePassword([
-                'AccessToken' => $accessToken,
+                'AccessToken'      => $accessToken,
                 'PreviousPassword' => $previousPassword->password(),
                 'ProposedPassword' => $proposedPassword->password(),
             ]);
-        } catch(AwsException $e) {
+        } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
 

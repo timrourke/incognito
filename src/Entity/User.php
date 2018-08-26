@@ -73,7 +73,7 @@ class User
             $userAttributes = new UserAttributeCollection();
         }
 
-        $this->username = $username;
+        $this->username       = $username;
         $this->userAttributes = $userAttributes;
     }
 

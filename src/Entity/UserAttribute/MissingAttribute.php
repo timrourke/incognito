@@ -7,7 +7,7 @@ namespace Incognito\Entity\UserAttribute;
 /**
  * Class MissingAttribute
  *
- * Optional, for when a user attribute lookup finds nothing.
+ * An "optional" object, useful for when a user attribute lookup finds nothing.
  *
  * @package Incognito\Entity\UserAttribute
  */

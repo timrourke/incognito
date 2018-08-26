@@ -34,7 +34,7 @@ class UserRepository
         UserQueryService $queryService
     )
     {
-        $this->mapper = $mapper;
+        $this->mapper       = $mapper;
         $this->queryService = $queryService;
     }
 
@@ -51,7 +51,7 @@ class UserRepository
 
         try {
             $result = $this->queryService->getUserByUsername($username);
-        } catch(AwsException $e) {
+        } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
 
