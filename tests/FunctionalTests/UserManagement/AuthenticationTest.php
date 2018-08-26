@@ -45,7 +45,7 @@ class AuthenticationTest extends TestCase
             self::PASSWORD
         );
 
-        $authenticationResult = $result->toArray()['AuthenticationResult'];
+        $authenticationResult = $result['AuthenticationResult'];
 
         $this->assertEquals(
             200,
@@ -68,7 +68,7 @@ class AuthenticationTest extends TestCase
             self::PASSWORD
         );
 
-        $authenticationResult = $loginResult->toArray()['AuthenticationResult'];
+        $authenticationResult = $loginResult['AuthenticationResult'];
 
         $refreshTokenResult = $this->userAuthenticationService->refreshToken(
             self::USERNAME,
@@ -96,7 +96,7 @@ class AuthenticationTest extends TestCase
             self::PASSWORD
         );
 
-        $authenticationResult = $loginResult->toArray()['AuthenticationResult'];
+        $authenticationResult = $loginResult['AuthenticationResult'];
 
         $result = $this->userAuthenticationService->changePassword(
             $authenticationResult['AccessToken'],

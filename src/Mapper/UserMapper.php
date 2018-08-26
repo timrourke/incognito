@@ -57,7 +57,7 @@ class UserMapper
         $user = new User($username, $userAttributeCollection);
 
         return $user
-            ->setId((string) $userAttributeCollection->get('sub')->value())
+            ->setId($userAttributeCollection->get('sub')->value())
             ->setCreatedAt(new \DateTimeImmutable((string) $userData['UserCreateDate']))
             ->setUpdatedAt(new \DateTimeImmutable((string) $userData['UserLastModifiedDate']))
             ->setEnabled((bool) json_decode((string) $userData['Enabled']))

@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Incognito\UnitTests\CognitoClient\Exception;
+namespace Incognito\UnitTests\Exception;
 
 use Aws\Command;
 use Aws\Exception\AwsException;
-use Incognito\CognitoClient\Exception\NotAuthorizedException;
+use Incognito\Exception\UserNotFoundException;
 use PHPUnit\Framework\TestCase;
 
-class NotAuthorizedExceptionTest extends TestCase
+class UserNotFoundExceptionTest extends TestCase
 {
     public function testConstruct(): void
     {
         $awsException = $this->getAwsException();
 
-        $sut = new NotAuthorizedException($awsException);
+        $sut = new UserNotFoundException($awsException);
 
         $this->assertInstanceOf(
-            NotAuthorizedException::class,
+            UserNotFoundException::class,
             $sut
         );
     }
@@ -27,10 +27,10 @@ class NotAuthorizedExceptionTest extends TestCase
     {
         $awsException = $this->getAwsException();
 
-        $sut = new NotAuthorizedException($awsException);
+        $sut = new UserNotFoundException($awsException);
 
         $this->assertEquals(
-            'Login failed: Incorrect username or password.',
+            'User not found.',
             $sut->getMessage()
         );
     }
@@ -39,10 +39,10 @@ class NotAuthorizedExceptionTest extends TestCase
     {
         $awsException = $this->getAwsException();
 
-        $sut = new NotAuthorizedException($awsException);
+        $sut = new UserNotFoundException($awsException);
 
         $this->assertEquals(
-            401,
+            404,
             $sut->getCode()
         );
     }
@@ -51,7 +51,7 @@ class NotAuthorizedExceptionTest extends TestCase
     {
         $awsException = $this->getAwsException();
 
-        $sut = new NotAuthorizedException($awsException);
+        $sut = new UserNotFoundException($awsException);
 
         $this->assertEquals(
             $awsException,

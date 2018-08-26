@@ -48,7 +48,7 @@ class User
     /**
      * The current status for the user
      *
-     * @var \Incognito\Entity\UserStatus
+     * @var \Incognito\Entity\UserStatus|null
      */
     private $status;
 
@@ -69,6 +69,10 @@ class User
         Username $username,
         UserAttributeCollection $userAttributes = null
     ) {
+        if (is_null($userAttributes)) {
+            $userAttributes = new UserAttributeCollection();
+        }
+
         $this->username = $username;
         $this->userAttributes = $userAttributes;
     }
@@ -80,10 +84,6 @@ class User
      */
     public function setAttribute(UserAttribute $userAttribute): void
     {
-        if (is_null($this->userAttributes)) {
-            $this->userAttributes = new UserAttributeCollection();
-        }
-
         $this->userAttributes->add($userAttribute);
     }
 
@@ -91,9 +91,9 @@ class User
      * Get a user attribute by name
      *
      * @param string $name
-     * @return UserAttribute|null
+     * @return UserAttribute
      */
-    public function getAttribute(string $name): ?UserAttribute
+    public function getAttribute(string $name): UserAttribute
     {
         return $this->userAttributes->get($name);
     }
@@ -105,9 +105,7 @@ class User
      */
     public function getAttributes(): array
     {
-        return is_null($this->userAttributes) ?
-            [] :
-            $this->userAttributes->toArray();
+        return $this->userAttributes->toArray();
     }
 
     /**
@@ -117,7 +115,7 @@ class User
      */
     public function id(): string
     {
-        return (string) $this->id;
+        return $this->id ?: '';
     }
 
     /**
@@ -237,11 +235,9 @@ class User
      * @return \Incognito\Entity\UserStatus
      */
     public function status(): UserStatus {
-        if (is_null($this->status)) {
-            $this->status = new UserStatus('UNKNOWN');
-        }
-
-        return $this->status;
+        return is_null($this->status) ?
+            new UserStatus() :
+            $this->status;
     }
 
     /**

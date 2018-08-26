@@ -42,7 +42,7 @@ class InvalidTokenResponseFactory implements ResponseFactoryInterface
         return new Response(
             401,
             [],
-            json_encode(self::ERROR_MESSAGE)
+            (string) json_encode(self::ERROR_MESSAGE)
         );
     }
 }

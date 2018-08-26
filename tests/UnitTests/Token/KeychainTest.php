@@ -78,7 +78,7 @@ class KeychainTest extends TestCase
         $response = new Response(
             200,
             [],
-            json_encode($this->getRsaKeysetStub())
+            (string) json_encode($this->getRsaKeysetStub())
         );
 
         $guzzleMock->expects($this->once())

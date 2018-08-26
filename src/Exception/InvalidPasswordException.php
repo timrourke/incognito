@@ -2,32 +2,32 @@
 
 declare(strict_types=1);
 
-namespace Incognito\CognitoClient\Exception;
+namespace Incognito\Exception;
 
 use Aws\Exception\AwsException;
 use Exception;
 
 /**
- * Class NotAuthorizedException
+ * Class InvalidPasswordException
  *
- * Useful when a login attempt is made with an incorrect username or password.
+ * Useful when creating or updating a user fails because a password is invalid.
  *
  * @package Incognito\CognitoClient\Exception
  */
-class NotAuthorizedException extends Exception
+class InvalidPasswordException extends Exception
 {
     /**
      * @var int
      */
-    private const CODE = 401;
+    private const CODE = 422;
 
     /**
      * @var string
      */
-    private const MESSAGE = 'Login failed: Incorrect username or password.';
+    private const MESSAGE = 'Invalid password.';
 
     /**
-     * NotAuthorizedException constructor.
+     * InvalidPasswordException constructor.
      *
      * @param \Aws\Exception\AwsException|null $previous
      */

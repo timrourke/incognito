@@ -7,7 +7,7 @@ namespace Incognito\UnitTests\Repository;
 use Aws\Command;
 use Aws\Result;
 use Aws\Exception\AwsException;
-use Incognito\CognitoClient\Exception\UserNotFoundException;
+use Incognito\Exception\UserNotFoundException;
 use Incognito\CognitoClient\UserQueryService;
 use Incognito\Entity\User;
 use Incognito\Entity\Username;

@@ -81,7 +81,7 @@ class ClaimsValidator
         $this->verifyRequiredHeaderClaims($token);
         $this->headerChecker->check($token, 0);
 
-        $payload = $token->getPayload();
+        $payload = (string) $token->getPayload();
         $claims = $this->tokenConverter->decode($payload);
         $this->verifyRequiredPayloadClaims($claims);
         $this->claimChecker->check($claims);

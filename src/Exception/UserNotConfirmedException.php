@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Incognito\CognitoClient\Exception;
+namespace Incognito\Exception;
 
 use Aws\Exception\AwsException;
 use Exception;

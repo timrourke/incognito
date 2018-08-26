@@ -2,32 +2,30 @@
 
 declare(strict_types=1);
 
-namespace Incognito\CognitoClient\Exception;
+namespace Incognito\Exception;
 
 use Aws\Exception\AwsException;
-use Exception;
+use \Exception;
 
 /**
- * Class InvalidPasswordException
- *
- * Useful when creating or updating a user fails because a password is invalid.
+ * Class UsernameExistsException
  *
  * @package Incognito\CognitoClient\Exception
  */
-class InvalidPasswordException extends Exception
+class UsernameExistsException extends Exception
 {
     /**
      * @var int
      */
-    private const CODE = 422;
+    private const CODE = 409;
 
     /**
      * @var string
      */
-    private const MESSAGE = 'Invalid password.';
+    private const MESSAGE = 'Username already exists.';
 
     /**
-     * InvalidPasswordException constructor.
+     * UsernameExistsException constructor.
      *
      * @param \Aws\Exception\AwsException|null $previous
      */

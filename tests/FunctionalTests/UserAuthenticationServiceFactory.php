@@ -22,7 +22,7 @@ use RuntimeException;
 class UserAuthenticationServiceFactory
 {
     /**
-     * @var \Incognito\CognitoClient\UserAuthenticationService
+     * @var \Incognito\CognitoClient\UserAuthenticationService|null
      */
     private static $userAuthenticationService;
 
@@ -75,8 +75,8 @@ class UserAuthenticationServiceFactory
     private function getCredentials(): CognitoCredentials
     {
         $handle = $this->openTerraformStateFile();
-        $contents = fread($handle, filesize($this->getTerraformStateFilePath()));
-        $json = json_decode($contents, true);
+        $contents = fread($handle, (int) filesize($this->getTerraformStateFilePath()));
+        $json = json_decode((string) $contents, true);
         $resources = $json['modules'][0]['resources'];
 
         return new CognitoCredentials(

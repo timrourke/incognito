@@ -15,19 +15,27 @@ use Assert\Assertion;
  */
 class UserStatus
 {
+    private const STATUS_UNCONFIRMED           = 'UNCONFIRMED';
+    private const STATUS_CONFIRMED             = 'CONFIRMED';
+    private const STATUS_ARCHIVED              = 'ARCHIVED';
+    private const STATUS_COMPROMISED           = 'COMPROMISED';
+    private const STATUS_UNKNOWN               = 'UNKNOWN';
+    private const STATUS_RESET_REQUIRED        = 'RESET_REQUIRED';
+    private const STATUS_FORCE_CHANGE_PASSWORD = 'FORCE_CHANGE_PASSWORD';
+
     /**
      * The possible statuses an AWS Cognito User can be in
      *
      * @var array
      */
     private const VALID_STATUSES = [
-        'UNCONFIRMED',
-        'CONFIRMED',
-        'ARCHIVED',
-        'COMPROMISED',
-        'UNKNOWN',
-        'RESET_REQUIRED',
-        'FORCE_CHANGE_PASSWORD',
+        self::STATUS_UNCONFIRMED,
+        self::STATUS_CONFIRMED,
+        self::STATUS_ARCHIVED,
+        self::STATUS_COMPROMISED,
+        self::STATUS_UNKNOWN,
+        self::STATUS_RESET_REQUIRED,
+        self::STATUS_FORCE_CHANGE_PASSWORD,
     ];
 
     /**
@@ -41,8 +49,12 @@ class UserStatus
      * @param string $status
      * @throws \Assert\AssertionFailedException
      */
-    public function __construct(string $status)
+    public function __construct(string $status = '')
     {
+        if (!$status) {
+            $status = self::STATUS_UNKNOWN;
+        }
+
         $this->setStatus($status);
     }
 

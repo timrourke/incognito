@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Incognito\UnitTests\Entity\UserAttribute;
 
 use Assert\AssertionFailedException;
+use Incognito\Entity\UserAttribute\MissingAttribute;
 use Incognito\Entity\UserAttribute\UserAttribute;
 use Incognito\Entity\UserAttribute\UserAttributeCollection;
 use PHPUnit\Framework\TestCase;
@@ -110,8 +111,8 @@ class UserAttributeCollectionTest extends TestCase
             $sut->get('given_name')
         );
 
-        $this->assertEquals(
-            null,
+        $this->assertInstanceOf(
+            MissingAttribute::class,
             $sut->get('family_name')
         );
     }

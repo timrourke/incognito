@@ -7,11 +7,7 @@ namespace Incognito\CognitoClient;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
-use Incognito\CognitoClient\Exception\InvalidPasswordException;
-use Incognito\CognitoClient\Exception\NotAuthorizedException;
-use Incognito\CognitoClient\Exception\UsernameExistsException;
-use Incognito\CognitoClient\Exception\UserNotConfirmedException;
-use Incognito\CognitoClient\Exception\UserNotFoundException;
+use Incognito\Exception\ExceptionFactory;
 use Incognito\Entity\Password;
 use Incognito\Entity\User;
 use Incognito\Entity\UserAttribute\UserAttribute;
@@ -47,11 +43,11 @@ class UserAuthenticationService
      *
      * @param string $username
      * @param string $password
-     * @return \Aws\Result
-     * @throws \Incognito\CognitoClient\Exception\UserNotConfirmedException
+     * @return \Aws\Result|null
+     * @throws \Incognito\Exception\UserNotConfirmedException
      * @throws \Exception
      */
-    public function loginUser(string $username, string $password): Result
+    public function loginUser(string $username, string $password): ?Result
     {
         $result = null;
 
@@ -69,7 +65,7 @@ class UserAuthenticationService
                 ],
             ]);
         } catch(AwsException $e) {
-            $this->handleLoginAwsException($e);
+            throw ExceptionFactory::make($e);
         }
 
         return $result;
@@ -80,9 +76,10 @@ class UserAuthenticationService
      *
      * @param string $username
      * @param string $refreshToken
-     * @return \Aws\Result
+     * @return \Aws\Result|null
+     * @throws \Exception
      */
-    public function refreshToken(string $username, string $refreshToken): Result
+    public function refreshToken(string $username, string $refreshToken): ?Result
     {
          return $this->cognitoClient->adminInitiateAuth([
               'AuthFlow'       => 'REFRESH_TOKEN_AUTH',
@@ -103,9 +100,10 @@ class UserAuthenticationService
      *
      * @param \Incognito\Entity\User $user
      * @param \Incognito\Entity\Password $password
-     * @return \Aws\Result
+     * @return \Aws\Result|null
+     * @throws \Exception
      */
-    public function signUpUser(User $user, Password $password): Result
+    public function signUpUser(User $user, Password $password): ?Result
     {
         $result = null;
 
@@ -128,7 +126,7 @@ class UserAuthenticationService
                 'Username' => $user->username(),
             ]);
         } catch(AwsException $e) {
-            $this->handleSignUpUserAwsException($e);
+            throw ExceptionFactory::make($e);
         }
 
         return $result;
@@ -139,9 +137,10 @@ class UserAuthenticationService
      * or SMS confirmation flow.
      *
      * @param string $username
-     * @return \Aws\Result
+     * @return \Aws\Result|null
+     * @throws \Exception
      */
-    public function adminConfirmSignUp(string $username): Result
+    public function adminConfirmSignUp(string $username): ?Result
     {
         $result = null;
 
@@ -151,7 +150,7 @@ class UserAuthenticationService
                 'Username'   => $username,
             ]);
         } catch (AwsException $e) {
-            $this->handleAdminConfirmSignUpException($e);
+            throw ExceptionFactory::make($e);
         }
 
         return $result;
@@ -163,13 +162,14 @@ class UserAuthenticationService
      * @param string $accessToken
      * @param \Incognito\Entity\Password $previousPassword
      * @param \Incognito\Entity\Password $proposedPassword
-     * @return \Aws\Result
+     * @return \Aws\Result|null
+     * @throws \Exception
      */
     public function changePassword(
         string $accessToken,
         Password $previousPassword,
         Password $proposedPassword
-    ): Result {
+    ): ?Result {
         $result = null;
 
         try {
@@ -179,62 +179,9 @@ class UserAuthenticationService
                 'ProposedPassword' => $proposedPassword->password(),
             ]);
         } catch(AwsException $e) {
-            $this->handleChangePasswordAwsException($e);
+            throw ExceptionFactory::make($e);
         }
 
         return $result;
-    }
-
-    /**
-     * @param \Aws\Exception\AwsException $e
-     * @throws \Incognito\CognitoClient\Exception\NotAuthorizedException
-     * @throws \Incognito\CognitoClient\Exception\UserNotConfirmedException
-     * @throws \Incognito\CognitoClient\Exception\UserNotFoundException
-     */
-    private function handleLoginAwsException(AwsException $e): void
-    {
-        switch ($e->getAwsErrorCode()) {
-            case 'NotAuthorizedException':
-                throw new NotAuthorizedException($e);
-            case 'UserNotConfirmedException':
-                throw new UserNotConfirmedException($e);
-            case 'UserNotFoundException':
-                throw new UserNotFoundException($e);
-            default:
-                throw $e;
-        }
-    }
-
-    /**
-     * @param \Aws\Exception\AwsException $e
-     * @throws \Incognito\CognitoClient\Exception\UsernameExistsException
-     */
-    private function handleSignUpUserAwsException(AwsException $e): void
-    {
-        switch ($e->getAwsErrorCode()) {
-            case 'UsernameExistsException':
-                throw new UsernameExistsException($e);
-            default:
-                throw $e;
-        }
-    }
-
-    /**
-     * @param \Aws\Exception\AwsException $e
-     * @throws \Incognito\CognitoClient\Exception\InvalidPasswordException
-     */
-    private function handleChangePasswordAwsException(AwsException $e): void
-    {
-        switch ($e->getAwsErrorCode()) {
-            case 'InvalidPasswordException':
-                throw new InvalidPasswordException($e);
-            default:
-                throw $e;
-        }
-    }
-
-    private function handleAdminConfirmSignUpException(AwsException $e): void
-    {
-        throw $e;
     }
 }

@@ -16,7 +16,7 @@ class UserAttributeCollection
     /**
      * Constructor.
      *
-     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
+     * @param mixed[]|\Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      */
     public function __construct(array $userAttributes = [])
     {
@@ -53,9 +53,9 @@ class UserAttributeCollection
      * Get a UserAttribute by name
      *
      * @param string $name
-     * @return \Incognito\Entity\UserAttribute\UserAttribute|null
+     * @return \Incognito\Entity\UserAttribute\UserAttribute
      */
-    public function get(string $name): ?UserAttribute
+    public function get(string $name): UserAttribute
     {
         return array_reduce(
             $this->userAttributes,
@@ -66,7 +66,7 @@ class UserAttributeCollection
 
                 return $acc;
             },
-            null
+            new MissingAttribute()
         );
     }
 
@@ -86,7 +86,12 @@ class UserAttributeCollection
             }
         );
 
-        return $this->userAttributes;
+        return array_filter(
+            $this->userAttributes,
+            function (UserAttribute $a) {
+                return !is_a($a, MissingAttribute::class);
+            }
+        );
     }
 
     /**

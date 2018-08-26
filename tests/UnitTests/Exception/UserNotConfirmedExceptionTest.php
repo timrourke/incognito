@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Incognito\UnitTests\CognitoClient\Exception;
+namespace Incognito\UnitTests\Exception;
 
 use Aws\Command;
 use Aws\Exception\AwsException;
-use Incognito\CognitoClient\Exception\UsernameExistsException;
+use Incognito\Exception\UserNotConfirmedException;
 use PHPUnit\Framework\TestCase;
 
-class UsernameExistsExceptionTest extends TestCase
+class UserNotConfirmedExceptionTest extends TestCase
 {
     public function testConstruct(): void
     {
         $awsException = $this->getAwsException();
 
-        $sut = new UsernameExistsException($awsException);
+        $sut = new UserNotConfirmedException($awsException);
 
         $this->assertInstanceOf(
-            UsernameExistsException::class,
+            UserNotConfirmedException::class,
             $sut
         );
     }
@@ -27,10 +27,10 @@ class UsernameExistsExceptionTest extends TestCase
     {
         $awsException = $this->getAwsException();
 
-        $sut = new UsernameExistsException($awsException);
+        $sut = new UserNotConfirmedException($awsException);
 
         $this->assertEquals(
-            'Username already exists.',
+            'Login failed: User not confirmed.',
             $sut->getMessage()
         );
     }
@@ -39,10 +39,10 @@ class UsernameExistsExceptionTest extends TestCase
     {
         $awsException = $this->getAwsException();
 
-        $sut = new UsernameExistsException($awsException);
+        $sut = new UserNotConfirmedException($awsException);
 
         $this->assertEquals(
-            409,
+            401,
             $sut->getCode()
         );
     }
@@ -51,7 +51,7 @@ class UsernameExistsExceptionTest extends TestCase
     {
         $awsException = $this->getAwsException();
 
-        $sut = new UsernameExistsException($awsException);
+        $sut = new UserNotConfirmedException($awsException);
 
         $this->assertEquals(
             $awsException,
