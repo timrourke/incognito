@@ -55,7 +55,7 @@ jobs:
       - run:
           name: Run phpstan
           command: |
-            vendor/bin/phpstan -l 7 src tests
+            vendor/bin/phpstan analyse -l 7 src tests
 
       - store_artifacts:
           path: './coverage/test-results.xml'
