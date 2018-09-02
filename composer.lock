@@ -703,29 +703,28 @@
         },
         {
             "name": "web-token/jwt-checker",
-            "version": "v1.0.6",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-checker.git",
-                "reference": "00859ef36ad4213648b28a473e49f275989e0d80"
+                "reference": "2d69f3132c725513724162abb58ed23590524078"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-checker/zipball/00859ef36ad4213648b28a473e49f275989e0d80",
-                "reference": "00859ef36ad4213648b28a473e49f275989e0d80",
+                "url": "https://api.github.com/repos/web-token/jwt-checker/zipball/2d69f3132c725513724162abb58ed23590524078",
+                "reference": "2d69f3132c725513724162abb58ed23590524078",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1",
-                "web-token/jwt-core": "^1.0"
+                "web-token/jwt-core": "^1.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.0"
+                "phpunit/phpunit": "^6.0|^7.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
@@ -748,7 +747,7 @@
                 }
             ],
             "description": "Checker component of the JWT Framework.",
-            "homepage": "https://github.com/web-token/jwt-checker",
+            "homepage": "https://github.com/web-token",
             "keywords": [
                 "JOSE",
                 "JWE",
@@ -767,7 +766,7 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-01-18T20:36:43+00:00"
+            "time": "2018-08-21T12:56:58+00:00"
         },
         {
             "name": "web-token/jwt-core",
