@@ -770,7 +770,7 @@
         },
         {
             "name": "web-token/jwt-core",
-            "version": "v1.2.1",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-core.git",
