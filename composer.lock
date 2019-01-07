@@ -147,16 +147,16 @@
         },
         {
             "name": "fgrosse/phpasn1",
-            "version": "2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fgrosse/PHPASN1.git",
-                "reference": "734e1a94dfb292199f4f285be99a5645ea66fb58"
+                "reference": "7ebf2a09084a7bbdb7b879c66fdf7ad80461bbe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fgrosse/PHPASN1/zipball/734e1a94dfb292199f4f285be99a5645ea66fb58",
-                "reference": "734e1a94dfb292199f4f285be99a5645ea66fb58",
+                "url": "https://api.github.com/repos/fgrosse/PHPASN1/zipball/7ebf2a09084a7bbdb7b879c66fdf7ad80461bbe8",
+                "reference": "7ebf2a09084a7bbdb7b879c66fdf7ad80461bbe8",
                 "shasum": ""
             },
             "require": {
@@ -212,7 +212,7 @@
                 "x509",
                 "x690"
             ],
-            "time": "2018-03-31T08:32:19+00:00"
+            "time": "2018-12-02T01:34:34+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -773,16 +773,16 @@
         },
         {
             "name": "web-token/jwt-core",
-            "version": "v1.2.3",
+            "version": "v1.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-core.git",
-                "reference": "c134cc93eae28f39aa95ccddcb5b024e77a7c039"
+                "reference": "9ae6d04c3906f06d05d77788dd247706cb27b656"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/c134cc93eae28f39aa95ccddcb5b024e77a7c039",
-                "reference": "c134cc93eae28f39aa95ccddcb5b024e77a7c039",
+                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/9ae6d04c3906f06d05d77788dd247706cb27b656",
+                "reference": "9ae6d04c3906f06d05d77788dd247706cb27b656",
                 "shasum": ""
             },
             "require": {
@@ -843,7 +843,7 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-22T08:16:38+00:00"
+            "time": "2018-11-14T12:21:21+00:00"
         },
         {
             "name": "web-token/jwt-signature",
