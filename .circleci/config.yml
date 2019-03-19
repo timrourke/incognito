@@ -51,6 +51,7 @@ jobs:
             ./cc-test-reporter before-build
             sudo ./vendor/bin/phpunit --coverage-clover ./clover.xml --coverage-html ./coverage --log-junit ~/phpunit/junit.xml
             ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+            bash <(curl -s https://codecov.io/bash)
 
       - run:
           name: Run phpstan
