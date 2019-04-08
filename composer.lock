@@ -146,16 +146,16 @@
         },
         {
             "name": "fgrosse/phpasn1",
-            "version": "2.1.0",
+            "version": "v2.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fgrosse/PHPASN1.git",
-                "reference": "734e1a94dfb292199f4f285be99a5645ea66fb58"
+                "reference": "7ebf2a09084a7bbdb7b879c66fdf7ad80461bbe8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fgrosse/PHPASN1/zipball/734e1a94dfb292199f4f285be99a5645ea66fb58",
-                "reference": "734e1a94dfb292199f4f285be99a5645ea66fb58",
+                "url": "https://api.github.com/repos/fgrosse/PHPASN1/zipball/7ebf2a09084a7bbdb7b879c66fdf7ad80461bbe8",
+                "reference": "7ebf2a09084a7bbdb7b879c66fdf7ad80461bbe8",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +211,7 @@
                 "x509",
                 "x690"
             ],
-            "time": "2018-03-31T08:32:19+00:00"
+            "time": "2018-12-02T01:34:34+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -814,16 +814,16 @@
         },
         {
             "name": "web-token/jwt-core",
-            "version": "v1.2.3",
+            "version": "v1.3.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-core.git",
-                "reference": "c134cc93eae28f39aa95ccddcb5b024e77a7c039"
+                "reference": "a16a68f488a4732ed7baf4b8ab6c0561f2dc6822"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/c134cc93eae28f39aa95ccddcb5b024e77a7c039",
-                "reference": "c134cc93eae28f39aa95ccddcb5b024e77a7c039",
+                "url": "https://api.github.com/repos/web-token/jwt-core/zipball/a16a68f488a4732ed7baf4b8ab6c0561f2dc6822",
+                "reference": "a16a68f488a4732ed7baf4b8ab6c0561f2dc6822",
                 "shasum": ""
             },
             "require": {
@@ -842,7 +842,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -884,7 +884,7 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-22T08:16:38+00:00"
+            "time": "2019-01-21T11:37:37+00:00"
         },
         {
             "name": "web-token/jwt-signature",
@@ -1567,7 +1567,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🅱 Nette Bootstrap: the simple way to configure and bootstrap your Nette application.",
+            "description": "? Nette Bootstrap: the simple way to configure and bootstrap your Nette application.",
             "homepage": "https://nette.org",
             "keywords": [
                 "bootstrapping",
@@ -1632,7 +1632,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "💎 Nette Dependency Injection Container: Flexible, compiled and full-featured DIC with perfectly usable autowiring and support for all new PHP 7.1 features.",
+            "description": "? Nette Dependency Injection Container: Flexible, compiled and full-featured DIC with perfectly usable autowiring and support for all new PHP 7.1 features.",
             "homepage": "https://nette.org",
             "keywords": [
                 "compiled",
@@ -1697,7 +1697,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🔍 Nette Finder: find files and directories with an intuitive API.",
+            "description": "? Nette Finder: find files and directories with an intuitive API.",
             "homepage": "https://nette.org",
             "keywords": [
                 "filesystem",
@@ -1757,7 +1757,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🍸 Nette NEON: encodes and decodes NEON file format.",
+            "description": "? Nette NEON: encodes and decodes NEON file format.",
             "homepage": "http://ne-on.org",
             "keywords": [
                 "export",
@@ -1820,7 +1820,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🐘 Nette PHP Generator: generates neat PHP code for you. Supports new PHP 7.3 features.",
+            "description": "? Nette PHP Generator: generates neat PHP code for you. Supports new PHP 7.3 features.",
             "homepage": "https://nette.org",
             "keywords": [
                 "code",
@@ -1884,7 +1884,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🍀 Nette RobotLoader: high performance and comfortable autoloader that will search and autoload classes within your application.",
+            "description": "? Nette RobotLoader: high performance and comfortable autoloader that will search and autoload classes within your application.",
             "homepage": "https://nette.org",
             "keywords": [
                 "autoload",
@@ -1957,7 +1957,7 @@
                     "homepage": "https://nette.org/contributors"
                 }
             ],
-            "description": "🛠 Nette Utils: lightweight utilities for string & array manipulation, image handling, safe JSON encoding/decoding, validation, slug or strong password generating etc.",
+            "description": "? Nette Utils: lightweight utilities for string & array manipulation, image handling, safe JSON encoding/decoding, validation, slug or strong password generating etc.",
             "homepage": "https://nette.org",
             "keywords": [
                 "array",
