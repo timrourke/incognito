@@ -26,7 +26,7 @@ class AuthenticationTest extends TestCase
      */
     private $userAuthenticationService;
 
-    protected function setUp()/* The :void return type declaration that should be here would cause a BC issue */
+    protected function setUp(): void
     {
         $this->userAuthenticationService = UserAuthenticationServiceFactory::build();
 

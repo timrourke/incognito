@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Incognito\FunctionalTests;
 
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient;
-use Aws\Credentials\CredentialProvider;
 use Incognito\CognitoClient\CognitoCredentials;
 use Incognito\CognitoClient\UserAuthenticationService;
-use RuntimeException;
+use Symfony\Component\Process\Process;
 
 /**
  * Class UserAuthenticationServiceFactory
@@ -49,49 +48,31 @@ class UserAuthenticationServiceFactory
         return new UserAuthenticationService($client, $credentials);
     }
 
-    private function getTerraformStateFilePath(): string
-    {
-        return __DIR__ . '/terraform/terraform.tfstate';
-    }
-
-    private function openTerraformStateFile()
-    {
-        $filePath = $this->getTerraformStateFilePath();
-        $handle = fopen($filePath, 'rb');
-
-        if (false === $handle) {
-            throw new RuntimeException(
-
-                sprintf(
-                    'Unable to open file "%s": %s',
-                    $filePath,
-                    print_r(error_get_last(), true)
-                )
-            );
-        }
-
-        return $handle;
-    }
-
     private function getCredentials(): CognitoCredentials
     {
-        $handle = $this->openTerraformStateFile();
-        $contents = fread($handle, (int) filesize($this->getTerraformStateFilePath()));
-        $json = json_decode((string) $contents, true);
-        $resources = $json['modules'][0]['resources'];
-
         return new CognitoCredentials(
-            $resources['aws_cognito_user_pool_client.incognito_test_client']['primary']['id'],
-            $resources['aws_cognito_user_pool_client.incognito_test_client']['primary']['attributes']['client_secret'],
-            $resources['aws_cognito_user_pool.incognito_test_user_pool']['primary']['id']
+            $this->getTerraformOutput('aws_cognito_user_pool_client_id'),
+            $this->getTerraformOutput('aws_cognito_user_pool_client_secret'),
+            $this->getTerraformOutput('aws_cognito_user_pool_id')
         );
+    }
+
+    private function getTerraformOutput(string $key): string
+    {
+        $process = Process::fromShellCommandline(
+            "terraform output $key",
+            __DIR__ . '/terraform'
+        );
+
+        $process->mustRun();
+
+        return trim($process->getOutput());
     }
 
     private function getCognitoClient(): CognitoIdentityProviderClient
     {
         return new CognitoIdentityProviderClient([
-            'credentials' => CredentialProvider::env(),
-            'region' => getenv('AWS_DEFAULT_REGION'),
+            'region' => 'us-east-1',
             'version' => 'latest',
         ]);
     }

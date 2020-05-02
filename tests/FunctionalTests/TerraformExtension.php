@@ -27,7 +27,7 @@ class TerraformExtension implements BeforeFirstTestHook, AfterLastTestHook
         echo "\n\n\nYay! Running terraform to create the test Cognito User Pool...\n\n\n";
 
         $this->verifyTerraformIsInstalled();
-
+        $this->initTerraform();
         $this->runTerraformApply();
     }
 
@@ -36,6 +36,12 @@ class TerraformExtension implements BeforeFirstTestHook, AfterLastTestHook
         echo "\n\n\nBye! Running terraform to destroy the test Cognito User Pool...\n\n\n";
 
         $this->runTerraformDestroy();
+    }
+
+    private function initTerraform(): void
+    {
+        $process = Process::fromShellCommandline('terraform init', __DIR__ . '/terraform');
+        $process->mustRun();
     }
 
     private function runTerraformApply(): void
@@ -52,7 +58,7 @@ class TerraformExtension implements BeforeFirstTestHook, AfterLastTestHook
 
     private function verifyTerraformIsInstalled(): void
     {
-        $process = new Process(['command', '-v', 'terraform'], __DIR__ . '/terraform');
+        $process = Process::fromShellCommandline('command -v terraform');
         $process->run();
 
         if (!$process->getOutput()) {

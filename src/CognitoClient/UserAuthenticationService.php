@@ -56,9 +56,9 @@ class UserAuthenticationService
                 'ClientId'       => $this->cognitoCredentials->getClientId(),
                 'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
                 'AuthParameters' => [
-                    'SECRET_HASH' => $this->cognitoCredentials->getSecretHashForUsername(
-                        $username
-                    ),
+                    'SECRET_HASH' => $this
+                        ->cognitoCredentials
+                        ->getSecretHashForUsername($username),
                     'USERNAME'    => $username,
                     'PASSWORD'    => $password,
                 ],
@@ -80,20 +80,18 @@ class UserAuthenticationService
      */
     public function refreshToken(string $username, string $refreshToken): ?Result
     {
-        return $this->cognitoClient->adminInitiateAuth(
-            [
-              'AuthFlow'       => 'REFRESH_TOKEN_AUTH',
-              'ClientId'       => $this->cognitoCredentials->getClientId(),
-              'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
-              'AuthParameters' => [
-                  'REFRESH_TOKEN' => $refreshToken,
-                'SECRET_HASH'   => $this->cognitoCredentials->getSecretHashForUsername(
-                    $username
-                ),
-                  'USERNAME'      => $username,
-              ],
-             ]
-        );
+        return $this->cognitoClient->adminInitiateAuth([
+            'AuthFlow'       => 'REFRESH_TOKEN_AUTH',
+            'ClientId'       => $this->cognitoCredentials->getClientId(),
+            'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
+            'AuthParameters' => [
+                'REFRESH_TOKEN'  => $refreshToken,
+                'SECRET_HASH'    => $this
+                    ->cognitoCredentials
+                    ->getSecretHashForUsername($username),
+                'USERNAME'       => $username,
+            ],
+        ]);
     }
 
     /**
@@ -109,15 +107,14 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->signUp(
-                [
+            $result = $this->cognitoClient->signUp([
                 'ClientId'   => $this->cognitoCredentials->getClientId(),
                 'Password'   => $password->password(),
                 'SecretHash' => $this->cognitoCredentials->getSecretHashForUsername(
                     $user->username()
                 ),
                 'UserAttributes' => array_map(
-                    function (UserAttribute $attr) {
+                    function (UserAttribute $attr): array {
                         return [
                             'Name'  => $attr->name(),
                             'Value' => $attr->value(),
@@ -126,8 +123,7 @@ class UserAuthenticationService
                     $user->getAttributes()
                 ),
                 'Username' => $user->username(),
-                ]
-            );
+            ]);
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
@@ -148,12 +144,10 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->adminConfirmSignUp(
-                [
+            $result = $this->cognitoClient->adminConfirmSignUp([
                 'UserPoolId' => $this->cognitoCredentials->getUserPoolId(),
                 'Username'   => $username,
-                ]
-            );
+            ]);
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
@@ -178,13 +172,11 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->changePassword(
-                [
+            $result = $this->cognitoClient->changePassword([
                 'AccessToken'      => $accessToken,
                 'PreviousPassword' => $previousPassword->password(),
                 'ProposedPassword' => $proposedPassword->password(),
-                ]
-            );
+            ]);
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
