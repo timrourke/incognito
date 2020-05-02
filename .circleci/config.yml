@@ -9,7 +9,7 @@ jobs:
       CC_TEST_REPORTER_ID: '8e76501ef6943aab8b75ccd38af9c741d589f93f920ad447619d7c0bc93ced9f'
 
     docker:
-      - image: circleci/php:7.1-browsers
+      - image: circleci/php:7.4-browsers
 
     working_directory: ~/incognito
 
