@@ -22,5 +22,5 @@ This library seeks to provide:
 
 - [ ] A PSR-15 middleware for authenticating HTTP requests bearing a JWT issued by AWS Cognito
 - [ ] A factory to build a PSR-7 response in the event of an unauthenticated request
-- [ ] A keychain service for fetching and cacheing the public RSA keyset for your AWS Cognito User Pool
+- [ ] A keychain service for fetching and caching the public RSA keyset for your AWS Cognito User Pool
 - [ ] Several HTTP services useful for initiating authentication and user management flows in an AWS Cognito User Pool
