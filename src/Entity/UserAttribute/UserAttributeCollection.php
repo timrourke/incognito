@@ -61,9 +61,9 @@ class UserAttributeCollection
         return array_reduce(
             $this->userAttributes,
             function (
-                ?UserAttribute $acc,
+                UserAttribute $acc,
                 UserAttribute $current
-            ) use ($name): ?UserAttribute {
+            ) use ($name): UserAttribute {
                 if ($current->name() === $name) {
                     $acc = $current;
                 }

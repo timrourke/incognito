@@ -19,7 +19,7 @@ use Jose\Component\Signature\JWS;
 class SignatureValidator
 {
     /**
-     * @var \Jose\Component\Core\JWKSet
+     * @var \Jose\Component\Core\JWKSet<string, \Jose\Component\Core\JWK>
      */
     private JWKSet $keyset;
 
@@ -31,7 +31,7 @@ class SignatureValidator
     /**
      * Constructor.
      *
-     * @param \Jose\Component\Core\JWKSet           $keyset
+     * @param \Jose\Component\Core\JWKSet<string, \Jose\Component\Core\JWK> $keyset
      * @param \Jose\Component\Signature\JWSVerifier $tokenVerifier
      */
     public function __construct(JWKSet $keyset, JWSVerifier $tokenVerifier)

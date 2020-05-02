@@ -22,7 +22,7 @@ class UserMapper
     /**
      * Map an AWS SDK "AdminGetUser" Result to a User entity
      *
-     * @param  \Aws\Result $result
+     * @param  \Aws\Result<array> $result
      * @return \Incognito\Entity\User
      * @throws \Assert\AssertionFailedException
      */
@@ -34,7 +34,7 @@ class UserMapper
     /**
      * Map an AWS SDK "ListUsers" Result to an array of User entities
      *
-     * @param  Result $result
+     * @param  Result<array> $result
      * @return \Incognito\Entity\User[]
      */
     public function mapListUsersResult(Result $result): array
@@ -50,7 +50,7 @@ class UserMapper
     /**
      * Build a User entity from an AWS SDK Result
      *
-     * @param  array $userData
+     * @param  array<string, mixed> $userData
      * @return \Incognito\Entity\User
      * @throws \Assert\AssertionFailedException
      * @throws \Exception
@@ -85,8 +85,9 @@ class UserMapper
     /**
      * Build a UserAttributeCollection from an AWS SDK Result
      *
-     * @param  array $userData
+     * @param array<string, mixed> $userData
      * @return \Incognito\Entity\UserAttribute\UserAttributeCollection
+     * @throws \Assert\AssertionFailedException
      */
     private function buildUserAttributesCollectionFromResult(
         array $userData
@@ -96,7 +97,7 @@ class UserMapper
             'UserAttributes';
 
         $userAttributes = array_map(
-            function (array $attr) {
+            function (array $attr): UserAttribute {
                 return new UserAttribute($attr['Name'], $attr['Value']);
             },
             $userData[$attrsKey]

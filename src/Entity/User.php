@@ -102,7 +102,7 @@ class User
     /**
      * Get the array of user attributes for this user
      *
-     * @return array
+     * @return UserAttribute[]
      */
     public function getAttributes(): array
     {

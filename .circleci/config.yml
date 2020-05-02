@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Run phpstan
           command: |
-            vendor/bin/phpstan analyse -l 7 src tests
+            vendor/bin/phpstan analyse --level 7 src
 
       - run:
           name: Run phpcs

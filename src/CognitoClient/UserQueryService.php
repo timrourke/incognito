@@ -37,7 +37,7 @@ class UserQueryService
      * Get a user by username
      *
      * @param  string $username
-     * @return \Aws\Result
+     * @return \Aws\Result<array>
      */
     public function getUserByUsername(string $username): Result
     {
@@ -54,7 +54,7 @@ class UserQueryService
      *
      * TODO: Implement query filters
      *
-     * @return \Aws\Result
+     * @return \Aws\Result<array>
      */
     public function getList(): Result
     {

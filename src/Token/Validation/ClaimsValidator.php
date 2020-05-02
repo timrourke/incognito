@@ -15,7 +15,7 @@ use Jose\Component\Signature\JWSTokenSupport;
 class ClaimsValidator
 {
     /**
-     * @var array
+     * @var string[]
      */
     private const REQUIRED_HEADER_CLAIMS = [
         'alg',
@@ -23,7 +23,7 @@ class ClaimsValidator
     ];
 
     /**
-     * @var array
+     * @var string[]
      */
     private const REQUIRED_PAYLOAD_CLAIMS = [
         'token_use',
@@ -112,7 +112,7 @@ class ClaimsValidator
     /**
      * Verify that all required payload claims are present
      *
-     * @param  array $claims
+     * @param  array<string, mixed> $claims
      * @throws \Jose\Component\Checker\InvalidClaimException
      */
     private function verifyRequiredPayloadClaims(array $claims): void
@@ -138,7 +138,7 @@ class ClaimsValidator
      * ignore the unprotected headers here.
      *
      * @param  \Jose\Component\Signature\JWS $token
-     * @return array
+     * @return array<string, mixed>
      */
     private function getTokenHeaders(JWS $token): array
     {

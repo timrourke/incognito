@@ -43,7 +43,7 @@ class UserAuthenticationService
      *
      * @param  string $username
      * @param  string $password
-     * @return \Aws\Result|null
+     * @return \Aws\Result<array>|null
      * @throws \Exception
      */
     public function loginUser(string $username, string $password): ?Result
@@ -75,7 +75,7 @@ class UserAuthenticationService
      *
      * @param  string $username
      * @param  string $refreshToken
-     * @return \Aws\Result|null
+     * @return \Aws\Result<array>|null
      * @throws \Exception
      */
     public function refreshToken(string $username, string $refreshToken): ?Result
@@ -99,7 +99,7 @@ class UserAuthenticationService
      *
      * @param  \Incognito\Entity\User     $user
      * @param  \Incognito\Entity\Password $password
-     * @return \Aws\Result|null
+     * @return \Aws\Result<array>|null
      * @throws \Exception
      */
     public function signUpUser(User $user, Password $password): ?Result
@@ -136,7 +136,7 @@ class UserAuthenticationService
      * or SMS confirmation flow.
      *
      * @param  string $username
-     * @return \Aws\Result|null
+     * @return \Aws\Result<array>|null
      * @throws \Exception
      */
     public function adminConfirmSignUp(string $username): ?Result
@@ -161,7 +161,7 @@ class UserAuthenticationService
      * @param  string                     $accessToken
      * @param  \Incognito\Entity\Password $previousPassword
      * @param  \Incognito\Entity\Password $proposedPassword
-     * @return \Aws\Result|null
+     * @return \Aws\Result<array>|null
      * @throws \Exception
      */
     public function changePassword(

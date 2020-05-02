@@ -63,9 +63,9 @@ class Keychain
      * request to retrieve the keys from your Cognito app's public RSA keys
      * endpoint.
      *
-     * @return \Jose\Component\Core\JWKSet
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return \Jose\Component\Core\JWKSet<string, \Jose\Component\Core\JWK>
      * @throws \Psr\Cache\InvalidArgumentException
+     * @throws \Throwable
      */
     public function getPublicKeyset(): JWKSet
     {
@@ -82,8 +82,8 @@ class Keychain
      * Make an http request for your Cognito app's public RSA keyset and store
      * it in the cache
      *
-     * @return \Jose\Component\Core\JWKSet
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return \Jose\Component\Core\JWKSet<string, \Jose\Component\Core\JWK>
+     * @throws \Throwable
      */
     private function fetchAndCacheKeyset(): JWKSet
     {
@@ -103,8 +103,8 @@ class Keychain
     /**
      * Make an http request for your Cognito app's public RSA keyset
      *
-     * @return array
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return array<string, mixed>
+     * @throws \Throwable
      */
     private function fetchKeysetData(): array
     {
@@ -116,7 +116,7 @@ class Keychain
     /**
      * Try to get the RSA public keyset from the cache
      *
-     * @return \Jose\Component\Core\JWKSet|null
+     * @return \Jose\Component\Core\JWKSet<string, \Jose\Component\Core\JWK>|null
      * @throws \Psr\Cache\InvalidArgumentException
      */
     private function getKeysetFromCache(): ?JWKSet

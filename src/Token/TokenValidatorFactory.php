@@ -37,7 +37,7 @@ class TokenValidatorFactory
      * Build a Cognito token service with all of its dependencies
      *
      * @param  string $cognitoClientAppId
-     * @param  JWKSet $keyset
+     * @param  JWKSet<string, \Jose\Component\Core\JWK> $keyset
      * @return TokenValidator
      */
     public static function make(
@@ -88,7 +88,7 @@ class TokenValidatorFactory
     /**
      * Get a Cognito token signature validator
      *
-     * @param  \Jose\Component\Core\JWKSet $keyset
+     * @param  \Jose\Component\Core\JWKSet<string, \Jose\Component\Core\JWK> $keyset
      * @return \Incognito\Token\Validation\SignatureValidator
      */
     private static function getSignatureValidator(

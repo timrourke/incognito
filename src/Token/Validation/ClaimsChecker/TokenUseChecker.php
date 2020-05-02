@@ -18,11 +18,11 @@ use Jose\Component\Checker\InvalidClaimException;
 final class TokenUseChecker implements ClaimChecker
 {
     /**
-     * {@inheritdoc}
-     *
+     * @param mixed $value
      * @return bool
+     * @throws \Jose\Component\Checker\InvalidClaimException
      */
-    public function checkClaim($value)
+    public function checkClaim($value): bool
     {
         if (empty($value)) {
             throw new InvalidClaimException(
