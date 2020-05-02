@@ -956,25 +956,25 @@
         },
         {
             "name": "web-token/jwt-signature",
-            "version": "v1.2.1",
+            "version": "v1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature.git",
-                "reference": "f5b1536d8e1411806ea24f9f65deb3a415d583c3"
+                "reference": "00f23e997c9032536444f819bc3338ab475d69f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-signature/zipball/f5b1536d8e1411806ea24f9f65deb3a415d583c3",
-                "reference": "f5b1536d8e1411806ea24f9f65deb3a415d583c3",
+                "url": "https://api.github.com/repos/web-token/jwt-signature/zipball/00f23e997c9032536444f819bc3338ab475d69f9",
+                "reference": "00f23e997c9032536444f819bc3338ab475d69f9",
                 "shasum": ""
             },
             "require": {
-                "web-token/jwt-core": "^1.2",
-                "web-token/jwt-signature-algorithm-ecdsa": "^1.2",
-                "web-token/jwt-signature-algorithm-eddsa": "^1.2",
-                "web-token/jwt-signature-algorithm-hmac": "^1.2",
-                "web-token/jwt-signature-algorithm-none": "^1.2",
-                "web-token/jwt-signature-algorithm-rsa": "^1.2"
+                "web-token/jwt-core": "^1.3",
+                "web-token/jwt-signature-algorithm-ecdsa": "^1.3",
+                "web-token/jwt-signature-algorithm-eddsa": "^1.3",
+                "web-token/jwt-signature-algorithm-hmac": "^1.3",
+                "web-token/jwt-signature-algorithm-none": "^1.3",
+                "web-token/jwt-signature-algorithm-rsa": "^1.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0|^7.0"
@@ -990,7 +990,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1032,24 +1032,24 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-21T12:56:58+00:00"
+            "time": "2020-03-20T13:29:04+00:00"
         },
         {
             "name": "web-token/jwt-signature-algorithm-ecdsa",
-            "version": "v1.2.1",
+            "version": "v1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-ecdsa.git",
-                "reference": "f85bc587347a8353adaf75e9d720ba5670429500"
+                "reference": "a3babd3b82c29c739d426271ccb9dc1a56222e36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-ecdsa/zipball/f85bc587347a8353adaf75e9d720ba5670429500",
-                "reference": "f85bc587347a8353adaf75e9d720ba5670429500",
+                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-ecdsa/zipball/a3babd3b82c29c739d426271ccb9dc1a56222e36",
+                "reference": "a3babd3b82c29c739d426271ccb9dc1a56222e36",
                 "shasum": ""
             },
             "require": {
-                "web-token/jwt-signature": "^1.2"
+                "web-token/jwt-signature": "^1.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0|^7.0"
@@ -1057,7 +1057,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1099,24 +1099,24 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-06T19:31:22+00:00"
+            "time": "2020-03-20T13:29:04+00:00"
         },
         {
             "name": "web-token/jwt-signature-algorithm-eddsa",
-            "version": "v1.2.1",
+            "version": "v1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-eddsa.git",
-                "reference": "2d6b7ccf8eafb44bd23619b0cd14dd3dc5ea3f5e"
+                "reference": "b0dad134313b14b3ba077b63a7afcc2b38e5f793"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-eddsa/zipball/2d6b7ccf8eafb44bd23619b0cd14dd3dc5ea3f5e",
-                "reference": "2d6b7ccf8eafb44bd23619b0cd14dd3dc5ea3f5e",
+                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-eddsa/zipball/b0dad134313b14b3ba077b63a7afcc2b38e5f793",
+                "reference": "b0dad134313b14b3ba077b63a7afcc2b38e5f793",
                 "shasum": ""
             },
             "require": {
-                "web-token/jwt-signature": "^1.2"
+                "web-token/jwt-signature": "^1.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0|^7.0"
@@ -1124,7 +1124,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1166,24 +1166,24 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-06T19:30:56+00:00"
+            "time": "2020-03-20T13:29:04+00:00"
         },
         {
             "name": "web-token/jwt-signature-algorithm-hmac",
-            "version": "v1.2.1",
+            "version": "v1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-hmac.git",
-                "reference": "889d91ac877e41cf7b1d95d51bdb4c2a8d089c07"
+                "reference": "3bc85e1d13804902a8d81a11f58c28c9a471b5e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-hmac/zipball/889d91ac877e41cf7b1d95d51bdb4c2a8d089c07",
-                "reference": "889d91ac877e41cf7b1d95d51bdb4c2a8d089c07",
+                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-hmac/zipball/3bc85e1d13804902a8d81a11f58c28c9a471b5e2",
+                "reference": "3bc85e1d13804902a8d81a11f58c28c9a471b5e2",
                 "shasum": ""
             },
             "require": {
-                "web-token/jwt-signature": "^1.2"
+                "web-token/jwt-signature": "^1.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0|^7.0"
@@ -1191,7 +1191,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1233,24 +1233,24 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-06T19:30:56+00:00"
+            "time": "2020-03-20T13:29:04+00:00"
         },
         {
             "name": "web-token/jwt-signature-algorithm-none",
-            "version": "v1.2.1",
+            "version": "v1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-none.git",
-                "reference": "6dc96e10e300fe704087214342beced1ecc69a92"
+                "reference": "0391e160367e85846736e63ea6026e2dab667b6e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-none/zipball/6dc96e10e300fe704087214342beced1ecc69a92",
-                "reference": "6dc96e10e300fe704087214342beced1ecc69a92",
+                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-none/zipball/0391e160367e85846736e63ea6026e2dab667b6e",
+                "reference": "0391e160367e85846736e63ea6026e2dab667b6e",
                 "shasum": ""
             },
             "require": {
-                "web-token/jwt-signature": "^1.2"
+                "web-token/jwt-signature": "^1.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0|^7.0"
@@ -1258,7 +1258,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1300,24 +1300,24 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-06T19:30:56+00:00"
+            "time": "2020-03-20T13:29:04+00:00"
         },
         {
             "name": "web-token/jwt-signature-algorithm-rsa",
-            "version": "v1.2.1",
+            "version": "v1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/web-token/jwt-signature-algorithm-rsa.git",
-                "reference": "851ed5727ad96f59fa42baa48f835bf7ec423151"
+                "reference": "344181ef6cdd3aca77f7ff7defc9fb502eb33ec0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-rsa/zipball/851ed5727ad96f59fa42baa48f835bf7ec423151",
-                "reference": "851ed5727ad96f59fa42baa48f835bf7ec423151",
+                "url": "https://api.github.com/repos/web-token/jwt-signature-algorithm-rsa/zipball/344181ef6cdd3aca77f7ff7defc9fb502eb33ec0",
+                "reference": "344181ef6cdd3aca77f7ff7defc9fb502eb33ec0",
                 "shasum": ""
             },
             "require": {
-                "web-token/jwt-signature": "^1.2"
+                "web-token/jwt-signature": "^1.3"
             },
             "require-dev": {
                 "phpunit/phpunit": "^6.0|^7.0"
@@ -1325,7 +1325,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.2.x-dev"
+                    "dev-master": "1.3.x-dev"
                 }
             },
             "autoload": {
@@ -1367,7 +1367,7 @@
                 "jwt",
                 "symfony"
             ],
-            "time": "2018-08-06T19:30:56+00:00"
+            "time": "2020-03-20T13:29:04+00:00"
         },
         {
             "name": "web-token/jwt-util-ecc",
