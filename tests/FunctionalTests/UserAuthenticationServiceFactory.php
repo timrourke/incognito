@@ -21,9 +21,9 @@ use Symfony\Component\Process\Process;
 class UserAuthenticationServiceFactory
 {
     /**
-     * @var \Incognito\CognitoClient\UserAuthenticationService|null
+     * @var \Incognito\CognitoClient\UserAuthenticationService
      */
-    private static ?UserAuthenticationService $userAuthenticationService;
+    private static UserAuthenticationService $userAuthenticationService;
 
     private function __construct()
     {
@@ -31,7 +31,7 @@ class UserAuthenticationServiceFactory
 
     public static function build(): UserAuthenticationService
     {
-        if (!is_null(self::$userAuthenticationService)) {
+        if (isset(self::$userAuthenticationService)) {
             return self::$userAuthenticationService;
         }
 

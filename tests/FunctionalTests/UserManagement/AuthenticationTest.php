@@ -18,11 +18,6 @@ class AuthenticationTest extends TestCase
     private const PASSWORD = 'SomeValidPassword123!';
 
     /**
-     * @var string
-     */
-    private string $userId;
-
-    /**
      * @var \Incognito\CognitoClient\UserAuthenticationService
      */
     private UserAuthenticationService $userAuthenticationService;
@@ -132,10 +127,8 @@ class AuthenticationTest extends TestCase
         $user = new User(new Username(self::USERNAME));
         $password = new Password(self::PASSWORD);
 
-        $result = $this->userAuthenticationService->signUpUser($user, $password);
+        $this->userAuthenticationService->signUpUser($user, $password);
 
         $this->userAuthenticationService->adminConfirmSignUp(self::USERNAME);
-
-        $this->userId = $result['UserSub'];
     }
 }
