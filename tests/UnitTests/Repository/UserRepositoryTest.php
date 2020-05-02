@@ -32,6 +32,7 @@ class UserRepositoryTest extends TestCase
 
     /**
      * @throws \Exception
+     * @throws \Assert\AssertionFailedException
      */
     public function testFind(): void
     {
@@ -68,6 +69,9 @@ class UserRepositoryTest extends TestCase
         );
     }
 
+    /**
+     * @throws \Assert\AssertionFailedException
+     */
     public function testFindThrowsGenericAwsException(): void
     {
         static::expectException(AwsException::class);
@@ -94,6 +98,9 @@ class UserRepositoryTest extends TestCase
         $sut->find('some-username');
     }
 
+    /**
+     * @throws \Assert\AssertionFailedException
+     */
     public function testFindThrowsUserNotFoundException(): void
     {
         static::expectException(UserNotFoundException::class);

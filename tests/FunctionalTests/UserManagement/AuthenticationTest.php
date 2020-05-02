@@ -88,7 +88,9 @@ class AuthenticationTest extends TestCase
 
     /**
      * @test
-     * @throws \Incognito\Exception\UserNotConfirmedException
+     * @throws \Assert\AssertionFailedException
+     * @throws \Exception
+     * @throws \Assert\AssertionFailedException
      */
     public function shouldChangePassword(): void
     {

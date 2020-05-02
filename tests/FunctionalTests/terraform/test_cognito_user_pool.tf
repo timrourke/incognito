@@ -22,7 +22,7 @@ resource "aws_cognito_user_pool" "incognito_test_user_pool" {
 resource "aws_cognito_user_pool_client" "incognito_test_client" {
   name = "incognito_test_client"
 
-  user_pool_id = "${aws_cognito_user_pool.incognito_test_user_pool.id}"
+  user_pool_id = aws_cognito_user_pool.incognito_test_user_pool.id
 
   generate_secret = true
   explicit_auth_flows = ["ADMIN_NO_SRP_AUTH"]

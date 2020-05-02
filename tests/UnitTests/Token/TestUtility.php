@@ -207,6 +207,6 @@ class TestUtility
     {
         $serializer = new CompactSerializer(new StandardConverter());
 
-        return JWSSerializerManager::create([$serializer]);
+        return new JWSSerializerManager([$serializer]);
     }
 }

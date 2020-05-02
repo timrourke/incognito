@@ -14,6 +14,7 @@ class SignUpTest extends TestCase
 {
     /**
      * @test
+     * @throws \Exception
      */
     public function shouldSignUpUser(): void
     {

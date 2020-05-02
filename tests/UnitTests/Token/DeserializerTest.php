@@ -22,6 +22,9 @@ class DeserializerTest extends TestCase
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testGetTokenFromString(): void
     {
         $serializerManager = TestUtility::getSerializerManager();

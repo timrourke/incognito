@@ -163,6 +163,11 @@ class AuthenticationTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @param \Jose\Component\Signature\JWS $token
+     * @return string
+     * @throws \Exception
+     */
     private function serializeToken(JWS $token): string
     {
         return $this->serializer->serialize('jws_compact', $token);

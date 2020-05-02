@@ -44,7 +44,6 @@ class UserAuthenticationService
      * @param  string $username
      * @param  string $password
      * @return \Aws\Result|null
-     * @throws \Incognito\Exception\UserNotConfirmedException
      * @throws \Exception
      */
     public function loginUser(string $username, string $password): ?Result
@@ -52,8 +51,7 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->adminInitiateAuth(
-                [
+            $result = $this->cognitoClient->adminInitiateAuth([
                 'AuthFlow'       => 'ADMIN_NO_SRP_AUTH',
                 'ClientId'       => $this->cognitoCredentials->getClientId(),
                 'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
@@ -64,8 +62,7 @@ class UserAuthenticationService
                     'USERNAME'    => $username,
                     'PASSWORD'    => $password,
                 ],
-                ]
-            );
+            ]);
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }

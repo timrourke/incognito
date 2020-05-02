@@ -29,6 +29,10 @@ class KeychainTest extends TestCase
         );
     }
 
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     public function testGetPublicKeyset(): void
     {
         $guzzleMock = $this->getGuzzleMock();
@@ -59,6 +63,10 @@ class KeychainTest extends TestCase
         );
     }
 
+    /**
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Psr\Cache\InvalidArgumentException
+     */
     public function testGetPublicKeysetWithColdCache(): void
     {
         $guzzleMock = $this->getGuzzleMock();

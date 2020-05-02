@@ -6,6 +6,7 @@ namespace Incognito\FunctionalTests;
 
 use PHPUnit\Runner\BeforeFirstTestHook;
 use PHPUnit\Runner\AfterLastTestHook;
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 /**
@@ -55,7 +56,7 @@ class TerraformExtension implements BeforeFirstTestHook, AfterLastTestHook
         $process->run();
 
         if (!$process->getOutput()) {
-            throw new \RuntimeException(
+            throw new RuntimeException(
                 "Unable to verify that Terraform is installed. Terraform must be installed to execute the functional test suite.\nFind instructions for installing Terraform here:\nhttps://terraform.io\n\n"
             );
         }
