@@ -17,7 +17,7 @@ class CognitoCredentialsTest extends TestCase
             'someCognitoUserPoolId'
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             CognitoCredentials::class,
             $sut
         );
@@ -31,7 +31,7 @@ class CognitoCredentialsTest extends TestCase
             'someCognitoUserPoolId'
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'someCognitoClientId',
             $sut->getClientId()
         );
@@ -45,7 +45,7 @@ class CognitoCredentialsTest extends TestCase
             'someCognitoUserPoolId'
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'someCognitoClientSecret',
             $sut->getClientSecret()
         );
@@ -59,7 +59,7 @@ class CognitoCredentialsTest extends TestCase
             'someCognitoUserPoolId'
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'someCognitoUserPoolId',
             $sut->getUserPoolId()
         );
@@ -73,7 +73,7 @@ class CognitoCredentialsTest extends TestCase
             'someCognitoUserPoolId'
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'leH+ElshqALx+Oe0f20zk2dIr98jj0uwXwuKcQiQa0A=',
             $sut->getSecretHashForUsername('some-username')
         );

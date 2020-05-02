@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Incognito\UnitTests\Token;
 
+use Jose\Component\Checker\InvalidClaimException;
+use Jose\Component\Checker\InvalidHeaderException;
 use Jose\Component\Signature\JWS;
 use Incognito\Token\TokenValidator;
 use Incognito\Token\TokenValidatorFactory;
@@ -35,76 +37,95 @@ class ServiceTest extends TestCase
 
     public function testConstruct(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             TokenValidator::class,
             $this->sut
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testVerifyToken(): void
     {
         $actual = $this->sut->verifyToken($this->getValidTokenString());
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             JWS::class,
             $actual
         );
     }
 
     /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage The JWT has expired.
+     * @throws \Exception
      */
     public function testVerifyTokenThrowsWithExpiredToken(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('The JWT has expired.');
+
         $this->sut->verifyToken($this->getExpiredTokenString());
     }
 
     /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage The JWT can not be used yet.
+     * @throws \Exception
      */
     public function testVerifyTokenThrowsWithBeforeNotBefore(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('The JWT can not be used yet.');
+
         $this->sut->verifyToken($this->getBeforeNotBeforeTokenString());
     }
 
     /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage The JWT is issued in the future.
+     * @throws \Exception
      */
     public function testVerifyTokenThrowsWithFutureIssuedAt(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('The JWT is issued in the future.');
+
         $this->sut->verifyToken($this->getFutureIssuedAtTokenString());
     }
 
     /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage Bad audience.
+     * @throws \Exception
      */
     public function testVerifyTokenThrowsWithInvalidAudience(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('Bad audience.');
+
         $this->sut->verifyToken($this->getInvalidAudienceTokenString());
     }
 
     /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage The required payload claim "token_use" is missing from the token.
+     * @throws \Exception
      */
     public function testVerifyTokenThrowsWithMissingTokenUseClaim(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('The required payload claim "token_use" is missing from the token.');
+
         $this->sut->verifyToken($this->getMissingTokenUseTokenString());
     }
 
     /**
-     * @expectedException \Jose\Component\Checker\InvalidHeaderException
-     * @expectedExceptionMessage The required header claim "kid" is missing from the token.
+     * @throws \Exception
      */
     public function testVerifyTokenThrowsWithMissingKeyIdHeader(): void
     {
+        static::expectException(InvalidHeaderException::class);
+        static::expectExceptionMessage('The required header claim "kid" is missing from the token.');
+
         $this->sut->verifyToken($this->getMissingKeyIdHeadersTokenString());
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function getValidTokenString(): string
     {
         $token = TestUtility::getJWS();
@@ -112,6 +133,10 @@ class ServiceTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function getExpiredTokenString(): string
     {
         $expiredClaims = array_merge(
@@ -124,6 +149,10 @@ class ServiceTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function getBeforeNotBeforeTokenString(): string
     {
         $beforeNotBeforeClaims = array_merge(
@@ -136,6 +165,10 @@ class ServiceTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function getFutureIssuedAtTokenString(): string
     {
         $futureIssuedAtClaims = array_merge(
@@ -148,6 +181,10 @@ class ServiceTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function getInvalidAudienceTokenString(): string
     {
         $invalidAudienceClaims = array_merge(
@@ -160,16 +197,20 @@ class ServiceTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function getMissingKeyIdHeadersTokenString(): string
     {
         $validHeaders = TestUtility::getValidHeaderClaims();
 
         $headersMissingKeyId = array_filter(
             $validHeaders,
-            function ($v, $k) {
+            function (string $k): bool {
                 return $k !== 'kid';
             },
-            ARRAY_FILTER_USE_BOTH
+            ARRAY_FILTER_USE_KEY
         );
 
         $token = TestUtility::getJWS($headersMissingKeyId, null);
@@ -177,16 +218,20 @@ class ServiceTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
     private function getMissingTokenUseTokenString(): string
     {
         $validClaims = TestUtility::getValidClaims();
 
         $claimsMissingTokenUse = array_filter(
             $validClaims,
-            function ($v, $k) {
+            function (string $k): bool {
                 return $k !== 'token_use';
             },
-            ARRAY_FILTER_USE_BOTH
+            ARRAY_FILTER_USE_KEY
         );
 
         $token = TestUtility::getJWS(null, $claimsMissingTokenUse);
@@ -194,6 +239,11 @@ class ServiceTest extends TestCase
         return $this->serializeToken($token);
     }
 
+    /**
+     * @param \Jose\Component\Signature\JWS $token
+     * @return string
+     * @throws \Exception
+     */
     private function serializeToken(JWS $token): string
     {
         return $this->serializer->serialize('jws_compact', $token);

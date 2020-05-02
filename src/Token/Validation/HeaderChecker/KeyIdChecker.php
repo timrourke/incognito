@@ -22,7 +22,7 @@ final class KeyIdChecker implements HeaderChecker
      *
      * @see https://tools.ietf.org/html/rfc7515#section-4.1.4
      *
-     * @param mixed $value Header value to validate
+     * @param  mixed $value Header value to validate
      * @return bool
      * @throws InvalidHeaderException
      */

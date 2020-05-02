@@ -14,7 +14,7 @@ class EmailTest extends TestCase
     {
         $sut = new Email('some@email.com');
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             Email::class,
             $sut
         );
@@ -22,8 +22,8 @@ class EmailTest extends TestCase
 
     public function testConstructThrowsWithInvalidEmail(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid email: "foo" must be a valid email address.'
         );
 

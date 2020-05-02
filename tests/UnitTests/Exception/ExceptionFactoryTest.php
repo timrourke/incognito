@@ -21,7 +21,7 @@ class ExceptionFactoryTest extends TestCase
 
         $actual = ExceptionFactory::make($genericAwsException);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             AwsException::class,
             $actual
         );
@@ -39,7 +39,7 @@ class ExceptionFactoryTest extends TestCase
 
         $actual = ExceptionFactory::make($specificException);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserNotFoundException::class,
             $actual
         );

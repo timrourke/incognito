@@ -27,7 +27,7 @@ class InvalidTokenResponseFactoryTest extends TestCase
     {
         $sut = new InvalidTokenResponseFactory();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             InvalidTokenResponseFactory::class,
             $sut
         );
@@ -39,14 +39,14 @@ class InvalidTokenResponseFactoryTest extends TestCase
 
         $response = $sut->createResponse();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             Response::class,
             $response
         );
 
-        $this->assertEquals(401, $response->getStatusCode());
+        static::assertEquals(401, $response->getStatusCode());
 
-        $this->assertEquals(
+        static::assertEquals(
             json_encode($this->expectedResponseBody),
             $response->getBody()
         );

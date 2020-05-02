@@ -17,7 +17,7 @@ class UsernameExistsExceptionTest extends TestCase
 
         $sut = new UsernameExistsException($awsException);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UsernameExistsException::class,
             $sut
         );
@@ -29,7 +29,7 @@ class UsernameExistsExceptionTest extends TestCase
 
         $sut = new UsernameExistsException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             'Username already exists.',
             $sut->getMessage()
         );
@@ -41,7 +41,7 @@ class UsernameExistsExceptionTest extends TestCase
 
         $sut = new UsernameExistsException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             409,
             $sut->getCode()
         );
@@ -53,7 +53,7 @@ class UsernameExistsExceptionTest extends TestCase
 
         $sut = new UsernameExistsException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             $awsException,
             $sut->getPrevious()
         );

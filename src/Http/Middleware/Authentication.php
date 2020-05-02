@@ -44,7 +44,7 @@ class Authentication implements MiddlewareInterface
     /**
      * Constructor.
      *
-     * @param \Incognito\Token\TokenValidator $tokenService
+     * @param \Incognito\Token\TokenValidator          $tokenService
      * @param \Incognito\Http\ResponseFactoryInterface $authErrorResponseFactory
      */
     public function __construct(
@@ -59,8 +59,8 @@ class Authentication implements MiddlewareInterface
      * Process an incoming server request for valid authentication via an AWS
      * Cognito JSON Web Token
      *
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
+     * @param  ServerRequestInterface  $request
+     * @param  RequestHandlerInterface $handler
      * @return ResponseInterface
      */
     public function process(
@@ -81,7 +81,7 @@ class Authentication implements MiddlewareInterface
     /**
      * Authenticate a request
      *
-     * @param ServerRequestInterface $request
+     * @param  ServerRequestInterface $request
      * @return \Jose\Component\Signature\JWS
      * @throws \Exception
      */
@@ -96,7 +96,7 @@ class Authentication implements MiddlewareInterface
      * Fetch the compact serialization form of a JSON Web Token from the
      * Authorization header
      *
-     * @param ServerRequestInterface $request
+     * @param  ServerRequestInterface $request
      * @return string
      */
     private function fetchTokenFromRequest(

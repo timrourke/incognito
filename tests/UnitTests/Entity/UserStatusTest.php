@@ -14,7 +14,7 @@ class UserStatusTest extends TestCase
     {
         $sut = new UserStatus('UNKNOWN');
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserStatus::class,
             $sut
         );
@@ -22,8 +22,8 @@ class UserStatusTest extends TestCase
 
     public function testConstructThrowsWhenProvidedInvalidStatus(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid status: must provide a valid status, received: "blah"'
         );
 
@@ -34,7 +34,7 @@ class UserStatusTest extends TestCase
     {
         $sut = new UserStatus('FORCE_CHANGE_PASSWORD');
 
-        $this->assertEquals(
+        static::assertEquals(
             'FORCE_CHANGE_PASSWORD',
             sprintf('%s', $sut)
         );

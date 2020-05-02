@@ -58,7 +58,7 @@ class UserAttribute implements UserAttributeInterface
     /**
      * Set the name
      *
-     * @param string $name
+     * @param  string $name
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -74,7 +74,7 @@ class UserAttribute implements UserAttributeInterface
     /**
      * Validate that the name's length is between 1 and 32 characters
      *
-     * @param string $name
+     * @param  string $name
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -94,7 +94,7 @@ class UserAttribute implements UserAttributeInterface
     /**
      * Validate that the name's characters are valid
      *
-     * @param string $name
+     * @param  string $name
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -113,7 +113,7 @@ class UserAttribute implements UserAttributeInterface
     /**
      * Set the value
      *
-     * @param string $value
+     * @param  string $value
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -127,7 +127,7 @@ class UserAttribute implements UserAttributeInterface
     /**
      * Validate that the value's length is between 0 and 2048 characters
      *
-     * @param string $value
+     * @param  string $value
      * @return void
      * @throws \Assert\AssertionFailedException
      */

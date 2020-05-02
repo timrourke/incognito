@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Incognito\UnitTests\Token\Validation\ClaimsChecker;
 
 use Incognito\Token\Validation\ClaimsChecker\TokenUseChecker;
+use Jose\Component\Checker\InvalidClaimException;
 use PHPUnit\Framework\TestCase;
 
 class TokenUseCheckerTest extends TestCase
@@ -13,48 +14,48 @@ class TokenUseCheckerTest extends TestCase
     {
         $sut = new TokenUseChecker();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             TokenUseChecker::class,
             $sut
         );
     }
 
+    /**
+     * @throws \Jose\Component\Checker\InvalidClaimException
+     */
     public function testCheckClaim(): void
     {
         $sut = new TokenUseChecker();
 
-        $this->assertTrue($sut->checkClaim('id'));
-        $this->assertTrue($sut->checkClaim('access'));
+        static::assertTrue($sut->checkClaim('id'));
+        static::assertTrue($sut->checkClaim('access'));
     }
 
-    /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage Invalid claim "token_use". The claim "token_use" must have a value.
-     */
     public function testCheckClaimThrowsWhenEmpty(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('Invalid claim "token_use". The claim "token_use" must have a value.');
+
         $sut = new TokenUseChecker();
 
         $sut->checkClaim('');
     }
 
-    /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage Invalid claim "token_use". The claim "token_use" must be a string.
-     */
     public function testCheckClaimThrowsWhenNotString(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('Invalid claim "token_use". The claim "token_use" must be a string.');
+
         $sut = new TokenUseChecker();
 
         $sut->checkClaim(6);
     }
 
-    /**
-     * @expectedException \Jose\Component\Checker\InvalidClaimException
-     * @expectedExceptionMessage Invalid claim "token_use". The claim "token_use" must be "access" or "id".
-     */
     public function testCheckClaimThrowsWhenNotIdOrAccess(): void
     {
+        static::expectException(InvalidClaimException::class);
+        static::expectExceptionMessage('Invalid claim "token_use". The claim "token_use" must be "access" or "id".');
+
         $sut = new TokenUseChecker();
 
         $sut->checkClaim('some-incorrect-value');
@@ -64,7 +65,7 @@ class TokenUseCheckerTest extends TestCase
     {
         $sut = new TokenUseChecker();
 
-        $this->assertEquals(
+        static::assertEquals(
             'token_use',
             $sut->supportedClaim()
         );

@@ -17,7 +17,7 @@ class ServiceFactoryTest extends TestCase
             TestUtility::getKeyset()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             TokenValidator::class,
             $service
         );

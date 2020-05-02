@@ -31,7 +31,7 @@ class SignatureValidator
     /**
      * Constructor.
      *
-     * @param \Jose\Component\Core\JWKSet $keyset
+     * @param \Jose\Component\Core\JWKSet           $keyset
      * @param \Jose\Component\Signature\JWSVerifier $tokenVerifier
      */
     public function __construct(JWKSet $keyset, JWSVerifier $tokenVerifier)
@@ -43,7 +43,7 @@ class SignatureValidator
     /**
      * Check if a token's signature is valid
      *
-     * @param \Jose\Component\Signature\JWS $token
+     * @param  \Jose\Component\Signature\JWS $token
      * @return bool
      */
     public function validate(JWS $token): bool

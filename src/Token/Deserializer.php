@@ -37,6 +37,7 @@ class Deserializer
      *
      * @param string $tokenString
      * @return \Jose\Component\Signature\JWS
+     * @throws \Exception
      */
     public function getTokenFromString(string $tokenString): JWS
     {

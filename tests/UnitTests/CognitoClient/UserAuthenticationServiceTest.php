@@ -8,6 +8,7 @@ use Aws\Command;
 use Aws\Exception\AwsException;
 use Aws\Result;
 use Aws\CognitoIdentityProvider\CognitoIdentityProviderClient as CognitoClient;
+use Exception;
 use Incognito\CognitoClient\CognitoCredentials;
 use Incognito\Exception\InvalidPasswordException;
 use Incognito\Exception\NotAuthorizedException;
@@ -110,12 +111,15 @@ class UserAuthenticationServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserAuthenticationService::class,
             $sut
         );
     }
 
+    /**
+     * @throws \Incognito\Exception\UserNotConfirmedException
+     */
     public function testLoginUser(): void
     {
         $clientMock = $this->getCognitoClientMock();
@@ -136,9 +140,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->loginUser('some-username', 'some-password');
     }
 
+    /**
+     * @throws \Incognito\Exception\UserNotConfirmedException
+     */
     public function testLoginUserThrowsGenericException(): void
     {
-        $this->expectException(\Exception::class);
+        static::expectException(Exception::class);
 
         $clientMock = $this->getCognitoClientMock();
 
@@ -148,7 +155,7 @@ class UserAuthenticationServiceTest extends TestCase
                 'adminInitiateAuth',
                 self::LOGIN_PAYLOAD
             )
-            ->willThrowException(new \Exception());
+            ->willThrowException(new Exception());
 
         $sut = new UserAuthenticationService(
             $clientMock,
@@ -158,9 +165,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->loginUser('some-username', 'some-password');
     }
 
+    /**
+     * @throws \Incognito\Exception\UserNotConfirmedException
+     */
     public function testLoginUserThrowsGenericAwsException(): void
     {
-        $this->expectException(AwsException::class);
+        static::expectException(AwsException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -185,9 +195,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->loginUser('some-username', 'some-password');
     }
 
+    /**
+     * @throws \Incognito\Exception\UserNotConfirmedException
+     */
     public function testLoginUserThrowsNotAuthorizedException(): void
     {
-        $this->expectException(NotAuthorizedException::class);
+        static::expectException(NotAuthorizedException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -215,9 +228,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->loginUser('some-username', 'some-password');
     }
 
+    /**
+     * @throws \Incognito\Exception\UserNotConfirmedException
+     */
     public function testLoginUserThrowsUserNotFoundException(): void
     {
-        $this->expectException(UserNotFoundException::class);
+        static::expectException(UserNotFoundException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -245,9 +261,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->loginUser('some-username', 'some-password');
     }
 
+    /**
+     * @throws \Incognito\Exception\UserNotConfirmedException
+     */
     public function testLoginUserThrowsUserNotConfirmedException(): void
     {
-        $this->expectException(UserNotConfirmedException::class);
+        static::expectException(UserNotConfirmedException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -275,6 +294,9 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->loginUser('some-username', 'some-password');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testRefreshToken(): void
     {
         $expectedResult = $this->getAwsResult();
@@ -294,12 +316,15 @@ class UserAuthenticationServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $expectedResult,
             $sut->refreshToken('some-username', 'some-refresh-token')
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testSignUpUser(): void
     {
         $clientMock = $this->getCognitoClientMock();
@@ -322,9 +347,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->signUpUser($user, new Password('SomePassword123!'));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testSignUpUserThrowsGenericException(): void
     {
-        $this->expectException(\Exception::class);
+        static::expectException(Exception::class);
 
         $clientMock = $this->getCognitoClientMock();
 
@@ -334,7 +362,7 @@ class UserAuthenticationServiceTest extends TestCase
                 'signUp',
                 self::SIGN_UP_PAYLOAD
             )
-            ->willThrowException(new \Exception());
+            ->willThrowException(new Exception());
 
         $sut = new UserAuthenticationService(
             $clientMock,
@@ -344,9 +372,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->signUpUser($this->getSignUpUser(), new Password('SomePassword123!'));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testSignUpUserThrowsGenericAwsException(): void
     {
-        $this->expectException(AwsException::class);
+        static::expectException(AwsException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -371,9 +402,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->signUpUser($this->getSignUpUser(), new Password('SomePassword123!'));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testSignUpUserThrowsUsernameExistsException(): void
     {
-        $this->expectException(UsernameExistsException::class);
+        static::expectException(UsernameExistsException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -401,6 +435,9 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->signUpUser($this->getSignUpUser(), new Password('SomePassword123!'));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testChangePassword(): void
     {
         $oldPassword = new Password('Some-old-password!123');
@@ -428,9 +465,12 @@ class UserAuthenticationServiceTest extends TestCase
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testChangePasswordThrowsInvalidPasswordException(): void
     {
-        $this->expectException(InvalidPasswordException::class);
+        static::expectException(InvalidPasswordException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -465,9 +505,12 @@ class UserAuthenticationServiceTest extends TestCase
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testChangePasswordThrowsGenericException(): void
     {
-        $this->expectException(AwsException::class);
+        static::expectException(AwsException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -499,6 +542,9 @@ class UserAuthenticationServiceTest extends TestCase
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testAdminConfirmSignup(): void
     {
         $clientMock = $this->getCognitoClientMock();
@@ -519,9 +565,12 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->adminConfirmSignUp(self::ADMIN_CONFIRM_SIGNUP_PAYLOAD[0]['Username']);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testAdminConfirmSignupThrowsGenericException(): void
     {
-        $this->expectException(AwsException::class);
+        static::expectException(AwsException::class);
 
         $clientMock = $this->getCognitoClientMock();
 
@@ -546,6 +595,9 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->adminConfirmSignUp(self::ADMIN_CONFIRM_SIGNUP_PAYLOAD[0]['Username']);
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|CognitoClient
+     */
     private function getCognitoClientMock()
     {
         return $this->getMockBuilder(CognitoClient::class)
@@ -562,6 +614,9 @@ class UserAuthenticationServiceTest extends TestCase
         );
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|Result
+     */
     private function getAwsResult()
     {
         return $this->getMockBuilder(Result::class)

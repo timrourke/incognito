@@ -17,7 +17,7 @@ class UserNotConfirmedExceptionTest extends TestCase
 
         $sut = new UserNotConfirmedException($awsException);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserNotConfirmedException::class,
             $sut
         );
@@ -29,7 +29,7 @@ class UserNotConfirmedExceptionTest extends TestCase
 
         $sut = new UserNotConfirmedException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             'Login failed: User not confirmed.',
             $sut->getMessage()
         );
@@ -41,7 +41,7 @@ class UserNotConfirmedExceptionTest extends TestCase
 
         $sut = new UserNotConfirmedException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             401,
             $sut->getCode()
         );
@@ -53,7 +53,7 @@ class UserNotConfirmedExceptionTest extends TestCase
 
         $sut = new UserNotConfirmedException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             $awsException,
             $sut->getPrevious()
         );

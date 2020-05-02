@@ -22,6 +22,7 @@ class Username
      * Constructor.
      *
      * @param string $username
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct(string $username)
     {
@@ -47,7 +48,7 @@ class Username
     /**
      * Validate and set the username
      *
-     * @param string $username
+     * @param  string $username
      * @return void
      * @throws \Assert\AssertionFailedException
      */

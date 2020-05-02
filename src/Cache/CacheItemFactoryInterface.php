@@ -19,9 +19,9 @@ interface CacheItemFactoryInterface
     /**
      * Make a concrete implementation of a \Psr\Cache\CacheItemInterface
      *
-     * @param string $key The CacheItem's key
-     * @param mixed $data The data to cache
-     * @param bool $isHit Whether the CacheItem resulted from a cache hit
+     * @param  string $key   The CacheItem's key
+     * @param  mixed  $data  The data to cache
+     * @param  bool   $isHit Whether the CacheItem resulted from a cache hit
      * @return \Psr\Cache\CacheItemInterface
      */
     public function make(string $key, $data, bool $isHit): CacheItemInterface;

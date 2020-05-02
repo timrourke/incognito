@@ -16,7 +16,7 @@ class UserAttributeCollectionTest extends TestCase
     {
         $sut = new UserAttributeCollection();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserAttributeCollection::class,
             $sut
         );
@@ -24,11 +24,11 @@ class UserAttributeCollectionTest extends TestCase
 
     public function testConstructThrowsWhenAllAttrsAreNotCorrectType(): void
     {
-        $this->expectException(
+        static::expectException(
             AssertionFailedException::class
         );
 
-        $this->expectExceptionMessage(
+        static::expectExceptionMessage(
             'Invalid user attributes: all elements in the array must be of type "\Incognito\Entity\UserAttribute".'
         );
 
@@ -44,11 +44,11 @@ class UserAttributeCollectionTest extends TestCase
             new UserAttribute('given_name', 'Frederic'),
         ];
 
-        $this->expectException(
+        static::expectException(
             AssertionFailedException::class
         );
 
-        $this->expectExceptionMessage(
+        static::expectExceptionMessage(
             'Invalid user attributes: array of attributes must be unique by name. Non-unique attributes: given_name'
         );
 
@@ -63,7 +63,7 @@ class UserAttributeCollectionTest extends TestCase
 
         $sut->add($expectedNewAttr);
 
-        $this->assertEquals(
+        static::assertEquals(
             [$expectedNewAttr],
             $sut->toArray()
         );
@@ -82,7 +82,7 @@ class UserAttributeCollectionTest extends TestCase
 
         $sut->add($newGivenName);
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 $familyName,
                 $newGivenName,
@@ -101,17 +101,17 @@ class UserAttributeCollectionTest extends TestCase
             $givenName
         ]);
 
-        $this->assertEquals(
+        static::assertEquals(
             $email,
             $sut->get('email')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $givenName,
             $sut->get('given_name')
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             MissingAttribute::class,
             $sut->get('family_name')
         );
@@ -125,7 +125,7 @@ class UserAttributeCollectionTest extends TestCase
 
         $sut = new UserAttributeCollection($expected);
 
-        $this->assertEquals(
+        static::assertEquals(
             $expected,
             $sut->toArray()
         );
@@ -145,7 +145,7 @@ class UserAttributeCollectionTest extends TestCase
             $second
         ]);
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 $first,
                 $second,
@@ -160,7 +160,7 @@ class UserAttributeCollectionTest extends TestCase
     {
         $sut = new UserAttributeCollection();
 
-        $this->assertEquals(
+        static::assertEquals(
             [],
             $sut->toArray()
         );

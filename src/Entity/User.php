@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Incognito\Entity;
 
 use Assert\Assertion;
+use DateTimeImmutable;
 use Incognito\Entity\UserAttribute\UserAttribute;
 use Incognito\Entity\UserAttribute\UserAttributeCollection;
 
@@ -62,7 +63,7 @@ class User
     /**
      * Constructor.
      *
-     * @param \Incognito\Entity\Username $username
+     * @param \Incognito\Entity\Username                              $username
      * @param \Incognito\Entity\UserAttribute\UserAttributeCollection $userAttributes
      */
     public function __construct(
@@ -90,7 +91,7 @@ class User
     /**
      * Get a user attribute by name
      *
-     * @param string $name
+     * @param  string $name
      * @return UserAttribute
      */
     public function getAttribute(string $name): UserAttribute
@@ -121,7 +122,7 @@ class User
     /**
      * Set the user's ID
      *
-     * @param string $id
+     * @param  string $id
      * @return \Incognito\Entity\User
      */
     public function setId(string $id): User
@@ -144,7 +145,7 @@ class User
     /**
      * Set the user's username
      *
-     * @param Username $username
+     * @param  Username $username
      * @return \Incognito\Entity\User
      */
     public function setUsername(Username $username): User
@@ -159,7 +160,7 @@ class User
      *
      * @return \DateTimeImmutable|null
      */
-    public function createdAt(): ?\DateTimeImmutable
+    public function createdAt(): ?DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -167,11 +168,11 @@ class User
     /**
      * Set the date the user was created at
      *
-     * @param \DateTimeImmutable $createdAt
+     * @param  \DateTimeImmutable $createdAt
      * @return \Incognito\Entity\User
      * @throws \Assert\AssertionFailedException
      */
-    public function setCreatedAt(\DateTimeImmutable $createdAt): User
+    public function setCreatedAt(DateTimeImmutable $createdAt): User
     {
         Assertion::null(
             $this->createdAt,
@@ -188,7 +189,7 @@ class User
      *
      * @return \DateTimeImmutable|null
      */
-    public function updatedAt(): ?\DateTimeImmutable
+    public function updatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
@@ -196,10 +197,10 @@ class User
     /**
      * Set the date the user was last updated at
      *
-     * @param \DateTimeImmutable $updatedAt
+     * @param  \DateTimeImmutable $updatedAt
      * @return \Incognito\Entity\User
      */
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): User
+    public function setUpdatedAt(DateTimeImmutable $updatedAt): User
     {
         $this->updatedAt = $updatedAt;
 
@@ -219,7 +220,7 @@ class User
     /**
      * Set whether this user is enabled
      *
-     * @param bool $enabled
+     * @param  bool $enabled
      * @return \Incognito\Entity\User
      */
     public function setEnabled(bool $enabled): User
@@ -244,7 +245,7 @@ class User
     /**
      * Set the user's status
      *
-     * @param \Incognito\Entity\UserStatus $status
+     * @param  \Incognito\Entity\UserStatus $status
      * @return \Incognito\Entity\User
      */
     public function setStatus(UserStatus $status): User

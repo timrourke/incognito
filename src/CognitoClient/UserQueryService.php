@@ -23,7 +23,7 @@ class UserQueryService
      * UserQueryService constructor.
      *
      * @param \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient $cognitoClient
-     * @param \Incognito\CognitoClient\CognitoCredentials $cognitoCredentials
+     * @param \Incognito\CognitoClient\CognitoCredentials                $cognitoCredentials
      */
     public function __construct(
         CognitoClient $cognitoClient,
@@ -36,7 +36,7 @@ class UserQueryService
     /**
      * Get a user by username
      *
-     * @param string $username
+     * @param  string $username
      * @return \Aws\Result
      */
     public function getUserByUsername(string $username): Result

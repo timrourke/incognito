@@ -23,7 +23,7 @@ class KeychainTest extends TestCase
             new CacheItemFactoryStub()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             Keychain::class,
             $keychain
         );
@@ -53,7 +53,7 @@ class KeychainTest extends TestCase
 
         $keyset = $keychain->getPublicKeyset();
 
-        $this->assertEquals(
+        static::assertEquals(
             (JWKSet::createFromKeyData($this->getRsaKeysetStub()))->jsonSerialize(),
             $keyset->jsonSerialize()
         );
@@ -94,7 +94,7 @@ class KeychainTest extends TestCase
 
         $keyset = $keychain->getPublicKeyset();
 
-        $this->assertEquals(
+        static::assertEquals(
             (JWKSet::createFromKeyData($this->getRsaKeysetStub()))->jsonSerialize(),
             $keyset->jsonSerialize()
         );
@@ -116,20 +116,22 @@ class KeychainTest extends TestCase
         ];
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|Client
+     */
     private function getGuzzleMock()
     {
-        $mock = $this->getMockBuilder(Client::class)
+        return $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
             ->getMock();
-
-        return $mock;
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|PsrCacheItemPoolStub
+     */
     private function getCacheItemPoolMock()
     {
-        $mock = $this->getMockBuilder(PsrCacheItemPoolStub::class)
+        return $this->getMockBuilder(PsrCacheItemPoolStub::class)
             ->getMock();
-
-        return $mock;
     }
 }

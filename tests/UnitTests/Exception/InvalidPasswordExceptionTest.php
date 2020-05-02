@@ -17,7 +17,7 @@ class InvalidPasswordExceptionTest extends TestCase
 
         $sut = new InvalidPasswordException($awsException);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             InvalidPasswordException::class,
             $sut
         );
@@ -29,7 +29,7 @@ class InvalidPasswordExceptionTest extends TestCase
 
         $sut = new InvalidPasswordException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             'Invalid password.',
             $sut->getMessage()
         );
@@ -41,7 +41,7 @@ class InvalidPasswordExceptionTest extends TestCase
 
         $sut = new InvalidPasswordException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             422,
             $sut->getCode()
         );
@@ -53,7 +53,7 @@ class InvalidPasswordExceptionTest extends TestCase
 
         $sut = new InvalidPasswordException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             $awsException,
             $sut->getPrevious()
         );

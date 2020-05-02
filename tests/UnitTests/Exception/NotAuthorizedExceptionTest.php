@@ -17,7 +17,7 @@ class NotAuthorizedExceptionTest extends TestCase
 
         $sut = new NotAuthorizedException($awsException);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             NotAuthorizedException::class,
             $sut
         );
@@ -29,7 +29,7 @@ class NotAuthorizedExceptionTest extends TestCase
 
         $sut = new NotAuthorizedException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             'Login failed: Incorrect username or password.',
             $sut->getMessage()
         );
@@ -41,7 +41,7 @@ class NotAuthorizedExceptionTest extends TestCase
 
         $sut = new NotAuthorizedException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             401,
             $sut->getCode()
         );
@@ -53,7 +53,7 @@ class NotAuthorizedExceptionTest extends TestCase
 
         $sut = new NotAuthorizedException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             $awsException,
             $sut->getPrevious()
         );

@@ -24,12 +24,15 @@ class UserRepositoryTest extends TestCase
             $this->getUserQueryServiceMock()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserRepository::class,
             $sut
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testFind(): void
     {
         $expectedUser = new User(
@@ -59,7 +62,7 @@ class UserRepositoryTest extends TestCase
 
         $actual = $sut->find('some-username');
 
-        $this->assertEquals(
+        static::assertEquals(
             $expectedUser,
             $actual
         );
@@ -67,7 +70,7 @@ class UserRepositoryTest extends TestCase
 
     public function testFindThrowsGenericAwsException(): void
     {
-        $this->expectException(AwsException::class);
+        static::expectException(AwsException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -93,7 +96,7 @@ class UserRepositoryTest extends TestCase
 
     public function testFindThrowsUserNotFoundException(): void
     {
-        $this->expectException(UserNotFoundException::class);
+        static::expectException(UserNotFoundException::class);
 
         $awsException = new AwsException(
             'some-message',
@@ -144,12 +147,15 @@ class UserRepositoryTest extends TestCase
 
         $actual = $sut->findAll();
 
-        $this->assertEquals(
+        static::assertEquals(
             [],
             $actual
         );
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|UserQueryService
+     */
     private function getUserQueryServiceMock()
     {
         return $this->getMockBuilder(UserQueryService::class)
@@ -157,6 +163,9 @@ class UserRepositoryTest extends TestCase
             ->getMock();
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|UserMapper
+     */
     private function getUserMapperMock()
     {
         return $this->getMockBuilder(UserMapper::class)
@@ -164,6 +173,9 @@ class UserRepositoryTest extends TestCase
             ->getMock();
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|Result
+     */
     private function getAwsResult()
     {
         return $this->getMockBuilder(Result::class)

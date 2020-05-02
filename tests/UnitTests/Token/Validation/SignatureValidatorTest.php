@@ -17,7 +17,7 @@ class SignatureValidatorTest extends TestCase
             TestUtility::getJwsVerifier()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             SignatureValidator::class,
             $subject
         );
@@ -34,6 +34,6 @@ class SignatureValidatorTest extends TestCase
 
         $actual = $subject->validate($token);
 
-        $this->assertTrue($actual);
+        static::assertTrue($actual);
     }
 }

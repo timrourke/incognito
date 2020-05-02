@@ -107,16 +107,13 @@ class TestUtility
             self::getAlgorithmManager()
         );
 
-        $token = $builder->withPayload($payload)
+        return $builder->withPayload($payload)
             ->addSignature(
                 self::getJWK(),
                 $headers ?? self::getValidHeaderClaims(),
-                [
-                ]
+                []
             )
             ->build();
-
-        return $token;
     }
 
     public static function getValidClaims(): array
@@ -148,7 +145,7 @@ class TestUtility
     {
         $rsa256Alg = new RS256();
 
-        return AlgorithmManager::create([$rsa256Alg]);
+        return new AlgorithmManager([$rsa256Alg]);
     }
 
     /**
@@ -158,7 +155,7 @@ class TestUtility
      */
     public static function getJWK(): JWK
     {
-        return JWK::create([
+        return new JWK([
             "kty" => "RSA",
             "d"   => "QA6kJqPpQLHQzIAIFVeJPPevCnOS4ei0HY2ppw-dG9gVFDkqcfIsw73NhHd-W_c27ncUP008FOWr6BiwIhj74i-LuH8yf2pJegzuFGnUW9XXWGTB5IpMhnwwqE7iWqs2nwlUx4i1mlJ7KVY1Dr6LxHZSTEZeBcMewGKyPpTyCMgHU939zPe7TO8FqRLe7cVk3ylFe_MDbwfVJbg0mZImr6TNIrOdI_Psi_8dmT95nQpXtmilwrsqKi2Zji4VYTEgfwXFdLYbdFvkMf8rzqoegR_K0I5gLXS3Btorn_StWzZCwcjwW2Ufk1bswHkFpFJZzXt-4QZXk8ETYVhgESDkt9O_hzQwS2UF9f5GzRs4oDwHnwOK90MC5KO0iMtxAH5r3N6DSKp-0jUqiOlskUDHksL7rERHWI58DR_kMYsCOf_apI88WfhrcL-4cR64Baub5hFOE5GdYR3NMImxgl4R6xvcxpNbLT0gFZkg3cq6YvFU74qRJncJqCztiO4JG4JxZSttq1G66PDaSkZMiieizRBL8y8L60lm5qIkpgmu68ZwhqXXgD6NFpqKWcBAxXrZqt3ctlimap80RQqHuFlrAkYmSs0mGF9s4QJSJeZCkuR7CCJJDMZPcrYnRR8xdW4D0_aHd8pEF88WA4_U55LOM6tztZab-o1XYK8tZtYFYiE",
             "e"   => "AQAB",
@@ -199,16 +196,6 @@ class TestUtility
                 new JWSTokenSupport(),
             ]
         );
-    }
-
-    /**
-     * Get a StandardConverter
-     *
-     * @return StandardConverter
-     */
-    public static function getTokenConverter(): StandardConverter
-    {
-        return new StandardConverter();
     }
 
     /**

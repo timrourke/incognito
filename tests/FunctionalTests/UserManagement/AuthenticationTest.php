@@ -35,6 +35,7 @@ class AuthenticationTest extends TestCase
 
     /**
      * @test
+     * @throws \Exception
      */
     public function shouldLogInUser(): void
     {
@@ -47,18 +48,19 @@ class AuthenticationTest extends TestCase
 
         $authenticationResult = $result['AuthenticationResult'];
 
-        $this->assertEquals(
+        static::assertEquals(
             200,
             $result['@metadata']['statusCode']
         );
 
-        $this->assertNotEmpty($authenticationResult['AccessToken']);
-        $this->assertNotEmpty($authenticationResult['RefreshToken']);
-        $this->assertNotEmpty($authenticationResult['IdToken']);
+        static::assertNotEmpty($authenticationResult['AccessToken']);
+        static::assertNotEmpty($authenticationResult['RefreshToken']);
+        static::assertNotEmpty($authenticationResult['IdToken']);
     }
 
     /**
      * @test
+     * @throws \Exception
      */
     public function shouldRefreshToken(): void
     {
@@ -75,17 +77,18 @@ class AuthenticationTest extends TestCase
             $authenticationResult['RefreshToken']
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             200,
             $refreshTokenResult['@metadata']['statusCode']
         );
 
-        $this->assertNotEmpty($refreshTokenResult['AuthenticationResult']['AccessToken']);
-        $this->assertNotEmpty($refreshTokenResult['AuthenticationResult']['IdToken']);
+        static::assertNotEmpty($refreshTokenResult['AuthenticationResult']['AccessToken']);
+        static::assertNotEmpty($refreshTokenResult['AuthenticationResult']['IdToken']);
     }
 
     /**
      * @test
+     * @throws \Incognito\Exception\UserNotConfirmedException
      */
     public function shouldChangePassword(): void
     {
@@ -104,7 +107,7 @@ class AuthenticationTest extends TestCase
             new Password($expectedNewPassword)
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             200,
             $result['@metadata']['statusCode']
         );
@@ -112,12 +115,15 @@ class AuthenticationTest extends TestCase
         $loginResultAfterPasswordChanged = $this->userAuthenticationService
             ->loginUser(self::USERNAME, $expectedNewPassword);
 
-        $this->assertEquals(
+        static::assertEquals(
             200,
             $loginResultAfterPasswordChanged['@metadata']['statusCode']
         );
     }
 
+    /**
+     * @throws \Exception
+     */
     private function createUser()
     {
         $user = new User(new Username(self::USERNAME));

@@ -14,6 +14,7 @@
     "require": {
         "php": ">7.1.3",
         "ext-gmp": "*",
+        "ext-json": "*",
         "ext-mbstring": "*",
         "lib-openssl": "*",
         "web-token/jwt-checker": "^1.0",

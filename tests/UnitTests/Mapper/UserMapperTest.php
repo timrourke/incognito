@@ -5,21 +5,29 @@ declare(strict_types=1);
 namespace Incognito\UnitTests\Mapper;
 
 use Aws\Result;
+use DateTimeImmutable;
 use Incognito\Mapper\UserMapper;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class UserMapperTest
+ * @package Incognito\UnitTests\Mapper
+ */
 class UserMapperTest extends TestCase
 {
     public function testConstruct(): void
     {
         $sut = new UserMapper();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserMapper::class,
             $sut
         );
     }
 
+    /**
+     * @throws \Assert\AssertionFailedException
+     */
     public function testMapAdminGetUserResult(): void
     {
         $sut = new UserMapper();
@@ -56,47 +64,47 @@ class UserMapperTest extends TestCase
 
         $user = $sut->mapAdminGetUserResult($result);
 
-        $this->assertEquals(
+        static::assertEquals(
             'some-id',
             $user->id()
         );
 
-        $this->assertEquals(
-            new \DateTimeImmutable('2017-01-02T01:02:03Z'),
+        static::assertEquals(
+            new DateTimeImmutable('2017-01-02T01:02:03Z'),
             $user->createdAt()
         );
 
-        $this->assertEquals(
-            new \DateTimeImmutable('2018-02-03T02:03:04Z'),
+        static::assertEquals(
+            new DateTimeImmutable('2018-02-03T02:03:04Z'),
             $user->updatedAt()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'CONFIRMED',
             $user->status()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             false,
             $user->enabled()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'Fred',
             $user->getAttribute('given_name')->value()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'DiBenedetto',
             $user->getAttribute('family_name')->value()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'fred.dib0@example.com',
             $user->getAttribute('email')->value()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'some-id',
             $user->getAttribute('sub')->value()
         );
@@ -142,52 +150,55 @@ class UserMapperTest extends TestCase
 
         $users = $sut->mapListUsersResult($result);
 
-        $this->assertEquals(
+        static::assertEquals(
             'some-id',
             $users[0]->id()
         );
 
-        $this->assertEquals(
-            new \DateTimeImmutable('2017-01-02T01:02:03Z'),
+        static::assertEquals(
+            new DateTimeImmutable('2017-01-02T01:02:03Z'),
             $users[0]->createdAt()
         );
 
-        $this->assertEquals(
-            new \DateTimeImmutable('2018-02-03T02:03:04Z'),
+        static::assertEquals(
+            new DateTimeImmutable('2018-02-03T02:03:04Z'),
             $users[0]->updatedAt()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'CONFIRMED',
             $users[0]->status()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             false,
             $users[0]->enabled()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'Fred',
             $users[0]->getAttribute('given_name')->value()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'DiBenedetto',
             $users[0]->getAttribute('family_name')->value()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'fred.dib0@example.com',
             $users[0]->getAttribute('email')->value()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'some-id',
             $users[0]->getAttribute('sub')->value()
         );
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|Result
+     */
     private function buildAwsResultMock()
     {
         return $this->getMockBuilder(Result::class)

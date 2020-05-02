@@ -12,7 +12,7 @@ use Psr\Http\Message\ResponseInterface;
  * Useful for preventing tight coupling to a specific PSR-7 HTTP response object
  * implementation
  *
- * @package Incognito\Http
+ * @package            Incognito\Http
  * @codeCoverageIgnore
  */
 interface ResponseFactoryInterface

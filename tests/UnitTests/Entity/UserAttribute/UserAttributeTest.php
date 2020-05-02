@@ -14,7 +14,7 @@ class UserAttributeTest extends TestCase
     {
         $sut = new UserAttribute('email', 'somebody@somewhere.biz');
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserAttribute::class,
             $sut
         );
@@ -24,7 +24,7 @@ class UserAttributeTest extends TestCase
     {
         $sut = new UserAttribute('first_name');
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserAttribute::class,
             $sut
         );
@@ -32,11 +32,11 @@ class UserAttributeTest extends TestCase
 
     public function testConstructThrowsWhenNameNotLongEnough(): void
     {
-        $this->expectException(
+        static::expectException(
             AssertionFailedException::class
         );
 
-        $this->expectExceptionMessage(
+        static::expectExceptionMessage(
             'Invalid name "": name must be between 1 and 32 characters in length.'
         );
 
@@ -45,11 +45,11 @@ class UserAttributeTest extends TestCase
 
     public function testConstructThrowsWhenNameTooLong(): void
     {
-        $this->expectException(
+        static::expectException(
             AssertionFailedException::class
         );
 
-        $this->expectExceptionMessage(
+        static::expectExceptionMessage(
             'Invalid name "some name that is unacceptably long": name must be between 1 and 32 characters in length.'
         );
 
@@ -58,8 +58,8 @@ class UserAttributeTest extends TestCase
 
     public function testConstructThrowsWhenNameContainsInvalidCharacters(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             "Invalid name \"\u{0003}\": name contains invalid characters."
         );
 
@@ -70,7 +70,7 @@ class UserAttributeTest extends TestCase
     {
         $sut = new UserAttribute('given_name');
 
-        $this->assertEquals(
+        static::assertEquals(
             'given_name',
             $sut->name()
         );
@@ -80,7 +80,7 @@ class UserAttributeTest extends TestCase
     {
         $sut = new UserAttribute('zoneinfo', 'America/Chicago');
 
-        $this->assertEquals(
+        static::assertEquals(
             'America/Chicago',
             $sut->value()
         );

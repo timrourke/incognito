@@ -26,7 +26,7 @@ class UserRepository
     /**
      * UserRepository constructor.
      *
-     * @param \Incognito\Mapper\UserMapper $mapper
+     * @param \Incognito\Mapper\UserMapper              $mapper
      * @param \Incognito\CognitoClient\UserQueryService $queryService
      */
     public function __construct(
@@ -43,6 +43,7 @@ class UserRepository
      * @param string $username
      * @return \Incognito\Entity\User
      * @throws \Exception
+     * @throws \Assert\AssertionFailedException
      */
     public function find(string $username): User
     {

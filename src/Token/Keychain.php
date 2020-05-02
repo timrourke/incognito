@@ -42,8 +42,8 @@ class Keychain
     /**
      * Constructor.
      *
-     * @param \GuzzleHttp\ClientInterface $httpClient
-     * @param \Psr\Cache\CacheItemPoolInterface $cache
+     * @param \GuzzleHttp\ClientInterface                $httpClient
+     * @param \Psr\Cache\CacheItemPoolInterface          $cache
      * @param \Incognito\Cache\CacheItemFactoryInterface $cacheItemFactory
      */
     public function __construct(
@@ -64,6 +64,8 @@ class Keychain
      * endpoint.
      *
      * @return \Jose\Component\Core\JWKSet
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function getPublicKeyset(): JWKSet
     {
@@ -81,6 +83,7 @@ class Keychain
      * it in the cache
      *
      * @return \Jose\Component\Core\JWKSet
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function fetchAndCacheKeyset(): JWKSet
     {
@@ -101,6 +104,7 @@ class Keychain
      * Make an http request for your Cognito app's public RSA keyset
      *
      * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     private function fetchKeysetData(): array
     {
@@ -113,6 +117,7 @@ class Keychain
      * Try to get the RSA public keyset from the cache
      *
      * @return \Jose\Component\Core\JWKSet|null
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     private function getKeysetFromCache(): ?JWKSet
     {

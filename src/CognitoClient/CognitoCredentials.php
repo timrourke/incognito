@@ -78,7 +78,7 @@ class CognitoCredentials
     /**
      * Create a base64-encoded HMAC SHA256 signature to sign the SignUp request
      *
-     * @param string $username
+     * @param  string $username
      * @return string
      */
     public function getSecretHashForUsername(string $username): string

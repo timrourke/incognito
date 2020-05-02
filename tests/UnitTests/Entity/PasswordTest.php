@@ -14,7 +14,7 @@ class PasswordTest extends TestCase
     {
         $sut = new Password('SomePassword123!');
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             Password::class,
             $sut
         );
@@ -22,8 +22,8 @@ class PasswordTest extends TestCase
 
     public function testConstructThrowsWhenPasswordTooShort(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid password: password must be between 8 and 256 characters in length.'
         );
 
@@ -33,8 +33,8 @@ class PasswordTest extends TestCase
     public function testConstructThrowsWhenPasswordTooLong(): void
     {
         $longPassword = '123!Someincrediblylongpasswordthatshouldabsolutelythrowanexceptionblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah';
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid password: password must be between 8 and 256 characters in length.'
         );
 
@@ -43,8 +43,8 @@ class PasswordTest extends TestCase
 
     public function testConstructThrowsWhenPasswordIsWeak(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid password: password must contain uppercase and lowercase letters, numbers, and special characters.'
         );
 
@@ -55,7 +55,7 @@ class PasswordTest extends TestCase
     {
         $sut = new Password('charlesInCharge49?');
 
-        $this->assertEquals(
+        static::assertEquals(
             'charlesInCharge49?',
             $sut->password()
         );
@@ -65,9 +65,9 @@ class PasswordTest extends TestCase
     {
         $sut = new Password('kateyPass32!');
 
-        $this->assertEquals(
-            sprintf("%s", $sut),
-            'kateyPass32!'
+        static::assertEquals(
+            'kateyPass32!',
+            sprintf("%s", $sut)
         );
     }
 }

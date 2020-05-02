@@ -36,8 +36,8 @@ class TokenValidatorFactory
     /**
      * Build a Cognito token service with all of its dependencies
      *
-     * @param string $cognitoClientAppId
-     * @param JWKSet $keyset
+     * @param  string $cognitoClientAppId
+     * @param  JWKSet $keyset
      * @return TokenValidator
      */
     public static function make(
@@ -54,19 +54,21 @@ class TokenValidatorFactory
     /**
      * Get a Cognito token claims validator
      *
-     * @param string $cognitoClientAppId
+     * @param  string $cognitoClientAppId
      * @return ClaimsValidator
      */
     private static function getClaimsValidator(
         string $cognitoClientAppId
     ): ClaimsValidator {
-        $claimCheckerManager = ClaimCheckerManager::create([
+        $claimCheckerManager = ClaimCheckerManager::create(
+            [
             new IssuedAtChecker(),
             new NotBeforeChecker(),
             new ExpirationTimeChecker(),
             new AudienceChecker($cognitoClientAppId),
             new TokenUseChecker(),
-        ]);
+            ]
+        );
 
         $headerCheckerManager = HeaderCheckerManager::create(
             [
@@ -81,7 +83,6 @@ class TokenValidatorFactory
         return new ClaimsValidator(
             $claimCheckerManager,
             $headerCheckerManager,
-            new StandardConverter(),
             new JWSTokenSupport()
         );
     }
@@ -89,7 +90,7 @@ class TokenValidatorFactory
     /**
      * Get a Cognito token signature validator
      *
-     * @param \Jose\Component\Core\JWKSet $keyset
+     * @param  \Jose\Component\Core\JWKSet $keyset
      * @return \Incognito\Token\Validation\SignatureValidator
      */
     private static function getSignatureValidator(
@@ -97,7 +98,7 @@ class TokenValidatorFactory
     ): SignatureValidator {
         $rsa256Alg = new RS256();
 
-        $algorithmManager = AlgorithmManager::create([$rsa256Alg]);
+        $algorithmManager = new AlgorithmManager([$rsa256Alg]);
 
         $jwsVerifier = new JWSVerifier($algorithmManager);
 
@@ -116,9 +117,11 @@ class TokenValidatorFactory
     {
         $serializer = new CompactSerializer(new StandardConverter());
 
-        $serializerManager = JWSSerializerManager::create([
+        $serializerManager = JWSSerializerManager::create(
+            [
             $serializer,
-        ]);
+            ]
+        );
 
         return new Deserializer($serializerManager);
     }

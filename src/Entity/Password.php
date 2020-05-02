@@ -28,6 +28,7 @@ class Password
      * Password constructor.
      *
      * @param string $password
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct(string $password)
     {
@@ -53,7 +54,7 @@ class Password
     /**
      * Validate and set the password
      *
-     * @param string $password
+     * @param  string $password
      * @return void
      * @throws \Assert\AssertionFailedException
      */

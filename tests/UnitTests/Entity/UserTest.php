@@ -3,6 +3,7 @@
 namespace Incognito\UnitTests\Entity;
 
 use Assert\AssertionFailedException;
+use DateTimeImmutable;
 use Incognito\Entity\User;
 use Incognito\Entity\Username;
 use Incognito\Entity\UserStatus;
@@ -18,7 +19,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             User::class,
             $sut
         );
@@ -35,7 +36,7 @@ class UserTest extends TestCase
             $attrs
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $attrs->toArray(),
             $sut->getAttributes()
         );
@@ -56,7 +57,7 @@ class UserTest extends TestCase
 
         $sut->setAttribute($newEmail);
 
-        $this->assertEquals(
+        static::assertEquals(
             $newEmail,
             $sut->getAttribute('email')
         );
@@ -72,7 +73,7 @@ class UserTest extends TestCase
 
         $sut->setAttribute($newEmail);
 
-        $this->assertEquals(
+        static::assertEquals(
             $newEmail,
             $sut->getAttribute('email')
         );
@@ -91,7 +92,7 @@ class UserTest extends TestCase
             $attrs
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $givenName,
             $sut->getAttribute('given_name')
         );
@@ -108,7 +109,7 @@ class UserTest extends TestCase
             $attrs
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $attrs->toArray(),
             $sut->getAttributes()
         );
@@ -120,7 +121,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             [],
             $sut->getAttributes()
         );
@@ -132,7 +133,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             '',
             $sut->id()
         );
@@ -146,7 +147,7 @@ class UserTest extends TestCase
 
         $sut->setId('some-id');
 
-        $this->assertEquals(
+        static::assertEquals(
             'some-id',
             $sut->id()
         );
@@ -158,7 +159,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'foo',
             $sut->username()
         );
@@ -174,7 +175,7 @@ class UserTest extends TestCase
             new Username('bar')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'bar',
             $sut->username()
         );
@@ -186,23 +187,26 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             null,
             $sut->createdAt()
         );
     }
 
+    /**
+     * @throws \Assert\AssertionFailedException
+     */
     public function testSetCreatedAt(): void
     {
         $sut = new User(
             new Username('foo')
         );
 
-        $date = new \DateTimeImmutable('now');
+        $date = new DateTimeImmutable('now');
 
         $sut->setCreatedAt($date);
 
-        $this->assertEquals(
+        static::assertEquals(
             $date,
             $sut->createdAt()
         );
@@ -210,8 +214,8 @@ class UserTest extends TestCase
 
     public function testSetCreatedAtThrowsWhenAlreadySet(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid createdAt: user already has a "createdAt" date.'
         );
 
@@ -219,7 +223,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $date = new \DateTimeImmutable('now');
+        $date = new DateTimeImmutable('now');
 
         $sut->setCreatedAt($date);
         $sut->setCreatedAt($date);
@@ -231,7 +235,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             null,
             $sut->updatedAt()
         );
@@ -243,11 +247,11 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $date = new \DateTimeImmutable('now');
+        $date = new DateTimeImmutable('now');
 
         $sut->setUpdatedAt($date);
 
-        $this->assertEquals(
+        static::assertEquals(
             $date,
             $sut->updatedAt()
         );
@@ -259,7 +263,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             null,
             $sut->enabled()
         );
@@ -273,14 +277,14 @@ class UserTest extends TestCase
 
         $sut->setEnabled(true);
 
-        $this->assertEquals(
+        static::assertEquals(
             true,
             $sut->enabled()
         );
 
         $sut->setEnabled(false);
 
-        $this->assertEquals(
+        static::assertEquals(
             false,
             $sut->enabled()
         );
@@ -292,7 +296,7 @@ class UserTest extends TestCase
             new Username('foo')
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             'UNKNOWN',
             sprintf('%s', $sut->status())
         );
@@ -301,6 +305,7 @@ class UserTest extends TestCase
     /**
      * @dataProvider statusProvider
      * @param string $statusString
+     * @throws \Assert\AssertionFailedException
      */
     public function testSetStatus(string $statusString): void
     {
@@ -312,7 +317,7 @@ class UserTest extends TestCase
 
         $sut->setStatus($expected);
 
-        $this->assertEquals(
+        static::assertEquals(
             $expected,
             $sut->status()
         );

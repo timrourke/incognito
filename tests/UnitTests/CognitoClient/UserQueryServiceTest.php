@@ -19,7 +19,7 @@ class UserQueryServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserQueryService::class,
             $sut
         );
@@ -46,7 +46,7 @@ class UserQueryServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $expectedResult,
             $sut->getUserByUsername('some-username')
         );
@@ -72,12 +72,15 @@ class UserQueryServiceTest extends TestCase
             $this->getCognitoCredentials()
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             $expectedResult,
             $sut->getList()
         );
     }
 
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|CognitoClient
+     */
     private function getCognitoClientMock()
     {
         return $this->getMockBuilder(CognitoClient::class)

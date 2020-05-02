@@ -32,7 +32,7 @@ class AuthenticationTest extends TestCase
     {
         $sut = $this->getAuthentication();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             Authentication::class,
             $sut
         );
@@ -59,7 +59,7 @@ class AuthenticationTest extends TestCase
             $handler
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             200,
             $response->getStatusCode()
         );
@@ -81,7 +81,7 @@ class AuthenticationTest extends TestCase
             $handler
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             401,
             $response->getStatusCode()
         );
@@ -106,7 +106,7 @@ class AuthenticationTest extends TestCase
             $handler
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             401,
             $response->getStatusCode()
         );
@@ -131,7 +131,7 @@ class AuthenticationTest extends TestCase
             $handler
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             401,
             $response->getStatusCode()
         );

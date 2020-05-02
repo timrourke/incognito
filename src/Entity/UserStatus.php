@@ -46,7 +46,7 @@ class UserStatus
     /**
      * UserStatus constructor.
      *
-     * @param string $status
+     * @param  string $status
      * @throws \Assert\AssertionFailedException
      */
     public function __construct(string $status = '')
@@ -61,7 +61,7 @@ class UserStatus
     /**
      * Set the user's status
      *
-     * @param string $status
+     * @param  string $status
      * @return void
      * @throws \Assert\AssertionFailedException
      */

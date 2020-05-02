@@ -37,9 +37,9 @@ class TokenValidator
     /**
      * Constructor.
      *
-     * @param \Incognito\Token\Validation\ClaimsValidator $claimsValidator
+     * @param \Incognito\Token\Validation\ClaimsValidator    $claimsValidator
      * @param \Incognito\Token\Validation\SignatureValidator $signatureValidator
-     * @param \Incognito\Token\Deserializer $tokenDeserializer
+     * @param \Incognito\Token\Deserializer                  $tokenDeserializer
      */
     public function __construct(
         ClaimsValidator $claimsValidator,
@@ -54,7 +54,7 @@ class TokenValidator
     /**
      * Verify an AWS Cognito JWT
      *
-     * @param string $tokenString
+     * @param  string $tokenString
      * @return \Jose\Component\Signature\JWS
      * @throws \Exception
      */

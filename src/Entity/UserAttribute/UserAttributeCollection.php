@@ -29,7 +29,7 @@ class UserAttributeCollection
      * If the collection already contains a UserAttribute bearing the same name,
      * it will be replaced with the new one provided to this method.
      *
-     * @param \Incognito\Entity\UserAttribute\UserAttribute $newUserAttribute
+     * @param  \Incognito\Entity\UserAttribute\UserAttribute $newUserAttribute
      * @return UserAttributeCollection
      */
     public function add(UserAttribute $newUserAttribute): UserAttributeCollection
@@ -52,7 +52,7 @@ class UserAttributeCollection
     /**
      * Get a UserAttribute by name
      *
-     * @param string $name
+     * @param  string $name
      * @return \Incognito\Entity\UserAttribute\UserAttribute
      */
     public function get(string $name): UserAttribute
@@ -95,7 +95,7 @@ class UserAttributeCollection
     }
 
     /**
-     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
+     * @param  \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -109,7 +109,7 @@ class UserAttributeCollection
     }
 
     /**
-     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
+     * @param  \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -123,7 +123,7 @@ class UserAttributeCollection
     }
 
     /**
-     * @param \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
+     * @param  \Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
      * @return void
      * @throws \Assert\AssertionFailedException
      */

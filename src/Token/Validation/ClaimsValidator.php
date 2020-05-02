@@ -8,7 +8,7 @@ use Jose\Component\Checker\ClaimCheckerManager;
 use Jose\Component\Checker\HeaderCheckerManager;
 use Jose\Component\Checker\InvalidClaimException;
 use Jose\Component\Checker\InvalidHeaderException;
-use Jose\Component\Core\Converter\JsonConverter;
+use Jose\Component\Core\Util\JsonConverter;
 use Jose\Component\Signature\JWS;
 use Jose\Component\Signature\JWSTokenSupport;
 
@@ -40,11 +40,6 @@ class ClaimsValidator
     private $headerChecker;
 
     /**
-     * @var \Jose\Component\Core\Converter\JsonConverter
-     */
-    private $tokenConverter;
-
-    /**
      * @var \Jose\Component\Signature\JWSTokenSupport
      */
     private $tokenSupport;
@@ -52,29 +47,30 @@ class ClaimsValidator
     /**
      * Constructor.
      *
-     * @param \Jose\Component\Checker\ClaimCheckerManager $claimChecker
+     * @param \Jose\Component\Checker\ClaimCheckerManager  $claimChecker
      * @param \Jose\Component\Checker\HeaderCheckerManager $headerChecker
-     * @param \Jose\Component\Core\Converter\JsonConverter $tokenConverter
-     * @param \Jose\Component\Signature\JWSTokenSupport $tokenSupport
+     * @param \Jose\Component\Signature\JWSTokenSupport    $tokenSupport
      */
     public function __construct(
         ClaimCheckerManager $claimChecker,
         HeaderCheckerManager $headerChecker,
-        JsonConverter $tokenConverter,
         JWSTokenSupport $tokenSupport
     ) {
         $this->claimChecker = $claimChecker;
         $this->headerChecker = $headerChecker;
-        $this->tokenConverter = $tokenConverter;
         $this->tokenSupport = $tokenSupport;
     }
 
     /**
      * Check a token for having valid header values and claims
      *
-     * @param \Jose\Component\Signature\JWS $token
+     * @param  \Jose\Component\Signature\JWS $token
      * @return bool
      * @throws \InvalidArgumentException
+     * @throws \Jose\Component\Checker\InvalidHeaderException
+     * @throws \Jose\Component\Checker\MissingMandatoryHeaderParameterException
+     * @throws \Jose\Component\Checker\InvalidClaimException
+     * @throws \Jose\Component\Checker\MissingMandatoryClaimException
      */
     public function validate(JWS $token): bool
     {
@@ -82,7 +78,7 @@ class ClaimsValidator
         $this->headerChecker->check($token, 0);
 
         $payload = (string) $token->getPayload();
-        $claims = $this->tokenConverter->decode($payload);
+        $claims = JsonConverter::decode($payload);
         $this->verifyRequiredPayloadClaims($claims);
         $this->claimChecker->check($claims);
 
@@ -92,7 +88,7 @@ class ClaimsValidator
     /**
      * Verify that all required header claims are present
      *
-     * @param \Jose\Component\Signature\JWS $token
+     * @param  \Jose\Component\Signature\JWS $token
      * @throws \Jose\Component\Checker\InvalidHeaderException
      */
     private function verifyRequiredHeaderClaims(JWS $token): void
@@ -116,7 +112,7 @@ class ClaimsValidator
     /**
      * Verify that all required payload claims are present
      *
-     * @param array $claims
+     * @param  array $claims
      * @throws \Jose\Component\Checker\InvalidClaimException
      */
     private function verifyRequiredPayloadClaims(array $claims): void
@@ -141,7 +137,7 @@ class ClaimsValidator
      * We only intend to validate the protected headers of a token, so we can
      * ignore the unprotected headers here.
      *
-     * @param \Jose\Component\Signature\JWS $token
+     * @param  \Jose\Component\Signature\JWS $token
      * @return array
      */
     private function getTokenHeaders(JWS $token): array

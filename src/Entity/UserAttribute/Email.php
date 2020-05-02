@@ -16,7 +16,7 @@ class Email extends UserAttribute implements UserAttributeInterface
     /**
      * Email constructor.
      *
-     * @param string $value
+     * @param  string $value
      * @throws \Assert\AssertionFailedException
      */
     public function __construct($value = '')
@@ -27,7 +27,7 @@ class Email extends UserAttribute implements UserAttributeInterface
     /**
      * Set the email address
      *
-     * @param string $value
+     * @param  string $value
      * @return void
      * @throws \Assert\AssertionFailedException
      */
@@ -41,7 +41,7 @@ class Email extends UserAttribute implements UserAttributeInterface
     /**
      * Validate that the value is a valid email address
      *
-     * @param string $value
+     * @param  string $value
      * @return void
      * @throws \Assert\AssertionFailedException
      */

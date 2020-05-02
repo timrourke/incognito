@@ -17,7 +17,7 @@ class UserNotFoundExceptionTest extends TestCase
 
         $sut = new UserNotFoundException($awsException);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             UserNotFoundException::class,
             $sut
         );
@@ -29,7 +29,7 @@ class UserNotFoundExceptionTest extends TestCase
 
         $sut = new UserNotFoundException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             'User not found.',
             $sut->getMessage()
         );
@@ -41,7 +41,7 @@ class UserNotFoundExceptionTest extends TestCase
 
         $sut = new UserNotFoundException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             404,
             $sut->getCode()
         );
@@ -53,7 +53,7 @@ class UserNotFoundExceptionTest extends TestCase
 
         $sut = new UserNotFoundException($awsException);
 
-        $this->assertEquals(
+        static::assertEquals(
             $awsException,
             $sut->getPrevious()
         );

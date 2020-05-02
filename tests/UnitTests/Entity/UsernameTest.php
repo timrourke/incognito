@@ -14,7 +14,7 @@ class UsernameTest extends TestCase
     {
         $sut = new Username('fredflinstone');
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             Username::class,
             $sut
         );
@@ -22,8 +22,8 @@ class UsernameTest extends TestCase
 
     public function testConstructThrowsWhenUsernameTooShort(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid username "": username must be between 1 and 128 characters in length.'
         );
 
@@ -33,8 +33,8 @@ class UsernameTest extends TestCase
     public function testConstructThrowsWhenUsernameTooLong(): void
     {
         $longUsername = 'someincrediblylongusernamethatshouldabsolutelythrowanexceptionblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblahblah';
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             'Invalid username "'. $longUsername .'": username must be between 1 and 128 characters in length.'
         );
 
@@ -43,8 +43,8 @@ class UsernameTest extends TestCase
 
     public function testConstructThrowsWhenUsernameUsesInvalidCharacters(): void
     {
-        $this->expectException(AssertionFailedException::class);
-        $this->expectExceptionMessage(
+        static::expectException(AssertionFailedException::class);
+        static::expectExceptionMessage(
             "Invalid username \"\u{0007}\": username contains invalid characters."
         );
 
@@ -55,7 +55,7 @@ class UsernameTest extends TestCase
     {
         $sut = new Username('charles');
 
-        $this->assertEquals(
+        static::assertEquals(
             'charles',
             $sut->username()
         );
@@ -65,9 +65,9 @@ class UsernameTest extends TestCase
     {
         $sut = new Username('katey32!');
 
-        $this->assertEquals(
-            sprintf("%s", $sut),
-            'katey32!'
+        static::assertEquals(
+            'katey32!',
+            sprintf("%s", $sut)
         );
     }
 }

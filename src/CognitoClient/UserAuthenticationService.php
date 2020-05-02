@@ -28,7 +28,7 @@ class UserAuthenticationService
      * Constructor.
      *
      * @param \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient $cognitoClient
-     * @param \Incognito\CognitoClient\CognitoCredentials $cognitoCredentials
+     * @param \Incognito\CognitoClient\CognitoCredentials                $cognitoCredentials
      */
     public function __construct(
         CognitoClient $cognitoClient,
@@ -41,8 +41,8 @@ class UserAuthenticationService
     /**
      * Log a user in via username and password
      *
-     * @param string $username
-     * @param string $password
+     * @param  string $username
+     * @param  string $password
      * @return \Aws\Result|null
      * @throws \Incognito\Exception\UserNotConfirmedException
      * @throws \Exception
@@ -52,7 +52,8 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->adminInitiateAuth([
+            $result = $this->cognitoClient->adminInitiateAuth(
+                [
                 'AuthFlow'       => 'ADMIN_NO_SRP_AUTH',
                 'ClientId'       => $this->cognitoCredentials->getClientId(),
                 'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
@@ -63,7 +64,8 @@ class UserAuthenticationService
                     'USERNAME'    => $username,
                     'PASSWORD'    => $password,
                 ],
-            ]);
+                ]
+            );
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
@@ -74,32 +76,34 @@ class UserAuthenticationService
     /**
      * Refresh the current AWS Cognito session and return a new access token
      *
-     * @param string $username
-     * @param string $refreshToken
+     * @param  string $username
+     * @param  string $refreshToken
      * @return \Aws\Result|null
      * @throws \Exception
      */
     public function refreshToken(string $username, string $refreshToken): ?Result
     {
-         return $this->cognitoClient->adminInitiateAuth([
+        return $this->cognitoClient->adminInitiateAuth(
+            [
               'AuthFlow'       => 'REFRESH_TOKEN_AUTH',
               'ClientId'       => $this->cognitoCredentials->getClientId(),
               'UserPoolId'     => $this->cognitoCredentials->getUserPoolId(),
               'AuthParameters' => [
                   'REFRESH_TOKEN' => $refreshToken,
-                  'SECRET_HASH'   => $this->cognitoCredentials->getSecretHashForUsername(
-                      $username
-                  ),
+                'SECRET_HASH'   => $this->cognitoCredentials->getSecretHashForUsername(
+                    $username
+                ),
                   'USERNAME'      => $username,
               ],
-         ]);
+             ]
+        );
     }
 
     /**
      * Sign up a new user
      *
-     * @param \Incognito\Entity\User $user
-     * @param \Incognito\Entity\Password $password
+     * @param  \Incognito\Entity\User     $user
+     * @param  \Incognito\Entity\Password $password
      * @return \Aws\Result|null
      * @throws \Exception
      */
@@ -108,7 +112,8 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->signUp([
+            $result = $this->cognitoClient->signUp(
+                [
                 'ClientId'   => $this->cognitoCredentials->getClientId(),
                 'Password'   => $password->password(),
                 'SecretHash' => $this->cognitoCredentials->getSecretHashForUsername(
@@ -124,7 +129,8 @@ class UserAuthenticationService
                     $user->getAttributes()
                 ),
                 'Username' => $user->username(),
-            ]);
+                ]
+            );
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
@@ -136,7 +142,7 @@ class UserAuthenticationService
      * Confirm a sign up for a new User without the User going through an email
      * or SMS confirmation flow.
      *
-     * @param string $username
+     * @param  string $username
      * @return \Aws\Result|null
      * @throws \Exception
      */
@@ -145,10 +151,12 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->adminConfirmSignUp([
+            $result = $this->cognitoClient->adminConfirmSignUp(
+                [
                 'UserPoolId' => $this->cognitoCredentials->getUserPoolId(),
                 'Username'   => $username,
-            ]);
+                ]
+            );
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }
@@ -159,9 +167,9 @@ class UserAuthenticationService
     /**
      * Change a User's password
      *
-     * @param string $accessToken
-     * @param \Incognito\Entity\Password $previousPassword
-     * @param \Incognito\Entity\Password $proposedPassword
+     * @param  string                     $accessToken
+     * @param  \Incognito\Entity\Password $previousPassword
+     * @param  \Incognito\Entity\Password $proposedPassword
      * @return \Aws\Result|null
      * @throws \Exception
      */
@@ -173,11 +181,13 @@ class UserAuthenticationService
         $result = null;
 
         try {
-            $result = $this->cognitoClient->changePassword([
+            $result = $this->cognitoClient->changePassword(
+                [
                 'AccessToken'      => $accessToken,
                 'PreviousPassword' => $previousPassword->password(),
                 'ProposedPassword' => $proposedPassword->password(),
-            ]);
+                ]
+            );
         } catch (AwsException $e) {
             throw ExceptionFactory::make($e);
         }

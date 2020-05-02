@@ -15,38 +15,40 @@ class ClaimsValidatorTest extends TestCase
     {
         $claimChecker = TestUtility::getClaimChecker();
         $headerChecker = TestUtility::getHeaderChecker();
-        $tokenConverter = TestUtility::getTokenConverter();
 
         $subject = new ClaimsValidator(
             $claimChecker,
             $headerChecker,
-            $tokenConverter,
             new JWSTokenSupport()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ClaimsValidator::class,
             $subject
         );
     }
 
+    /**
+     * @throws \Jose\Component\Checker\InvalidClaimException
+     * @throws \Jose\Component\Checker\InvalidHeaderException
+     * @throws \Jose\Component\Checker\MissingMandatoryClaimException
+     * @throws \Jose\Component\Checker\MissingMandatoryHeaderParameterException
+     */
     public function testAreTokenClaimsValid(): void
     {
         $token = TestUtility::getJWS();
 
         $claimChecker = TestUtility::getClaimChecker();
         $headerChecker = TestUtility::getHeaderChecker();
-        $tokenConverter = TestUtility::getTokenConverter();
 
         $subject = new ClaimsValidator(
             $claimChecker,
             $headerChecker,
-            $tokenConverter,
             new JWSTokenSupport()
         );
 
         $tokenClaimsAreValid = $subject->validate($token);
 
-        $this->assertTrue($tokenClaimsAreValid);
+        static::assertTrue($tokenClaimsAreValid);
     }
 }
