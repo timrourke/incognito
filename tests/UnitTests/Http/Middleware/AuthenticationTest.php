@@ -11,6 +11,7 @@ use Incognito\Token\TokenValidator;
 use Incognito\Token\TokenValidatorFactory;
 use Incognito\UnitTests\Token\TestUtility;
 use Jose\Component\Signature\JWS;
+use Jose\Component\Signature\Serializer\JWSSerializerManager;
 use PHPUnit\Framework\TestCase;
 
 class AuthenticationTest extends TestCase
@@ -18,7 +19,7 @@ class AuthenticationTest extends TestCase
     /**
      * @var \Jose\Component\Signature\Serializer\JWSSerializerManager
      */
-    private $serializer;
+    private JWSSerializerManager $serializer;
 
     /**
      * {@inheritdoc}

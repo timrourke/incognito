@@ -12,12 +12,12 @@ class UserQueryService
     /**
      * @var \Aws\CognitoIdentityProvider\CognitoIdentityProviderClient
      */
-    private $cognitoClient;
+    private CognitoClient $cognitoClient;
 
     /**
      * @var \Incognito\CognitoClient\CognitoCredentials
      */
-    private $cognitoCredentials;
+    private CognitoCredentials $cognitoCredentials;
 
     /**
      * UserQueryService constructor.

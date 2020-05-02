@@ -21,12 +21,12 @@ class SignatureValidator
     /**
      * @var \Jose\Component\Core\JWKSet
      */
-    private $keyset;
+    private JWKSet $keyset;
 
     /**
      * @var \Jose\Component\Signature\JWSVerifier
      */
-    private $tokenVerifier;
+    private JWSVerifier $tokenVerifier;
 
     /**
      * Constructor.

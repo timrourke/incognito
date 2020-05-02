@@ -173,7 +173,7 @@ class TestUtility
      */
     public static function getClaimChecker(): ClaimCheckerManager
     {
-        return ClaimCheckerManager::create([
+        return new ClaimCheckerManager([
             new IssuedAtChecker(),
             new NotBeforeChecker(),
             new ExpirationTimeChecker(),
@@ -188,13 +188,9 @@ class TestUtility
      */
     public static function getHeaderChecker(): HeaderCheckerManager
     {
-        return HeaderCheckerManager::create(
-            [
-                new AlgorithmChecker(['RS256']),
-            ],
-            [
-                new JWSTokenSupport(),
-            ]
+        return new HeaderCheckerManager(
+            [new AlgorithmChecker(['RS256'])],
+            [new JWSTokenSupport()]
         );
     }
 

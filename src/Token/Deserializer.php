@@ -20,7 +20,7 @@ class Deserializer
     /**
      * @var \Jose\Component\Signature\Serializer\JWSSerializerManager
      */
-    private $serializer;
+    private JWSSerializerManager $serializer;
 
     /**
      * Constructor

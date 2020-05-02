@@ -15,6 +15,7 @@ class MissingAttribute extends UserAttribute
 {
     /**
      * MissingAttribute constructor.
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct()
     {

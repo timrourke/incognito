@@ -60,23 +60,21 @@ class TokenValidatorFactory
     private static function getClaimsValidator(
         string $cognitoClientAppId
     ): ClaimsValidator {
-        $claimCheckerManager = ClaimCheckerManager::create(
-            [
+        $claimCheckerManager = new ClaimCheckerManager([
             new IssuedAtChecker(),
             new NotBeforeChecker(),
             new ExpirationTimeChecker(),
             new AudienceChecker($cognitoClientAppId),
             new TokenUseChecker(),
-            ]
-        );
+        ]);
 
-        $headerCheckerManager = HeaderCheckerManager::create(
+        $headerCheckerManager = new HeaderCheckerManager(
             [
-                new AlgorithmChecker(['RS256']),
-                new KeyIdChecker(),
+            new AlgorithmChecker(['RS256']),
+            new KeyIdChecker(),
             ],
             [
-                new JWSTokenSupport(),
+            new JWSTokenSupport(),
             ]
         );
 
@@ -117,11 +115,7 @@ class TokenValidatorFactory
     {
         $serializer = new CompactSerializer(new StandardConverter());
 
-        $serializerManager = JWSSerializerManager::create(
-            [
-            $serializer,
-            ]
-        );
+        $serializerManager = new JWSSerializerManager([$serializer]);
 
         return new Deserializer($serializerManager);
     }

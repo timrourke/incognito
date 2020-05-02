@@ -16,18 +16,19 @@ class UserAttribute implements UserAttributeInterface
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var string
      */
-    protected $value;
+    protected string $value;
 
     /**
      * Constructor.
      *
      * @param string $name
      * @param string $value
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct(string $name, string $value = '')
     {

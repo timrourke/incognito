@@ -18,21 +18,21 @@ class CognitoCredentials
      *
      * @var string
      */
-    private $clientId;
+    private string $clientId;
 
     /**
      * The AWS Cognito client secret
      *
      * @var string
      */
-    private $clientSecret;
+    private string $clientSecret;
 
     /**
      * The AWS Cognito User Pool ID
      *
      * @var string
      */
-    private $userPoolId;
+    private string $userPoolId;
 
     /**
      * Constructor.

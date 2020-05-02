@@ -32,17 +32,17 @@ class ClaimsValidator
     /**
      * @var \Jose\Component\Checker\ClaimCheckerManager
      */
-    private $claimChecker;
+    private ClaimCheckerManager $claimChecker;
 
     /**
      * @var \Jose\Component\Checker\HeaderCheckerManager
      */
-    private $headerChecker;
+    private HeaderCheckerManager $headerChecker;
 
     /**
      * @var \Jose\Component\Signature\JWSTokenSupport
      */
-    private $tokenSupport;
+    private JWSTokenSupport $tokenSupport;
 
     /**
      * Constructor.

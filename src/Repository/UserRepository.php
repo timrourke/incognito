@@ -6,7 +6,6 @@ namespace Incognito\Repository;
 
 use Aws\Exception\AwsException;
 use Incognito\Exception\ExceptionFactory;
-use Incognito\Exception\UserNotFoundException;
 use Incognito\Entity\User;
 use Incognito\Mapper\UserMapper;
 use Incognito\CognitoClient\UserQueryService;
@@ -16,12 +15,12 @@ class UserRepository
     /**
      * @var \Incognito\Mapper\UserMapper
      */
-    private $mapper;
+    private UserMapper $mapper;
 
     /**
      * @var \Incognito\CognitoClient\UserQueryService
      */
-    private $queryService;
+    private UserQueryService $queryService;
 
     /**
      * UserRepository constructor.

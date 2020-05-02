@@ -22,17 +22,17 @@ class TokenValidator
     /**
      * @var \Incognito\Token\Validation\ClaimsValidator
      */
-    private $claimsValidator;
+    private ClaimsValidator $claimsValidator;
 
     /**
      * @var \Incognito\Token\Validation\SignatureValidator
      */
-    private $signatureValidator;
+    private SignatureValidator $signatureValidator;
 
     /**
      * @var \Incognito\Token\Deserializer
      */
-    private $tokenDeserializer;
+    private Deserializer $tokenDeserializer;
 
     /**
      * Constructor.

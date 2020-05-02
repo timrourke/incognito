@@ -13,11 +13,11 @@ class InvalidTokenResponseFactoryTest extends TestCase
     /**
      * @var array
      */
-    private $expectedResponseBody = [
+    private array $expectedResponseBody = [
         'errors' => [
             0 => [
                 'status' => '401',
-                'title'  => 'Unauthorized',
+                'title' => 'Unauthorized',
                 'detail' => 'The request has not been applied because it lacks valid authentication credentials for the target resource'
             ]
         ]

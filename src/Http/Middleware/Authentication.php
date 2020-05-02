@@ -34,12 +34,12 @@ class Authentication implements MiddlewareInterface
     /**
      * @var \Incognito\Http\ResponseFactoryInterface
      */
-    private $authErrorResponseFactory;
+    private ResponseFactoryInterface $authErrorResponseFactory;
 
     /**
      * @var \Incognito\Token\TokenValidator
      */
-    private $tokenService;
+    private TokenValidator $tokenService;
 
     /**
      * Constructor.

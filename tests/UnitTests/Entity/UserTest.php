@@ -25,6 +25,9 @@ class UserTest extends TestCase
         );
     }
 
+    /**
+     * @throws \Assert\AssertionFailedException
+     */
     public function testConstructWithUserAttrs(): void
     {
         $attrs = new UserAttributeCollection([
@@ -42,6 +45,9 @@ class UserTest extends TestCase
         );
     }
 
+    /**
+     * @throws \Assert\AssertionFailedException
+     */
     public function testSetAttribute(): void
     {
         $newEmail = new UserAttribute('email', 'someotheremail@somewhere.com');

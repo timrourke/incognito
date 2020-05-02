@@ -41,7 +41,7 @@ class UserStatus
     /**
      * @var string
      */
-    private $status;
+    private string $status;
 
     /**
      * UserStatus constructor.

@@ -22,7 +22,7 @@ class Password
     /**
      * @var string
      */
-    private $password;
+    private string $password;
 
     /**
      * Password constructor.

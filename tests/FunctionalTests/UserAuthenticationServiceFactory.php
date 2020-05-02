@@ -23,7 +23,7 @@ class UserAuthenticationServiceFactory
     /**
      * @var \Incognito\CognitoClient\UserAuthenticationService|null
      */
-    private static $userAuthenticationService;
+    private static ?UserAuthenticationService $userAuthenticationService;
 
     private function __construct()
     {

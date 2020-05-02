@@ -9,6 +9,7 @@ use Jose\Component\Checker\InvalidHeaderException;
 use Jose\Component\Signature\JWS;
 use Incognito\Token\TokenValidator;
 use Incognito\Token\TokenValidatorFactory;
+use Jose\Component\Signature\Serializer\JWSSerializerManager;
 use PHPUnit\Framework\TestCase;
 
 class ServiceTest extends TestCase
@@ -16,12 +17,12 @@ class ServiceTest extends TestCase
     /**
      * @var \Jose\Component\Signature\Serializer\JWSSerializerManager
      */
-    private $serializer;
+    private JWSSerializerManager $serializer;
 
     /**
      * @var \Incognito\Token\TokenValidator
      */
-    private $sut;
+    private TokenValidator $sut;
 
     /**
      * {@inheritdoc}

@@ -16,7 +16,7 @@ class Username
     /**
      * @var string
      */
-    private $username;
+    private string $username;
 
     /**
      * Constructor.

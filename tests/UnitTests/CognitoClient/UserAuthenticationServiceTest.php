@@ -118,7 +118,7 @@ class UserAuthenticationServiceTest extends TestCase
     }
 
     /**
-     * @throws \Incognito\Exception\UserNotConfirmedException
+     * @throws \Exception
      */
     public function testLoginUser(): void
     {
@@ -140,9 +140,6 @@ class UserAuthenticationServiceTest extends TestCase
         $sut->loginUser('some-username', 'some-password');
     }
 
-    /**
-     * @throws \Incognito\Exception\UserNotConfirmedException
-     */
     public function testLoginUserThrowsGenericException(): void
     {
         static::expectException(Exception::class);
@@ -166,7 +163,7 @@ class UserAuthenticationServiceTest extends TestCase
     }
 
     /**
-     * @throws \Incognito\Exception\UserNotConfirmedException
+     * @throws \Exception
      */
     public function testLoginUserThrowsGenericAwsException(): void
     {
@@ -196,7 +193,7 @@ class UserAuthenticationServiceTest extends TestCase
     }
 
     /**
-     * @throws \Incognito\Exception\UserNotConfirmedException
+     * @throws \Exception
      */
     public function testLoginUserThrowsNotAuthorizedException(): void
     {
@@ -229,7 +226,7 @@ class UserAuthenticationServiceTest extends TestCase
     }
 
     /**
-     * @throws \Incognito\Exception\UserNotConfirmedException
+     * @throws \Exception
      */
     public function testLoginUserThrowsUserNotFoundException(): void
     {
@@ -262,7 +259,7 @@ class UserAuthenticationServiceTest extends TestCase
     }
 
     /**
-     * @throws \Incognito\Exception\UserNotConfirmedException
+     * @throws \Exception
      */
     public function testLoginUserThrowsUserNotConfirmedException(): void
     {
@@ -624,6 +621,10 @@ class UserAuthenticationServiceTest extends TestCase
             ->getMock();
     }
 
+    /**
+     * @return \Incognito\Entity\User
+     * @throws \Assert\AssertionFailedException
+     */
     private function getSignUpUser(): User
     {
         return new User(

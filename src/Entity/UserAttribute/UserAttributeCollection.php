@@ -11,12 +11,13 @@ class UserAttributeCollection
     /**
      * @var \Incognito\Entity\UserAttribute\UserAttribute[]
      */
-    private $userAttributes;
+    private array $userAttributes;
 
     /**
      * Constructor.
      *
      * @param mixed[]|\Incognito\Entity\UserAttribute\UserAttribute[] $userAttributes
+     * @throws \Assert\AssertionFailedException
      */
     public function __construct(array $userAttributes = [])
     {
@@ -37,7 +38,7 @@ class UserAttributeCollection
         $this->userAttributes = array_merge(
             array_filter(
                 $this->userAttributes,
-                function (UserAttribute $attr) use ($newUserAttribute) {
+                function (UserAttribute $attr) use ($newUserAttribute): bool {
                     return $attr->name() !== $newUserAttribute->name();
                 }
             ),
@@ -59,7 +60,10 @@ class UserAttributeCollection
     {
         return array_reduce(
             $this->userAttributes,
-            function (?UserAttribute $acc, UserAttribute $current) use ($name) {
+            function (
+                ?UserAttribute $acc,
+                UserAttribute $current
+            ) use ($name): ?UserAttribute {
                 if ($current->name() === $name) {
                     $acc = $current;
                 }
@@ -79,16 +83,16 @@ class UserAttributeCollection
     {
         usort(
             $this->userAttributes,
-            function (UserAttribute $a, UserAttribute $b) {
-                return ($a->name() > $b->name()) ?
-                    1 :
-                    -1;
+            function (UserAttribute $a, UserAttribute $b): int {
+                return ($a->name() > $b->name())
+                    ? 1
+                    : -1;
             }
         );
 
         return array_filter(
             $this->userAttributes,
-            function (UserAttribute $a) {
+            function (UserAttribute $a): bool {
                 return !is_a($a, MissingAttribute::class);
             }
         );
@@ -131,7 +135,7 @@ class UserAttributeCollection
     {
         $mapOfAttrsByName = array_reduce(
             $userAttributes,
-            function (array $acc, UserAttribute $current) {
+            function (array $acc, UserAttribute $current): array {
                 $acc[$current->name()][] = $current;
 
                 return $acc;
@@ -141,10 +145,10 @@ class UserAttributeCollection
 
         $nonUniqueAttrs = array_filter(
             $mapOfAttrsByName,
-            function ($element, $key) use ($mapOfAttrsByName) {
+            function (string $key) use ($mapOfAttrsByName): bool {
                 return count($mapOfAttrsByName[$key]) > 1;
             },
-            ARRAY_FILTER_USE_BOTH
+            ARRAY_FILTER_USE_KEY
         );
 
         Assertion::eq(

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Incognito\FunctionalTests\UserManagement;
 
+use Incognito\CognitoClient\UserAuthenticationService;
 use Incognito\Entity\Password;
 use Incognito\Entity\User;
 use Incognito\Entity\Username;
@@ -19,12 +20,12 @@ class AuthenticationTest extends TestCase
     /**
      * @var string
      */
-    private $userId;
+    private string $userId;
 
     /**
      * @var \Incognito\CognitoClient\UserAuthenticationService
      */
-    private $userAuthenticationService;
+    private UserAuthenticationService $userAuthenticationService;
 
     protected function setUp(): void
     {

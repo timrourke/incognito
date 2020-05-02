@@ -27,17 +27,17 @@ class Keychain
     /**
      * @var \Psr\Cache\CacheItemPoolInterface
      */
-    private $cache;
+    private CacheItemPoolInterface $cache;
 
     /**
      * @var \Incognito\Cache\CacheItemFactoryInterface
      */
-    private $cacheItemFactory;
+    private CacheItemFactoryInterface $cacheItemFactory;
 
     /**
      * @var \GuzzleHttp\ClientInterface
      */
-    private $httpClient;
+    private HttpClientInterface $httpClient;
 
     /**
      * Constructor.

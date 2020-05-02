@@ -16,49 +16,49 @@ class User
      *
      * @var string
      */
-    private $id;
+    private string $id;
 
     /**
      * The user's username
      *
      * @var \Incognito\Entity\Username
      */
-    private $username;
+    private Username $username;
 
     /**
      * The date the user was created at
      *
      * @var \DateTimeImmutable
      */
-    private $createdAt;
+    private DateTimeImmutable $createdAt;
 
     /**
      * The date the user was last updated at
      *
      * @var \DateTimeImmutable
      */
-    private $updatedAt;
+    private DateTimeImmutable $updatedAt;
 
     /**
      * Whether the AWS Cognito User is enabled
      *
      * @var bool
      */
-    private $enabled;
+    private bool $enabled;
 
     /**
      * The current status for the user
      *
      * @var \Incognito\Entity\UserStatus|null
      */
-    private $status;
+    private ?UserStatus $status;
 
     /**
      * The user attributes for this user
      *
      * @var \Incognito\Entity\UserAttribute\UserAttributeCollection
      */
-    private $userAttributes;
+    private UserAttributeCollection $userAttributes;
 
     /**
      * Constructor.
@@ -116,7 +116,7 @@ class User
      */
     public function id(): string
     {
-        return $this->id ?: '';
+        return $this->id ?? '';
     }
 
     /**
@@ -162,7 +162,7 @@ class User
      */
     public function createdAt(): ?DateTimeImmutable
     {
-        return $this->createdAt;
+        return $this->createdAt ?? null;
     }
 
     /**
@@ -174,8 +174,8 @@ class User
      */
     public function setCreatedAt(DateTimeImmutable $createdAt): User
     {
-        Assertion::null(
-            $this->createdAt,
+        Assertion::false(
+            isset($this->createdAt),
             'Invalid createdAt: user already has a "createdAt" date.'
         );
 
@@ -191,7 +191,7 @@ class User
      */
     public function updatedAt(): ?DateTimeImmutable
     {
-        return $this->updatedAt;
+        return $this->updatedAt ?? null;
     }
 
     /**
@@ -214,7 +214,7 @@ class User
      */
     public function enabled(): ?bool
     {
-        return $this->enabled;
+        return $this->enabled ?? null;
     }
 
     /**
@@ -237,9 +237,9 @@ class User
      */
     public function status(): UserStatus
     {
-        return is_null($this->status) ?
-            new UserStatus() :
-            $this->status;
+        return isset($this->status)
+            ? $this->status
+            : new UserStatus();
     }
 
     /**
